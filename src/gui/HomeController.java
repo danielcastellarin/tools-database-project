@@ -30,7 +30,7 @@ public class HomeController extends Controller {
                 //TODO: FILL
                 break;
             case "Change Balance":
-                //TODO: FILL
+                fxml = "FXML/balance.fxml";
                 break;
             case "Buy Tools":
                 //TODO: FILL
