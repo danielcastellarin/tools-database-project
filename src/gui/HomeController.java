@@ -15,7 +15,7 @@ public class HomeController extends Controller {
     public void changeSceneFromGrid(ActionEvent event) {
         String buttonLabel = ((Button) event.getSource()).getText();
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-        String fxml;
+        String fxml = null; //TODO: Remove Null initialization
         switch (buttonLabel) {
             case "Add Tool":
                 fxml = "FXML/addTool.fxml";
@@ -23,11 +23,24 @@ public class HomeController extends Controller {
             case "View Tools":
                 fxml = "FXML/viewTools.fxml";
                 break;
+            case "Lend Tools":
+                //TODO: FILL
+                break;
+            case "Get Lendable Tools":
+                //TODO: FILL
+                break;
+            case "Change Balance":
+                //TODO: FILL
+                break;
+            case "Buy Tools":
+                //TODO: FILL
+                break;
+            case "Analytics":
+                fxml = "FXML/analytics.fxml";
+                break;
             default:
                 fxml = "FXML/home.fxml";
                 break;
-
-
         }
         changeScene(fxml, 400, 500, buttonLabel);
     }

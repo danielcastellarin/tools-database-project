@@ -30,8 +30,14 @@ public class Controller {
     }
 
     @FXML
-    public void returnToLogin(ActionEvent event) {
+    public void gotoLogin(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/login.fxml", 400, 500, "Login");
+    }
+
+    @FXML
+    public void gotoHome(ActionEvent event) {
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        changeScene("FXML/home.fxml", 400, 500, "Home");
     }
 }

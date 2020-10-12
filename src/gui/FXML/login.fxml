@@ -33,6 +33,6 @@
          </children>
       </HBox>
       <Button mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="175.0" text="Login" />
-      <Hyperlink onAction="#createNewAccount" text="Create New Account" />
+      <Hyperlink onAction="#gotoCreateNewAccount" text="Create New Account" />
    </children>
 </VBox>

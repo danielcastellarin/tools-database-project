@@ -19,17 +19,13 @@ public class LoginController extends Controller{
 
     @FXML
     public void login(ActionEvent event) {
-        //TODO: Insert New User Data into SQL Server
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-        System.out.println(username + " " + password);
-
+        //TODO:  Check if Username and Password are in Database
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/home.fxml", 400, 500, "Home");
     }
 
     @FXML
-    public void createNewAccount(ActionEvent event) {
+    public void gotoCreateNewAccount(ActionEvent event) {
         ((Stage)(((Hyperlink)event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/newAccount.fxml", 400, 500, "Create New Account");
     }
