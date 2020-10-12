@@ -24,16 +24,16 @@ public class HomeController extends Controller {
                 fxml = "FXML/viewTools.fxml";
                 break;
             case "Lend Tools":
-                //TODO: FILL
+                fxml = "FXML/lendTools.fxml";
                 break;
             case "Get Lendable Tools":
-                //TODO: FILL
+                fxml = "FXML/getLendableTools.fxml";
                 break;
             case "Change Balance":
                 fxml = "FXML/balance.fxml";
                 break;
             case "Buy Tools":
-                //TODO: FILL
+                fxml = "FXML/buyTools.fxml";
                 break;
             case "Analytics":
                 fxml = "FXML/analytics.fxml";
