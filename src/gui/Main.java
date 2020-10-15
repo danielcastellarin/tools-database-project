@@ -10,13 +10,12 @@ import java.sql.Connection;
 
 public class Main extends Application {
 
-    static Connection connection = null;
+
     static String username = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
-        connection = SQLController.openConnection(Credentials.getUrl(),
+        SQLController.openConnection(Credentials.getUrl(),
                 Credentials.getUsername(), Credentials.getPassword());
 
         Parent root = FXMLLoader.load(getClass().getResource("FXML/login.fxml"));
@@ -28,7 +27,7 @@ public class Main extends Application {
 
     @Override
     public void stop(){
-        SQLController.closeConnection(connection);
+        SQLController.closeConnection();
     }
 
     public static void setUsername(String user) {

@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
    <children>
       <VBox alignment="CENTER">
          <children>
@@ -29,9 +28,10 @@
       <TableView prefHeight="350.0" prefWidth="200.0">
         <columns>
           <TableColumn prefWidth="100.0" text="Name" />
-          <TableColumn prefWidth="100.0" text="Lendable" />
             <TableColumn prefWidth="100.0" text="Price" />
-            <TableColumn prefWidth="100.0" text="Category" />
+          <TableColumn prefWidth="100.0" text="Lendable" />
+            <TableColumn prefWidth="100.0" text="Purchasable" />
+            <TableColumn prefWidth="200.0" text="Category" />
         </columns>
       </TableView>
       <HBox>

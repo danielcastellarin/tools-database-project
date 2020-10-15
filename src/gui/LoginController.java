@@ -14,7 +14,7 @@ public class LoginController extends Controller{
     @FXML
     TextField usernameField;
     @FXML
-    PasswordField passwordField;
+    PasswordField passwordPasswordField;
     @FXML
     Text loginStatusText;
 
@@ -22,13 +22,19 @@ public class LoginController extends Controller{
 
     @FXML
     public void login(ActionEvent event) {
-        boolean succcess = SQLController.verifyLoginCredentials(Main.connection,
-                usernameField.getText(), passwordField.getText());
-        if (succcess) {
-            loginStatusText.setVisible(false);
-            Main.setUsername(usernameField.getText());
-            ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-            changeScene("FXML/home.fxml", 400, 500, "Home");
+        String user = usernameField.getText().trim();
+        String pass = passwordPasswordField.getText().trim();
+
+        if (!user.isEmpty() && !pass.isEmpty()) {
+            boolean succcess = SQLController.verifyLoginCredentials(user, pass);
+            if (succcess) {
+                loginStatusText.setVisible(false);
+                Main.setUsername(usernameField.getText());
+                ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+                changeScene("FXML/home.fxml", 400, 500, "Home");
+            } else {
+                loginStatusText.setVisible(true);
+            }
         } else {
             loginStatusText.setVisible(true);
         }

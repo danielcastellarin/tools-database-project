@@ -24,8 +24,7 @@ public class BalanceController extends Controller{
 
     @FXML
     public void initialize() {
-        balanceTextField.setText(Integer.toString(SQLController.getBalance(Main.connection,
-                Main.username)));
+        balanceTextField.setText(Integer.toString(SQLController.getBalance(Main.username)));
     }
 
     @FXML
@@ -49,8 +48,7 @@ public class BalanceController extends Controller{
                 break;
         }
 
-        balanceTextField.setText(Integer.toString(SQLController.incrementBalance(Main.connection,
-                Main.username, increment)));
+        balanceTextField.setText(Integer.toString(SQLController.incrementBalance(Main.username, increment)));
     }
 
 

@@ -16,11 +16,14 @@ public class HomeController extends Controller {
         String buttonLabel = ((Button) event.getSource()).getText();
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         String fxml = null; //TODO: Remove Null initialization
+        int width = 400;
+        int height = 500;
         switch (buttonLabel) {
             case "Add Tool":
                 fxml = "FXML/addTool.fxml";
                 break;
             case "View Tools":
+                width = 600;
                 fxml = "FXML/viewTools.fxml";
                 break;
             case "Lend Tools":
@@ -42,7 +45,7 @@ public class HomeController extends Controller {
                 fxml = "FXML/home.fxml";
                 break;
         }
-        changeScene(fxml, 400, 500, buttonLabel);
+        changeScene(fxml, width, height, buttonLabel);
     }
 
 }

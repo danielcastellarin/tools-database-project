@@ -14,7 +14,7 @@ public class ModifyToolController extends Controller{
     @FXML
     public void gotoViewTools(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-        changeScene("FXML/viewTools.fxml", 400, 500, "View Tools");
+        changeScene("FXML/viewTools.fxml", 600, 500, "View Tools");
     }
 
     @FXML

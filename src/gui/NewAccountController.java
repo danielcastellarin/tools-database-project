@@ -24,16 +24,26 @@ public class NewAccountController extends Controller{
 
     @FXML
     public void createNewUser(ActionEvent event) {
-        boolean success = SQLController.createNewUser(Main.connection,
-                firstNameTextField.getText(), lastNameTextField.getText(),
-                usernameTextField.getText(), passwordPasswordField.getText());
-        if (success) {
-            creationStatusText.setVisible(false);
-            gotoLogin(event);
+        creationStatusText.setText("Username Already In Use. Try Again");
+        creationStatusText.setVisible(false);
+        String firstName = firstNameTextField.getText().trim();
+        String lastName = lastNameTextField.getText().trim();
+        String username = usernameTextField.getText().trim();
+        String password = passwordPasswordField.getText().trim();
+
+        if (!firstName.isEmpty() && !lastName.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
+            boolean success = SQLController.createNewUser(
+                    firstName, lastName, username, password);
+            if (success) {
+                creationStatusText.setVisible(false);
+                gotoLogin(event);
+            } else {
+                creationStatusText.setVisible(true);
+            }
         } else {
+            creationStatusText.setText("Fill out all Fields.");
             creationStatusText.setVisible(true);
         }
-
     }
 
 
