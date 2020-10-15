@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
  * @author Ryan LaRue, rml5169@rit.edu
  */
 public class AddToolController extends Controller{
-
     //TODO: Populate Tool Category ChoiceBox with categories from database
 
     @FXML

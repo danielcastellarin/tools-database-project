@@ -18,8 +18,6 @@ public class NewAccountController extends Controller{
     PasswordField passwordPasswordField;
     @FXML
     TextField usernameTextField;
-    @FXML
-    TextField emailTextField;
 
     @FXML
     public void createNewUser(ActionEvent event) {
