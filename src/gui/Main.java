@@ -11,6 +11,7 @@ import java.sql.Connection;
 public class Main extends Application {
 
     static Connection connection = null;
+    static String username = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -28,6 +29,10 @@ public class Main extends Application {
     @Override
     public void stop(){
         SQLController.closeConnection(connection);
+    }
+
+    public static void setUsername(String user) {
+        username = user;
     }
 
 

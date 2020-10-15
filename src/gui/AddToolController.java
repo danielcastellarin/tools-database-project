@@ -21,6 +21,7 @@ public class AddToolController extends Controller{
     @FXML
     ChoiceBox<String> toolCategoryChoiceBox;
 
+
     @FXML
     public void addTool(ActionEvent event){
         //TODO: Add Tool to Database

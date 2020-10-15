@@ -16,7 +16,7 @@ public class LoginController extends Controller{
     @FXML
     PasswordField passwordField;
     @FXML
-    Text loginStatus;
+    Text loginStatusText;
 
 
 
@@ -25,11 +25,12 @@ public class LoginController extends Controller{
         boolean succcess = SQLController.verifyLoginCredentials(Main.connection,
                 usernameField.getText(), passwordField.getText());
         if (succcess) {
-            loginStatus.setVisible(false);
+            loginStatusText.setVisible(false);
+            Main.setUsername(usernameField.getText());
             ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             changeScene("FXML/home.fxml", 400, 500, "Home");
         } else {
-            loginStatus.setVisible(true);
+            loginStatusText.setVisible(true);
         }
     }
 
