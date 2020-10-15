@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LendToolsController">
    <children>
       <Label text="Lend a Tool" underline="true">
@@ -49,7 +48,7 @@
             </HBox>
             <VBox alignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="1">
                <children>
-                  <Label prefHeight="18.0" prefWidth="54.0" text="Due Date" />
+                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="110.0" text="Due Date" />
                   <DatePicker fx:id="dueDateDatePicker" />
                </children>
             </VBox>

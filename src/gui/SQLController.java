@@ -2,7 +2,6 @@ package gui; /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
 public class SQLController {
@@ -117,11 +116,28 @@ public class SQLController {
         return balance;
     }
 
+    public static void getCategories(Connection connection) {
+        String query =
+                "SELECT * FROM \"Category\"";
+        System.out.println("Submitting Query: " + query);
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                System.out.println(resultSet.getString(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static void main(String[] args) {
         Connection connection = openConnection(Credentials.getUrl(),
                 Credentials.getUsername(),
                 Credentials.getPassword());
-        incrementBalance(connection, "admin", 5);
+        getCategories(connection);
         closeConnection(connection);
     }
 }

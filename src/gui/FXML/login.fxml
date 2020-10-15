@@ -21,7 +21,7 @@
             <Font size="48.0" />
          </font>
       </Label>
-      <Text fx:id="loginStatusText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Login Credentials" visible="false" />
+      <Text fx:id="loginStatus" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Username/Password" visible="false" />
       <HBox alignment="CENTER" spacing="10.0">
          <children>
             <Label prefWidth="75.0" text="Username" />
