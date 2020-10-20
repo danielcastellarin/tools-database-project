@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<VBox prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AddToolCategoriesController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="20.0">
+         <children>
+            <Text fx:id="statusText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Category Already Exists" visible="false" />
+         </children>
+      </HBox>
+      <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="400.0">
+         <content>
+            <VBox fx:id="categoryVBox" alignment="CENTER" prefHeight="430.0" prefWidth="400.0" />
+         </content>
+      </ScrollPane>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="400.0" spacing="10.0">
+         <children>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <TextField fx:id="newCategoryTextField" />
+                  <Button mnemonicParsing="false" onAction="#addNewCategory" prefHeight="30.0" prefWidth="100.0" text="Add Category" />
+               </children>
+            </HBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Submit" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
