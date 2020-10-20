@@ -56,12 +56,12 @@
                   <Label layoutX="75.0" layoutY="43.0" text="Purchasable" />
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="60.0" spacing="5.0">
                      <children>
-                        <RadioButton fx:id="yesPurchasableRadioButton1" mnemonicParsing="false" selected="true" text="Yes">
+                        <RadioButton fx:id="yesPurchasableRadioButton" mnemonicParsing="false" selected="true" text="Yes">
                            <toggleGroup>
-                              <ToggleGroup fx:id="lendableToggleGroup1" />
+                              <ToggleGroup fx:id="purchasableToggleGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="No" toggleGroup="$lendableToggleGroup1" />
+                        <RadioButton mnemonicParsing="false" text="No" toggleGroup="$purchasableToggleGroup" />
                      </children>
                   </HBox>
                </children>
