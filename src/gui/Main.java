@@ -11,7 +11,7 @@ import java.sql.Connection;
 public class Main extends Application {
 
 
-    static String username = null;
+    private static int UID = -1;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -30,8 +30,12 @@ public class Main extends Application {
         SQLController.closeConnection();
     }
 
-    public static void setUsername(String user) {
-        username = user;
+    public static void setUID(int uid) {
+        UID = uid;
+    }
+
+    public static int getUID() {
+        return UID;
     }
 
 

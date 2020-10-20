@@ -2,7 +2,11 @@ package gui; /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
 
+import com.sun.org.apache.xerces.internal.dom.PSVIElementNSImpl;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLController {
 
@@ -54,16 +58,18 @@ public class SQLController {
         return true;
     }
 
-    public static boolean verifyLoginCredentials(String user, String password) {
+    public static int verifyLoginCredentials(String user, String password) {
         String query =
-                "SELECT username, password FROM \"User\" WHERE username ='" + user + "' AND password='" + password + "'";
+                "SELECT uid, username, password FROM \"User\" WHERE username " +
+                        "='" + user + "' AND password='" + password + "'";
         performQuery(query);
         try {
-            return resultSet.next();
+            resultSet.next();
+            return resultSet.getInt(1);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return false;
+        return -1;
     }
 
     public static boolean createNewUser(String firstName, String lastName,
@@ -75,27 +81,55 @@ public class SQLController {
         return performUpdate(query);
     }
 
-    public static int getBalance(String username) {
+    public static int getBalance(int uid) {
         String query =
-                "SELECT username, balance FROM \"User\" WHERE username = '" + username + "'";
+                "SELECT balance FROM \"User\" WHERE uid = " + uid ;
         Statement statement = null;
         performQuery(query);
         try {
             resultSet.next();
-            return resultSet.getInt(2);
+            return resultSet.getInt(1);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
         return 0;
     }
 
-    public static int incrementBalance(String username, int increment) {
-        int balance = getBalance(username) + increment;
+    public static int incrementBalance(int uid, int increment) {
+        int balance = getBalance(uid) + increment;
         String query =
                 "UPDATE \"User\" SET balance = " + balance + " WHERE " +
-                        "username = '" + username + "'";
-        System.out.println("Submitting Query: " + query);
+                        "uid = " + uid ;
         performUpdate(query);
         return balance;
+    }
+
+    public static List<String> getCategories() {
+        String query = "SELECT tool_category FROM \"Category\"";
+        performQuery(query);
+        List<String> categories = new ArrayList<>();
+        while(true) {
+            try {
+                if (!resultSet.next()) break;
+                categories.add(resultSet.getString(1));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return categories;
+    }
+
+    public static boolean insertCategory(String category_name) {
+        String query =
+                "INSERT INTO \"Category\" (tool_category)" +
+                        " " + "VALUES('" + category_name +"')";
+        return performUpdate(query);
+    }
+
+    public static void main(String[] args) {
+        openConnection(Credentials.getUrl(), Credentials.getUsername(),
+                Credentials.getPassword());
+        closeConnection();
     }
 }

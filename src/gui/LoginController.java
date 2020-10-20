@@ -26,10 +26,10 @@ public class LoginController extends Controller{
         String pass = passwordPasswordField.getText().trim();
 
         if (!user.isEmpty() && !pass.isEmpty()) {
-            boolean succcess = SQLController.verifyLoginCredentials(user, pass);
-            if (succcess) {
+            int uid = SQLController.verifyLoginCredentials(user, pass);
+            if (uid != -1) {
                 loginStatusText.setVisible(false);
-                Main.setUsername(usernameField.getText());
+                Main.setUID(uid);
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
                 changeScene("FXML/home.fxml", 400, 500, "Home");
             } else {
