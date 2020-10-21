@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class AddToolCategoriesController extends Controller{
+public class ToolCategoriesController extends Controller{
 
 
     @FXML
@@ -33,6 +33,20 @@ public class AddToolCategoriesController extends Controller{
             RadioButton button = new RadioButton();
             button.setPrefWidth(200);
             button.setText(category);
+            categoryVBox.getChildren().add(button);
+        }
+    }
+
+    @FXML
+    public void initialize(List<String> toolCategories) {
+        List<String> categories = SQLController.getAllCategories();
+        for (String category : categories) {
+            RadioButton button = new RadioButton();
+            button.setPrefWidth(200);
+            button.setText(category);
+            if (toolCategories.contains(category)) {
+                button.setSelected(true);
+            }
             categoryVBox.getChildren().add(button);
         }
     }
