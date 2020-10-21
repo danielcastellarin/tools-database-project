@@ -26,6 +26,7 @@ public class LendToolsController extends Controller{
 
     private Set<String> usernames;
     private Set<Integer> uids;
+    private UserTools tools;
 
     @FXML
     public void initialize() {
@@ -39,7 +40,7 @@ public class LendToolsController extends Controller{
             }
         });
 
-        UserTools tools = new UserTools(Main.getUID());
+        tools = new UserTools(Main.getUID());
         toolComboBox.getItems().addAll(tools.getToolNames());
 
         usernames = new HashSet<>();
@@ -54,10 +55,14 @@ public class LendToolsController extends Controller{
         String username = userComboBox.getSelectionModel().getSelectedItem();
         String toolName = toolComboBox.getSelectionModel().getSelectedItem();
         LocalDate dueDate = dueDateDatePicker.getValue();
+        int tid = toolComboBox.getSelectionModel().getSelectedItem();
+        tools.getTids();
         System.out.println(username);
         System.out.println(toolName);
         System.out.println(dueDate);
         //TODO: Update Server when a tool has been lent to someone else
+        SQLController.addNewTool(Main.getUID(), toolName, lendable,
+                purchasable, purchaseDate, salePrice, categories);
         gotoHome(event);
     }
 }
