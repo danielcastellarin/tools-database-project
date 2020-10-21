@@ -163,7 +163,7 @@ public class SQLController {
         }
     }
 
-    private static void insertToolToOwns(int uid, int tid,
+    private static void insertNewToolToOwns(int uid, int tid,
                                          String datePurchased,
                                          int salePrice) {
         String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
@@ -174,21 +174,21 @@ public class SQLController {
     }
 
     private static void insertNewToolToTool(int tid, String toolName,
-                                      boolean lendable, boolean purchasable) {
+                                      boolean lendable) {
         String query = "INSERT INTO \"Tool\" (tid, tool_name, lendable, " +
                 "purchasable)" +
                 " " + "VALUES(" + tid + ", '" + toolName +"', " + lendable +
-                ", " + purchasable +")";
+                ", true)";
         performUpdate(query);
     }
 
     public static void addNewTool(int uid, String toolName,
-                                  boolean lendable, boolean purchaseable,
+                                  boolean lendable,
                                   String purchaseDate, int sale_price,
                                   List<String> categories) {
         int tid = getNextAvailableTID();
-        insertNewToolToTool(tid, toolName, lendable, purchaseable);
-        insertToolToOwns(uid, tid, purchaseDate, sale_price);
+        insertNewToolToTool(tid, toolName, lendable);
+        insertNewToolToOwns(uid, tid, purchaseDate, sale_price);
         insertCategoriesToHas(tid, categories);
     }
 
@@ -287,14 +287,6 @@ public class SQLController {
         performUpdate(query);
     }
 
-    public static void sellTool(int uid, int tid, String datePurchased, int salePrice) {
-        String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
-                "date_sold, sale_price)" +
-                " " + "VALUES(" + uid + ", " + tid + ", '" + datePurchased +
-                "', NULL, " + salePrice + ")" +
-                "UPDATE \"Owns\" SET date_sold = CURRENT_DATE WHERE tid = " + tid + " AND date_sold = NULL";
-        performQuery(query);
-    }
 
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
