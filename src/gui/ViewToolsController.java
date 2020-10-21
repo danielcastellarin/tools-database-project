@@ -3,7 +3,12 @@ package gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -12,6 +17,12 @@ import javafx.stage.Stage;
 public class ViewToolsController extends Controller{
     //TODO: Add Functionality to populate list of tools from database
     //TODO: Add Functionality to click on tool and be able to modify it
+
+
+
+
+
+
 
     //PLACEHOLDER METHOD -- WILL BE REMOVED
     @FXML

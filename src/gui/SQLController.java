@@ -2,8 +2,6 @@ package gui; /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
 
-import com.sun.org.apache.xerces.internal.dom.PSVIElementNSImpl;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +102,7 @@ public class SQLController {
         return balance;
     }
 
-    public static List<String> getCategoryNames() {
+    public static List<String> getAllCategories() {
         String query = "SELECT tool_category FROM \"Category\"";
         performQuery(query);
         List<String> categories = new ArrayList<>();
@@ -129,9 +127,9 @@ public class SQLController {
 
     private static List<Integer> getCategoryIDs(List<String> categories) {
         List<Integer> cids = new ArrayList<>();
-        for (String category_name : categories) {
+        for (String categoryName : categories) {
             String query =
-                    "SELECT cid FROM \"Category\" WHERE tool_category= '" + category_name + "'";
+                    "SELECT cid FROM \"Category\" WHERE tool_category= '" + categoryName + "'";
             performQuery(query);
             try {
                 if (!resultSet.next()) break;
@@ -193,9 +191,88 @@ public class SQLController {
         insertCategoriesToHas(tid, categories);
     }
 
+    private static void getToolInfoFromOwns(int uid, List<Integer> salePrices,
+                                List<Integer> tids) {
+        String query =
+                "SELECT tid, sale_price FROM \"Owns\" WHERE uid=" + uid + " " +
+                        "AND date_sold IS NULL";
+        performQuery(query);
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                salePrices.add(resultSet.getInt(2));
+                tids.add(resultSet.getInt(1));
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void getToolInfoFromTool(List<Integer> tids,
+                                           List<String> toolNames,
+                                           List<Boolean> lendable,
+                                           List<Boolean> purchasable) {
+        for (int tid: tids) {
+            String query =
+                    "SELECT tool_name, lendable, purchasable FROM \"Tool\" " +
+                            "WHERE tid=" + tid;
+            performQuery(query);
+            while (true) {
+                try {
+                    if (!resultSet.next()) break;
+                    toolNames.add(resultSet.getString(1));
+                    lendable.add(resultSet.getBoolean(2));
+                    purchasable.add(resultSet.getBoolean(2));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+    private static void getToolInfoFromHas(List<Integer> tids,
+                                           List<StringBuilder> categories) {
+        for (int tid: tids) {
+            String query = "SELECT tool_category FROM \"Category\" WHERE " +
+                    "cid IN (SELECT cid FROM \"Has\" WHERE tid=" + tid + ")";
+            performQuery(query);
+            try {
+                StringBuilder categoryString = new StringBuilder("( ");
+                while (resultSet.next()) {
+                    categoryString.append(resultSet.getString(1)).append(" ");
+                }
+                categoryString.append(")");
+                categories.add(categoryString);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void getUserTools(int uid, List<Integer> tids,
+                                    List<Integer> salePrices,
+                                    List<String> toolNames,
+                                    List<Boolean> lendable,
+                                    List<Boolean> purchasable,
+                                    List<StringBuilder> categories) {
+        getToolInfoFromOwns(uid, salePrices, tids);
+        getToolInfoFromHas(tids, categories);
+        getToolInfoFromTool(tids, toolNames, lendable, purchasable);
+        System.out.println(tids);
+        System.out.println(salePrices);
+        System.out.println(toolNames);
+        System.out.println(lendable);
+        System.out.println(purchasable);
+        System.out.println(categories);
+    }
+
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
                 Credentials.getPassword());
+
+
         closeConnection();
     }
 }

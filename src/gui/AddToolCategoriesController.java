@@ -28,7 +28,7 @@ public class AddToolCategoriesController extends Controller{
 
     @FXML
     public void initialize() {
-        List<String> categories = SQLController.getCategoryNames();
+        List<String> categories = SQLController.getAllCategories();
         for (String category : categories) {
             RadioButton button = new RadioButton();
             button.setPrefWidth(200);
