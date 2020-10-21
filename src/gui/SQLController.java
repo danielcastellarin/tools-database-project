@@ -278,7 +278,15 @@ public class SQLController {
             }
 
         }
-     }
+    }
+
+    public static void insertNewBorrowRecord(int uid, int tid, String dueDate, String dateLent) {
+        String query = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +
+                "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', '" + dateLent + "')" +
+                "UPDATE \"Tool\" SET lendable = FALSE AND purchasable = FALSE WHERE tid = " + tid;
+        performUpdate(query);
+    }
+
 
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
