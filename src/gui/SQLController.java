@@ -104,7 +104,7 @@ public class SQLController {
         return balance;
     }
 
-    public static List<String> getCategories() {
+    public static List<String> getCategoryNames() {
         String query = "SELECT tool_category FROM \"Category\"";
         performQuery(query);
         List<String> categories = new ArrayList<>();
@@ -113,7 +113,7 @@ public class SQLController {
                 if (!resultSet.next()) break;
                 categories.add(resultSet.getString(1));
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.err.println(e.getMessage());
             }
 
         }
@@ -125,6 +125,72 @@ public class SQLController {
                 "INSERT INTO \"Category\" (tool_category)" +
                         " " + "VALUES('" + category_name +"')";
         return performUpdate(query);
+    }
+
+    private static List<Integer> getCategoryIDs(List<String> categories) {
+        List<Integer> cids = new ArrayList<>();
+        for (String category_name : categories) {
+            String query =
+                    "SELECT cid FROM \"Category\" WHERE tool_category= '" + category_name + "'";
+            performQuery(query);
+            try {
+                if (!resultSet.next()) break;
+                cids.add(resultSet.getInt(1));
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return cids;
+    }
+
+    public static int getNextAvailableTID(){
+        String query = "SELECT MAX(tid) FROM \"Tool\"";
+        performQuery(query);
+        try {
+            resultSet.next();
+            return resultSet.getInt(1) + 1;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return -1;
+    }
+
+    private static void insertCategoriesToHas(int tid, List<String> categories) {
+        List<Integer> cids = getCategoryIDs(categories);
+        for (int cid : cids) {
+            String query = "INSERT INTO \"Has\" (tid, cid)" +
+                    " " + "VALUES(" + tid + "," + cid +")";
+            performUpdate(query);
+        }
+    }
+
+    private static void insertNewToolToOwns(int uid, int tid,
+                                         String datePurchased,
+                                         int salePrice) {
+        String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+                "date_sold, sale_price)" +
+                " " + "VALUES(" + uid + ", " + tid + ", '" + datePurchased +
+                "', NULL, " + salePrice + ")";
+        performUpdate(query);
+    }
+
+    private static void insertNewToolToTool(int tid, String toolName,
+                                      boolean lendable, boolean purchasable) {
+        String query = "INSERT INTO \"Tool\" (tid, tool_name, lendable, " +
+                "purchaseable)" +
+                " " + "VALUES(" + tid + ", '" + toolName +"', " + lendable +
+                ", " + purchasable +")";
+        performUpdate(query);
+    }
+
+    public static void addNewTool(int uid, String toolName,
+                                  boolean lendable, boolean purchaseable,
+                                  String purchaseDate, int sale_price,
+                                  List<String> categories) {
+        int tid = getNextAvailableTID();
+        insertNewToolToTool(tid, toolName, lendable, purchaseable);
+        insertNewToolToOwns(uid, tid, purchaseDate, sale_price);
+        insertCategoriesToHas(tid, categories);
     }
 
     public static void main(String[] args) {

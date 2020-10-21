@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -29,7 +28,7 @@ public class AddToolCategoriesController extends Controller{
 
     @FXML
     public void initialize() {
-        List<String> categories = SQLController.getCategories();
+        List<String> categories = SQLController.getCategoryNames();
         for (String category : categories) {
             RadioButton button = new RadioButton();
             button.setPrefWidth(200);

@@ -16,7 +16,7 @@ public class HomeController extends Controller {
         String buttonLabel = ((Button) event.getSource()).getText();
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         String fxml = null; //TODO: Remove Null initialization
-        int width = 400;
+        int width = 450;
         int height = 500;
         switch (buttonLabel) {
             case "Add Tool":

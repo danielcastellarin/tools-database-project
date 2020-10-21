@@ -6,6 +6,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,14 +27,20 @@ public class AddToolController extends Controller{
     @FXML
     RadioButton yesLendableRadioButton;
     @FXML
-    TextField priceTextField;
+    ComboBox<Integer> priceComboBox;
     @FXML
     TextField toolNameTextField;
+    @FXML
+    Text statusText;
+
+    @FXML
+    public void initialize() {
+        priceComboBox.getItems().addAll(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
+    }
 
     public static void setCategoriesList(List<String> categoriesList) {
         categories = categoriesList;
     }
-
 
     @FXML
     public void addCategories() {
@@ -43,23 +50,24 @@ public class AddToolController extends Controller{
     @FXML
     public void addTool(ActionEvent event){
 
-        System.out.println("Tool Name: " + toolNameTextField.getText());
-        System.out.println("Sale Price: " + priceTextField.getText());
-        System.out.println("Lendable: " + yesLendableRadioButton.isSelected());
-        System.out.println("Purchasable: " + yesPurchasableRadioButton.isSelected());
+        //TODO: Make sure tool name isnt emtpty
+        String toolName = toolNameTextField.getText();
+        if (!toolName.equals("")) {
+            statusText.setVisible(false);
+            int salePrice = priceComboBox.getSelectionModel().getSelectedItem();
+            boolean lendable = yesLendableRadioButton.isSelected();
+            boolean purchasable = yesPurchasableRadioButton.isSelected();
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = new Date();
-        System.out.println("Purchase Date:" + dateFormat.format(date));
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = new Date();
+            String purchaseDate = dateFormat.format(date);
 
-        //TODO: Create Insert Query into various needed tables
-        //TODO: Figure out how to find auto incremented TID
+            SQLController.addNewTool(Main.getUID(), toolName, lendable,
+                    purchasable, purchaseDate, salePrice, categories);
 
-        System.out.print("Categories: ");
-        for (String s: categories) {
-            System.out.print(s + " ");
+            gotoHome(event);
+        } else {
+            statusText.setVisible(true);
         }
-        System.out.println();
-        gotoHome(event);
     }
 }
