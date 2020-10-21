@@ -2,14 +2,15 @@ package gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,9 +27,13 @@ public class ModifyToolController extends Controller{
     @FXML
     ComboBox<Integer> priceComboBox;
 
+    int index;
+    UserTools tools;
 
     @FXML
     public void initialize(UserTools tools, int index) {
+        this.tools = tools;
+        this.index = index;
 
         priceComboBox.getItems().addAll(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
 
@@ -39,8 +44,7 @@ public class ModifyToolController extends Controller{
         toolNameTextField.setText(tools.getToolNames().get(index));
         priceComboBox.getSelectionModel().select(tools.getSalePrices().get(index));
 
-        //TODO: Populate categories
-        parseCategories(tools.getCategories().get(index));
+
     }
 
     private List<String> parseCategories(String category) {
@@ -57,8 +61,28 @@ public class ModifyToolController extends Controller{
     }
 
     @FXML
+    public void addCategories() {
+        List<String> categories = parseCategories(tools.getCategories().get(index));
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
+                    "/ToolCategories.fxml"));
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setTitle("Modify Tool");
+
+            Scene scene = new Scene(loader.load());
+            ToolCategoriesController controller = loader.getController();
+            controller.initialize(categories);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @FXML
     public void modifyTool(ActionEvent event){
-        //TODO: Update selected tool in Database
+
         gotoViewTools(event);
     }
 }

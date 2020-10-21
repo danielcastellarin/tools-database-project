@@ -35,7 +35,7 @@ public class LendToolsController extends Controller{
                 super.updateItem(date, empty);
                 LocalDate today = LocalDate.now();
 
-                setDisable(empty || date.compareTo(today) < 0 );
+                setDisable(empty || date.compareTo(today) <= 0 );
             }
         });
 

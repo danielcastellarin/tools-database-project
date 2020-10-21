@@ -42,7 +42,7 @@ public class AddToolController extends Controller{
 
     @FXML
     public void addCategories() {
-        changeScene("FXML/addToolCategories.fxml", "Add Categories");
+        changeScene("FXML/ToolCategories.fxml", "Add Categories");
     }
 
     @FXML
