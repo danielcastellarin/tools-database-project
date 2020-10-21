@@ -13,6 +13,7 @@ public class Main extends Application {
 
     private static int UID = -1;
 
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         SQLController.openConnection(Credentials.getUrl(),

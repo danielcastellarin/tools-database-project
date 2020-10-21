@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.LendToolsController">
    <children>
@@ -19,6 +20,11 @@
             <Font size="36.0" />
          </font>
       </Label>
+      <Text fx:id="statusText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Username Entered" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
       <GridPane prefHeight="400.0" prefWidth="300.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -55,13 +61,13 @@
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label text="Tool" />
-                  <ComboBox fx:id="toolComboBox" prefWidth="150.0" />
+                  <ComboBox fx:id="toolComboBox" editable="true" prefWidth="150.0" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
                   <Label text="User" />
-                  <ComboBox fx:id="userComboBox" prefWidth="150.0" />
+                  <ComboBox fx:id="userComboBox" editable="true" prefWidth="150.0" />
                </children>
             </VBox>
          </children>

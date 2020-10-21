@@ -5,6 +5,7 @@ package gui; /**
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class SQLController {
 
@@ -260,25 +261,28 @@ public class SQLController {
         getToolInfoFromOwns(uid, salePrices, tids);
         getToolInfoFromHas(tids, categories);
         getToolInfoFromTool(tids, toolNames, lendable, purchasable);
-        System.out.println(tids);
-        System.out.println(salePrices);
-        System.out.println(toolNames);
-        System.out.println(lendable);
-        System.out.println(purchasable);
-        System.out.println(categories);
     }
+
+
+    public static void getAllOtherUsers(int uid, Set<Integer> uids,
+                                        Set<String> usernames) {
+        String query = "SELECT uid, username FROM \"User\" WHERE uid != " + uid;
+        performQuery(query);
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                uids.add(resultSet.getInt(1));
+                usernames.add(resultSet.getString(2));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+     }
 
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
                 Credentials.getPassword());
-        List<Integer> tids = new ArrayList<>();
-        List<Integer> salePrices = new ArrayList<>();
-        List<String> toolNames = new ArrayList<>();
-        List<Boolean> purchasable = new ArrayList<>();
-        List<Boolean> lendable = new ArrayList<>();
-        List<String> categories = new ArrayList<>();
-
-        getUserTools(1, tids, salePrices, toolNames, lendable, purchasable, categories);
 
         closeConnection();
     }

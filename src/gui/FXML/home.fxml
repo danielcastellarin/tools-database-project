@@ -56,7 +56,7 @@
             </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="131.0" prefHeight="60.8" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" onAction="#changeSceneFromGrid" prefHeight="76.0" prefWidth="200.0" text="Analytics" textAlignment="CENTER" />
+                  <Button disable="true" mnemonicParsing="false" onAction="#changeSceneFromGrid" prefHeight="76.0" prefWidth="200.0" text="Analytics" textAlignment="CENTER" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="210.0" layoutY="131.0" prefHeight="60.8" prefWidth="200.0" GridPane.rowIndex="3">
