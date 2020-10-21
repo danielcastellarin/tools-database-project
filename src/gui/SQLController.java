@@ -175,7 +175,7 @@ public class SQLController {
     private static void insertNewToolToTool(int tid, String toolName,
                                       boolean lendable, boolean purchasable) {
         String query = "INSERT INTO \"Tool\" (tid, tool_name, lendable, " +
-                "purchaseable)" +
+                "purchasable)" +
                 " " + "VALUES(" + tid + ", '" + toolName +"', " + lendable +
                 ", " + purchasable +")";
         performUpdate(query);
@@ -232,7 +232,7 @@ public class SQLController {
 
     }
     private static void getToolInfoFromHas(List<Integer> tids,
-                                           List<StringBuilder> categories) {
+                                           List<String> categories) {
         for (int tid: tids) {
             String query = "SELECT tool_category FROM \"Category\" WHERE " +
                     "cid IN (SELECT cid FROM \"Has\" WHERE tid=" + tid + ")";
@@ -243,7 +243,7 @@ public class SQLController {
                     categoryString.append(resultSet.getString(1)).append(" ");
                 }
                 categoryString.append(")");
-                categories.add(categoryString);
+                categories.add(categoryString.toString());
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -256,7 +256,7 @@ public class SQLController {
                                     List<String> toolNames,
                                     List<Boolean> lendable,
                                     List<Boolean> purchasable,
-                                    List<StringBuilder> categories) {
+                                    List<String> categories) {
         getToolInfoFromOwns(uid, salePrices, tids);
         getToolInfoFromHas(tids, categories);
         getToolInfoFromTool(tids, toolNames, lendable, purchasable);
@@ -271,7 +271,14 @@ public class SQLController {
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
                 Credentials.getPassword());
+        List<Integer> tids = new ArrayList<>();
+        List<Integer> salePrices = new ArrayList<>();
+        List<String> toolNames = new ArrayList<>();
+        List<Boolean> purchasable = new ArrayList<>();
+        List<Boolean> lendable = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
 
+        getUserTools(1, tids, salePrices, toolNames, lendable, purchasable, categories);
 
         closeConnection();
     }

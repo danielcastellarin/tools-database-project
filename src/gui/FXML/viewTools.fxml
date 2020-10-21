@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.ViewToolsController">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
    <children>
       <VBox alignment="CENTER">
          <children>
@@ -27,7 +27,7 @@
       </VBox>
       <TableView prefHeight="350.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="100.0" text="Name" />
+          <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
             <TableColumn prefWidth="100.0" text="Price" />
           <TableColumn prefWidth="100.0" text="Lendable" />
             <TableColumn prefWidth="100.0" text="Purchasable" />
