@@ -178,7 +178,7 @@ public class SQLController {
         String query = "INSERT INTO \"Tool\" (tid, tool_name, lendable, " +
                 "purchasable)" +
                 " " + "VALUES(" + tid + ", '" + toolName +"', " + lendable +
-                ", purchasable)";
+                ", true)";
         performUpdate(query);
     }
 
