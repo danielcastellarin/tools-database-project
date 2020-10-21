@@ -239,12 +239,14 @@ public class SQLController {
                     "cid IN (SELECT cid FROM \"Has\" WHERE tid=" + tid + ")";
             performQuery(query);
             try {
-                StringBuilder categoryString = new StringBuilder("( ");
+                StringBuilder categoryString = new StringBuilder();
                 while (resultSet.next()) {
-                    categoryString.append(resultSet.getString(1)).append(" ");
+                    categoryString.append(resultSet.getString(1)).append(", ");
                 }
-                categoryString.append(")");
-                categories.add(categoryString.toString());
+                // Remove ending ', '
+                String category = categoryString.toString().substring(0,
+                        categoryString.length() - 2);
+                categories.add(category);
 
             } catch (SQLException e) {
                 e.printStackTrace();
