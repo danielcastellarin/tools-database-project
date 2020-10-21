@@ -174,20 +174,20 @@ public class SQLController {
     }
 
     private static void insertNewToolToTool(int tid, String toolName,
-                                      boolean lendable, boolean purchasable) {
+                                      boolean lendable) {
         String query = "INSERT INTO \"Tool\" (tid, tool_name, lendable, " +
                 "purchasable)" +
                 " " + "VALUES(" + tid + ", '" + toolName +"', " + lendable +
-                ", " + purchasable +")";
+                ", purchasable)";
         performUpdate(query);
     }
 
     public static void addNewTool(int uid, String toolName,
-                                  boolean lendable, boolean purchaseable,
+                                  boolean lendable,
                                   String purchaseDate, int sale_price,
                                   List<String> categories) {
         int tid = getNextAvailableTID();
-        insertNewToolToTool(tid, toolName, lendable, purchaseable);
+        insertNewToolToTool(tid, toolName, lendable);
         insertNewToolToOwns(uid, tid, purchaseDate, sale_price);
         insertCategoriesToHas(tid, categories);
     }
