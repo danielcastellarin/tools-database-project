@@ -163,7 +163,7 @@ public class SQLController {
         }
     }
 
-    private static void insertNewToolToOwns(int uid, int tid,
+    private static void insertToolToOwns(int uid, int tid,
                                          String datePurchased,
                                          int salePrice) {
         String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
@@ -188,7 +188,7 @@ public class SQLController {
                                   List<String> categories) {
         int tid = getNextAvailableTID();
         insertNewToolToTool(tid, toolName, lendable, purchaseable);
-        insertNewToolToOwns(uid, tid, purchaseDate, sale_price);
+        insertToolToOwns(uid, tid, purchaseDate, sale_price);
         insertCategoriesToHas(tid, categories);
     }
 
@@ -285,6 +285,15 @@ public class SQLController {
                 "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', '" + dateLent + "')" +
                 "UPDATE \"Tool\" SET lendable = FALSE AND purchasable = FALSE WHERE tid = " + tid;
         performUpdate(query);
+    }
+
+    public static void sellTool(int uid, int tid, String datePurchased, int salePrice) {
+        String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+                "date_sold, sale_price)" +
+                " " + "VALUES(" + uid + ", " + tid + ", '" + datePurchased +
+                "', NULL, " + salePrice + ")" +
+                "UPDATE \"Owns\" SET date_sold = CURRENT_DATE WHERE tid = " + tid + " AND date_sold = NULL";
+        performQuery(query);
     }
 
 
