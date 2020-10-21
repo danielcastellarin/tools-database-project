@@ -15,29 +15,33 @@ import java.io.IOException;
  */
 public class Controller {
 
-    public void changeScene(String fxml, int width, int height, String title) {
+    public void changeScene(String fxml, String title) {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setTitle(title);
+
+        Scene scene = null;
         try {
-            Parent part = FXMLLoader.load(getClass().getResource(fxml));
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setTitle(title);
-            Scene scene = new Scene(part, width, height);
-            stage.setScene(scene);
-            stage.show();
+            scene = new Scene(loader.load());
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     @FXML
     public void gotoLogin(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-        changeScene("FXML/login.fxml", 400, 500, "Login");
+        changeScene("FXML/login.fxml", "Login");
     }
 
     @FXML
     public void gotoHome(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-        changeScene("FXML/home.fxml", 400, 500, "Home");
+        changeScene("FXML/home.fxml", "Home");
     }
 }

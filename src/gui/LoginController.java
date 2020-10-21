@@ -31,7 +31,7 @@ public class LoginController extends Controller{
                 loginStatusText.setVisible(false);
                 Main.setUID(uid);
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-                changeScene("FXML/home.fxml", 400, 500, "Home");
+                changeScene("FXML/home.fxml",  "Home");
             } else {
                 loginStatusText.setVisible(true);
             }
@@ -43,7 +43,7 @@ public class LoginController extends Controller{
     @FXML
     public void gotoCreateNewAccount(ActionEvent event) {
         ((Stage)(((Hyperlink)event.getSource()).getScene().getWindow())).close();
-        changeScene("FXML/newAccount.fxml", 400, 500, "Create New Account");
+        changeScene("FXML/newAccount.fxml", "Create New Account");
     }
 
 

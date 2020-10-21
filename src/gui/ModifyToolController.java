@@ -11,10 +11,17 @@ import javafx.stage.Stage;
 public class ModifyToolController extends Controller{
     //TODO: Populate data from selected tool using database info
 
+
+    @FXML
+    public void initialize(UserTools tools, int index) {
+        System.out.println(tools.getTids() + " " + index);
+    }
+
+
     @FXML
     public void gotoViewTools(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-        changeScene("FXML/viewTools.fxml", 600, 500, "View Tools");
+        changeScene("FXML/viewTools.fxml",  "View Tools");
     }
 
     @FXML

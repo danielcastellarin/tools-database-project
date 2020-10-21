@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
     <children>
         <VBox alignment="CENTER">
             <children>
@@ -18,26 +18,25 @@
                         <Font size="36.0" />
                     </font>
                 </Label>
-                <Label text="Click on a tool to modify">
+                <Label text="Double click on a tool to modify">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
             </children>
         </VBox>
-        <TableView fx:id="table" prefHeight="350.0" prefWidth="200.0">
+        <TableView fx:id="table" onMouseClicked="#gotoModifyTool" prefHeight="450.0" prefWidth="200.0">
             <columns>
-                <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
-                <TableColumn fx:id="priceColumn" prefWidth="100.0" text="Price" />
-                <TableColumn fx:id="lendableColumn" prefWidth="100.0" text="Lendable" />
-                <TableColumn fx:id="purchasableColumn" prefWidth="100.0" text="Purchasable" />
-                <TableColumn fx:id="categoriesColumn" prefWidth="200.0" text="Categories" />
+                <TableColumn fx:id="nameColumn" prefWidth="125.0" resizable="false" text="Name" />
+                <TableColumn fx:id="priceColumn" prefWidth="125.0" resizable="false" text="Price" />
+                <TableColumn fx:id="lendableColumn" prefWidth="125.0" resizable="false" text="Lendable" />
+                <TableColumn fx:id="purchasableColumn" prefWidth="125.0" resizable="false" text="Purchasable" />
+                <TableColumn fx:id="categoriesColumn" prefWidth="300.0" resizable="false" text="Categories" />
             </columns>
         </TableView>
         <HBox>
             <children>
                 <Button mnemonicParsing="false" onAction="#gotoHome" prefHeight="30.0" prefWidth="75.0" text="Back" />
-                <Button layoutX="20.0" layoutY="10.0" mnemonicParsing="false" onAction="#gotoModifyTool" prefHeight="30.0" prefWidth="306.0" text="PLACEHOLDER TO ACCESS MODIFY TOOLS SCENE" />
             </children>
             <padding>
                 <Insets left="10.0" />

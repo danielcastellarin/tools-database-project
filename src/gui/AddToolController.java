@@ -23,8 +23,6 @@ public class AddToolController extends Controller{
     private static List<String> categories;
 
     @FXML
-    RadioButton yesPurchasableRadioButton;
-    @FXML
     RadioButton yesLendableRadioButton;
     @FXML
     ComboBox<Integer> priceComboBox;
@@ -44,7 +42,7 @@ public class AddToolController extends Controller{
 
     @FXML
     public void addCategories() {
-        changeScene("FXML/addToolCategories.fxml", 400, 500, "Add Categories");
+        changeScene("FXML/addToolCategories.fxml", "Add Categories");
     }
 
     @FXML
@@ -56,14 +54,12 @@ public class AddToolController extends Controller{
             statusText.setVisible(false);
             int salePrice = priceComboBox.getSelectionModel().getSelectedItem();
             boolean lendable = yesLendableRadioButton.isSelected();
-            boolean purchasable = yesPurchasableRadioButton.isSelected();
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
             String purchaseDate = dateFormat.format(date);
 
-            SQLController.addNewTool(Main.getUID(), toolName, lendable,
-                    purchasable, purchaseDate, salePrice, categories);
+            SQLController.addNewTool(Main.getUID(), toolName, lendable, purchaseDate, salePrice, categories);
 
             gotoHome(event);
         } else {

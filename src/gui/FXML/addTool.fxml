@@ -42,17 +42,6 @@
                   <RadioButton mnemonicParsing="false" text="No" toggleGroup="$lendableToggleGroup" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" spacing="5.0">
-               <children>
-                  <Label text="Purchasable" />
-                  <RadioButton fx:id="yesPurchasableRadioButton" mnemonicParsing="false" selected="true" text="Yes">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="purchasableToggleGroup" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="No" toggleGroup="$purchasableToggleGroup" />
-               </children>
-            </HBox>
             <ComboBox fx:id="priceComboBox" prefWidth="150.0" promptText="Price" />
             <HBox alignment="CENTER" spacing="5.0">
                <children>
