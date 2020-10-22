@@ -3,9 +3,7 @@ package gui; /**
  */
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SQLController {
 
@@ -351,11 +349,38 @@ public class SQLController {
         performUpdate(query2);
     }
 
+    private static String generateCategoryCondition(List<String> categories) {
+        String condition = "(";
+        for (int i = 0; i < categories.size(); i++) {
+
+            condition += "c.tool_category LIKE '%" + categories.get(i) + "%'";
+            if (i != categories.size()-1) {
+                condition += " OR ";
+            }
+        }
+        condition += ");";
+        return condition;
+    }
+
+    public static void getLendableTools(int uid) {
+        //TODO: Implement
+    }
+
+    public static void getBuyableTools() {
+        //TODO: Implement
+    }
 
 
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
                 Credentials.getPassword());
+        HashSet<Integer> uids = new HashSet<>();
+        HashSet<String> usernames = new HashSet<>();
+        List<String> cats = new ArrayList<>();
+        cats.add("POWER");
+//        cats.add("THIS");
+        getLendableTools(1);
+
 
         closeConnection();
     }

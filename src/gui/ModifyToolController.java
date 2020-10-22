@@ -61,22 +61,7 @@ public class ModifyToolController extends Controller{
 
     @FXML
     public void modifyCategories() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
-                    "/ToolCategories.fxml"));
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setTitle("Modify Tool");
-
-            Scene scene = new Scene(loader.load());
-            ToolCategoriesController controller = loader.getController();
-            controller.initialize(super.getCategories());
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+        super.gotoCategories(super.getCategories(), "Modify Tool");
     }
 
     @FXML

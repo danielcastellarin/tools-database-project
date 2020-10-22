@@ -15,13 +15,12 @@ public class HomeController extends Controller {
     public void changeSceneFromGrid(ActionEvent event) {
         String buttonLabel = ((Button) event.getSource()).getText();
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-        String fxml = null; //TODO: Remove Null initialization
+        String fxml;
         switch (buttonLabel) {
             case "Add Tool":
                 fxml = "FXML/addTool.fxml";
                 break;
             case "View Tools":
-
                 fxml = "FXML/viewTools.fxml";
                 break;
             case "Lend Tools":

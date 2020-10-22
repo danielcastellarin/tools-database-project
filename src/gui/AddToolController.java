@@ -22,7 +22,6 @@ import java.util.List;
  * @author Ryan LaRue, rml5169@rit.edu
  */
 public class AddToolController extends Controller{
-    //TODO: Populate Tool Category ChoiceBox with categories from database
 
     private static List<String> categories;
 
@@ -40,21 +39,7 @@ public class AddToolController extends Controller{
 
     @FXML
     public void addCategories() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
-                    "/ToolCategories.fxml"));
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setTitle("Add Tool");
-
-            Scene scene = new Scene(loader.load());
-            ToolCategoriesController controller = loader.getController();
-            controller.initialize(null);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+        super.gotoCategories(null, "Add Tool");
     }
 
     @FXML

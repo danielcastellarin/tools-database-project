@@ -44,8 +44,8 @@ public class Controller {
 
     @FXML
     public void gotoHome(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/home.fxml", "Home");
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
 
     public List<String> getCategories() {
@@ -54,6 +54,24 @@ public class Controller {
 
     public void setCategories(List<String> categories) {
         Controller.categories = categories;
+    }
+
+    public void gotoCategories(List<String> categories, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
+                    "/ToolCategories.fxml"));
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setTitle(title);
+
+            Scene scene = new Scene(loader.load());
+            ToolCategoriesController controller = loader.getController();
+            controller.initialize(categories);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
 

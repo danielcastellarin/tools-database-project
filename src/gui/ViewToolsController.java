@@ -24,8 +24,8 @@ import java.util.List;
  * @author Ryan LaRue, rml5169@rit.edu
  */
 public class ViewToolsController extends Controller{
-    //TODO: Add Functionality to populate list of tools from database
-    //TODO: Add Functionality to click on tool and be able to modify it
+
+    //TODO: Add borrowed tools to collection
 
     @FXML
     TableView table;

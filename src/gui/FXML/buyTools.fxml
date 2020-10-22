@@ -25,8 +25,8 @@
                   <TextField prefHeight="26.0" prefWidth="110.0" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" text="Select Search Categories" />
-            <Button mnemonicParsing="false" text="Search" />
+            <Button mnemonicParsing="false" onAction="#selectSearchCategories" text="Select Search Categories" />
+            <Button mnemonicParsing="false" onAction="#search" text="Search" />
             <HBox alignment="BOTTOM_LEFT" layoutX="10.0" layoutY="305.0" prefHeight="129.0" prefWidth="200.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#gotoHome" prefHeight="30.0" prefWidth="75.0" text="Back" />
