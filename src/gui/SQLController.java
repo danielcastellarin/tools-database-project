@@ -320,6 +320,7 @@ public class SQLController {
         return 0;
     }
 
+    // TODO: this is where the tools are modified
     public static void updateTool(int tid, String name, int price, boolean lendable, String categories) {
         String query = "UPDATE \"Tool\" SET tool_name = '" + name + "', " +
                 "lendable = " + lendable + ", categories = '" + categories + "' WHERE tid = " + tid;

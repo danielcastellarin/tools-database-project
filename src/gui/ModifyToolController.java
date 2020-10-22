@@ -18,7 +18,6 @@ import java.util.List;
  * @author Ryan LaRue, rml5169@rit.edu
  */
 public class ModifyToolController extends Controller{
-    //TODO: Populate data from selected tool using database info
 
     @FXML
     TextField toolNameTextField;
@@ -94,6 +93,7 @@ public class ModifyToolController extends Controller{
 
     @FXML
     public void modifyTool(ActionEvent event){
+        // TODO: getting the categories is a mystery at the moment, so this will need to be checked
         StringBuilder categoryString = new StringBuilder();
         for (int i = 0; i < super.getCategories().size(); i++) {
             categoryString.append(super.getCategories().get(i)).append(", ");
@@ -101,9 +101,9 @@ public class ModifyToolController extends Controller{
         // Remove ending ', '
         String category = categoryString.toString().substring(0,
                 categoryString.length() - 2);
+        // TODO: values are not being gotten from Javafx correctly, because I ran the query in the db and it worked fine
         ViewATool newTool = new ViewATool(toolNameTextField.getText(), priceComboBox.getSelectionModel().getSelectedItem(),
                 (tool.isPurchasable() ? yesLendableRadioButton.isSelected() : tool.isPurchasable()), tool.isPurchasable(), category);
-        //TODO: Update Name, Lendable, Categories, Sale Price
         SQLController.updateTool(tid, newTool.getName(), newTool.getPrice(), newTool.isLendable(), newTool.getCategories());
         gotoViewTools(event);
     }
