@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GetLendableToolsController">
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER" prefHeight="300.0" prefWidth="400.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <VBox prefHeight="300.0" prefWidth="146.0">
+            <Label text="Lendable Tools" underline="true">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" text="Search" />
-                  <TextField />
+                  <Label text="Tool Name:" />
+                  <TextField prefHeight="26.0" prefWidth="110.0" />
                </children>
-            </VBox>
-            <TableView prefHeight="200.0" prefWidth="250.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-                  <TableColumn prefWidth="75.0" text="C2" />
-                  <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
+            </HBox>
+            <Button mnemonicParsing="false" text="Select Search Categories" />
+            <Button mnemonicParsing="false" text="Button" />
          </children>
-      </HBox>
-      <Button mnemonicParsing="false" onAction="#gotoHome" text="Back" />
+      </VBox>
+      <TableView prefHeight="200.0" prefWidth="400.0">
+        <columns>
+          <TableColumn prefWidth="133.33" text="Name" />
+          <TableColumn prefWidth="133.33" text="Owner" />
+            <TableColumn prefWidth="133.33" text="Due Date" />
+        </columns>
+      </TableView>
    </children>
-</VBox>
+</HBox>
