@@ -53,6 +53,11 @@ public class ModifyToolController extends Controller{
         return categories;
     }
 
+    @FXML
+    public void back(ActionEvent event) {
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    }
+
 
     @FXML
     public void gotoViewTools(ActionEvent event) {
