@@ -2,12 +2,16 @@ package gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,8 +27,6 @@ public class AddToolController extends Controller{
     private static List<String> categories;
 
     @FXML
-    RadioButton yesLendableRadioButton;
-    @FXML
     ComboBox<Integer> priceComboBox;
     @FXML
     TextField toolNameTextField;
@@ -38,7 +40,21 @@ public class AddToolController extends Controller{
 
     @FXML
     public void addCategories() {
-        changeScene("FXML/ToolCategories.fxml", "Add Categories");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
+                    "/ToolCategories.fxml"));
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setTitle("Add Tool");
+
+            Scene scene = new Scene(loader.load());
+            ToolCategoriesController controller = loader.getController();
+            controller.initialize(null);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @FXML
@@ -48,13 +64,12 @@ public class AddToolController extends Controller{
         if (!toolName.equals("") && !priceComboBox.getSelectionModel().isEmpty()) {
             statusText.setVisible(false);
             int salePrice = priceComboBox.getSelectionModel().getSelectedItem();
-            boolean lendable = yesLendableRadioButton.isSelected();
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
             String purchaseDate = dateFormat.format(date);
 
-            SQLController.addNewTool(Main.getUID(), toolName, lendable,
+            SQLController.addNewTool(Main.getUID(), toolName,
                     purchaseDate, salePrice, super.getCategories());
 
             gotoHome(event);

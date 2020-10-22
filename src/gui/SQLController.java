@@ -179,21 +179,18 @@ public class SQLController {
         performUpdate(query);
     }
 
-    private static void insertNewToolToTool(int tid, String toolName,
-                                            boolean lendable) {
+    private static void insertNewToolToTool(int tid, String toolName) {
         String query = "INSERT INTO \"Tool\" (tid, tool_name, lendable, " +
                 "purchasable)" +
-                " " + "VALUES(" + tid + ", '" + toolName + "', " + lendable +
-                ", true)";
+                " " + "VALUES(" + tid + ", '" + toolName + "', true, true)";
         performUpdate(query);
     }
 
     public static void addNewTool(int uid, String toolName,
-                                  boolean lendable,
                                   String purchaseDate, int sale_price,
                                   List<String> categories) {
         int tid = getNextAvailableTID();
-        insertNewToolToTool(tid, toolName, lendable);
+        insertNewToolToTool(tid, toolName);
         insertToolToOwns(uid, tid, purchaseDate, sale_price);
         insertCategoriesToHas(tid, categories);
     }
@@ -293,10 +290,6 @@ public class SQLController {
         getAllOtherUsers(uid, uids, usernames);
     }
 
-    public static void getBuyableTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids, Set<String> usernames) {
-
-    }
-
     public static void getAllOtherUsers(int uid, Set<Integer> uids,
                                         Set<String> usernames) {
         String query = "SELECT uid, username FROM \"User\" WHERE uid != " + uid;
@@ -325,11 +318,8 @@ public class SQLController {
         return 0;
     }
 
-    // TODO: this is where the tools are modified
-    public static void updateTool(int tid, String name, int price,
-                                  boolean lendable, List<String> categories) {
-        String query = "UPDATE \"Tool\" SET tool_name = '" + name + "', " +
-                "lendable = " + lendable + " WHERE tid = " + tid;
+    public static void updateTool(int tid, String name, int price, List<String> categories) {
+        String query = "UPDATE \"Tool\" SET tool_name = '" + name + "' WHERE tid = " + tid;
         performUpdate(query);
         query = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE tid = " + tid;
         performUpdate(query);
@@ -360,6 +350,8 @@ public class SQLController {
                 "SELECT sale_price FROM \"Owns\" WHERE tid = " + tid + " AND date_sold = CURRENT_DATE ))";
         performUpdate(query2);
     }
+
+
 
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),

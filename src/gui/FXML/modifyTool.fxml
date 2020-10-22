@@ -3,9 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -33,17 +31,6 @@
             </HBox>
             <HBox alignment="CENTER" spacing="5.0">
                <children>
-                  <Label text="Lendable" />
-                  <RadioButton fx:id="yesLendableRadioButton" mnemonicParsing="false" selected="true" text="Yes">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="lendableToggleGroup" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="No" toggleGroup="$lendableToggleGroup" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="5.0">
-               <children>
                   <Label text="Price: " />
                   <ComboBox fx:id="priceComboBox" prefWidth="150.0" />
                   <Label layoutX="117.0" layoutY="14.0" text="\$" />
@@ -52,7 +39,7 @@
             <HBox alignment="CENTER" spacing="5.0">
                <children>
                   <Label text="Tool Categories:" />
-                  <Button mnemonicParsing="false" onAction="#addCategories" text="Change Categories" />
+                  <Button mnemonicParsing="false" onAction="#modifyCategories" text="Change Categories" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="175.0">

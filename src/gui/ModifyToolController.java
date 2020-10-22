@@ -23,8 +23,6 @@ public class ModifyToolController extends Controller{
     @FXML
     TextField toolNameTextField;
     @FXML
-    RadioButton yesLendableRadioButton;
-    @FXML
     ComboBox<Integer> priceComboBox;
     @FXML
     Text statusText;
@@ -43,9 +41,6 @@ public class ModifyToolController extends Controller{
 
         priceComboBox.getItems().addAll(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
 
-        if(tool.isLendable()) {
-            yesLendableRadioButton.setSelected(true);
-        }
         toolNameTextField.setText(tool.getName());
         priceComboBox.getSelectionModel().select(tools.getSalePrices().get(index));
 
@@ -65,7 +60,7 @@ public class ModifyToolController extends Controller{
     }
 
     @FXML
-    public void addCategories() {
+    public void modifyCategories() {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
@@ -90,10 +85,9 @@ public class ModifyToolController extends Controller{
         String newName = toolNameTextField.getText();
         statusText.setVisible(false);
         int newPrice = priceComboBox.getSelectionModel().getSelectedItem();
-        boolean lendable = yesLendableRadioButton.isSelected();
         if (!newName.equals("")) {
 
-            SQLController.updateTool(tid, newName, newPrice, lendable, super.getCategories());
+            SQLController.updateTool(tid, newName, newPrice, super.getCategories());
         } else {
             statusText.setVisible(true);
         }

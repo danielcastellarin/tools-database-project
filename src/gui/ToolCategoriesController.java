@@ -46,8 +46,10 @@ public class ToolCategoriesController extends Controller{
             RadioButton button = new RadioButton();
             button.setPrefWidth(200);
             button.setText(category);
-            if (toolCategories.contains(category)) {
-                button.setSelected(true);
+            if (toolCategories != null) {
+                if (toolCategories.contains(category)) {
+                    button.setSelected(true);
+                }
             }
             categoryVBox.getChildren().add(button);
         }
