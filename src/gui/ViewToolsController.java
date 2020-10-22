@@ -46,6 +46,7 @@ public class ViewToolsController extends Controller{
     TableColumn categoriesColumn;
 
     UserTools tools;
+    ArrayList<ViewATool> toolList;
 
     @FXML
     public void initialize() {
@@ -66,7 +67,7 @@ public class ViewToolsController extends Controller{
         map.put("purchasable", tools.getTids());
         map.put("categories", tools.getCategories());
 
-        ArrayList<ViewATool> toolList = new ArrayList<>(tools.getTids().size());
+        toolList = new ArrayList<>(tools.getTids().size());
         for (int i = 0; i < tools.getTids().size(); i++) {
             toolList.add(new ViewATool(tools.getToolNames().get(i),
                     tools.getSalePrices().get(i), tools.getLendable().get(i),

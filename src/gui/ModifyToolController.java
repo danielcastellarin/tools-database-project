@@ -43,8 +43,6 @@ public class ModifyToolController extends Controller{
 
         toolNameTextField.setText(tools.getToolNames().get(index));
         priceComboBox.getSelectionModel().select(tools.getSalePrices().get(index));
-
-
     }
 
     private List<String> parseCategories(String category) {
