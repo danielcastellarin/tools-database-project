@@ -27,17 +27,17 @@ public class ToolCategoriesController extends Controller{
     @FXML
     Text statusText;
 
-    @FXML
-    public void initialize() {
-        List<String> categories = SQLController.getAllCategories();
-
-        for (String category : categories) {
-            RadioButton button = new RadioButton();
-            button.setPrefWidth(200);
-            button.setText(category);
-            categoryVBox.getChildren().add(button);
-        }
-    }
+//    @FXML
+//    public void initialize() {
+//        List<String> categories = SQLController.getAllCategories();
+//
+//        for (String category : categories) {
+//            RadioButton button = new RadioButton();
+//            button.setPrefWidth(200);
+//            button.setText(category);
+//            categoryVBox.getChildren().add(button);
+//        }
+//    }
 
     @FXML
     public void initialize(List<String> toolCategories) {

@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,11 +26,13 @@ public class ModifyToolController extends Controller{
     RadioButton yesLendableRadioButton;
     @FXML
     ComboBox<Integer> priceComboBox;
+    @FXML
+    Text statusText;
 
-    int index;
-    UserTools tools;
-    ViewATool tool;
-    int tid;
+    private int index;
+    private UserTools tools;
+    private ViewATool tool;
+    private int tid;
 
     @FXML
     public void initialize(ViewATool theTool, UserTools tools, int index, int tid) {
@@ -40,17 +43,13 @@ public class ModifyToolController extends Controller{
 
         priceComboBox.getItems().addAll(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
 
-//        if (tools.getLendable().get(index)) {
-//            yesLendableRadioButton.setSelected(true);
-//        }
         if(tool.isLendable()) {
             yesLendableRadioButton.setSelected(true);
         }
-
-//        toolNameTextField.setText(tools.getToolNames().get(index));
         toolNameTextField.setText(tool.getName());
-//        priceComboBox.getSelectionModel().select(tools.getSalePrices().get(index));
-        priceComboBox.getSelectionModel().select(tool.getPrice());
+        priceComboBox.getSelectionModel().select(tools.getSalePrices().get(index));
+
+        super.setCategories(parseCategories(tools.getCategories().get(index)));
     }
 
     private List<String> parseCategories(String category) {
@@ -60,12 +59,6 @@ public class ModifyToolController extends Controller{
     }
 
     @FXML
-    public void back(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-    }
-
-
-    @FXML
     public void gotoViewTools(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/viewTools.fxml",  "View Tools");
@@ -73,7 +66,7 @@ public class ModifyToolController extends Controller{
 
     @FXML
     public void addCategories() {
-        List<String> categories = parseCategories(tools.getCategories().get(index));
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
                     "/ToolCategories.fxml"));
@@ -83,7 +76,7 @@ public class ModifyToolController extends Controller{
 
             Scene scene = new Scene(loader.load());
             ToolCategoriesController controller = loader.getController();
-            controller.initialize(categories);
+            controller.initialize(super.getCategories());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -93,18 +86,17 @@ public class ModifyToolController extends Controller{
 
     @FXML
     public void modifyTool(ActionEvent event){
-        // TODO: getting the categories is a mystery at the moment, so this will need to be checked
-        StringBuilder categoryString = new StringBuilder();
-        for (int i = 0; i < super.getCategories().size(); i++) {
-            categoryString.append(super.getCategories().get(i)).append(", ");
+
+        String newName = toolNameTextField.getText();
+        statusText.setVisible(false);
+        int newPrice = priceComboBox.getSelectionModel().getSelectedItem();
+        boolean lendable = yesLendableRadioButton.isSelected();
+        if (!newName.equals("")) {
+
+            SQLController.updateTool(tid, newName, newPrice, lendable, super.getCategories());
+        } else {
+            statusText.setVisible(true);
         }
-        // Remove ending ', '
-        String category = categoryString.toString().substring(0,
-                categoryString.length() - 2);
-        // TODO: values are not being gotten from Javafx correctly, because I ran the query in the db and it worked fine
-        ViewATool newTool = new ViewATool(toolNameTextField.getText(), priceComboBox.getSelectionModel().getSelectedItem(),
-                (tool.isPurchasable() ? yesLendableRadioButton.isSelected() : tool.isPurchasable()), tool.isPurchasable(), category);
-        SQLController.updateTool(tid, newTool.getName(), newTool.getPrice(), newTool.isLendable(), newTool.getCategories());
         gotoViewTools(event);
     }
 }

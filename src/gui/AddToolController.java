@@ -44,7 +44,8 @@ public class AddToolController extends Controller{
     @FXML
     public void addTool(ActionEvent event){
         String toolName = toolNameTextField.getText();
-        if (!toolName.equals("")) {
+
+        if (!toolName.equals("") && !priceComboBox.getSelectionModel().isEmpty()) {
             statusText.setVisible(false);
             int salePrice = priceComboBox.getSelectionModel().getSelectedItem();
             boolean lendable = yesLendableRadioButton.isSelected();

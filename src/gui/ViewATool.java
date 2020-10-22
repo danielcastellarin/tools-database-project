@@ -28,7 +28,7 @@ public class ViewATool {
     }
 
     public int getPrice() {
-        return price.get();
+        return price.getValue();
     }
 
     public void setPrice(int price) {

@@ -45,13 +45,12 @@ public class ViewToolsController extends Controller{
     @FXML
     TableColumn categoriesColumn;
 
-    UserTools tools;
-    ArrayList<ViewATool> toolList;
-    int selectedTid;
+    private UserTools tools;
+    private ArrayList<ViewATool> toolList;
+    private int selectedTid;
 
     @FXML
     public void initialize() {
-
         nameColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, String>("Name"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, Integer>("Price"));
         lendableColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, Boolean>("Lendable"));
@@ -70,15 +69,12 @@ public class ViewToolsController extends Controller{
         table.setItems(FXCollections.observableList(toolList));
     }
 
-
-
-    //PLACEHOLDER METHOD -- WILL BE REMOVED
     @FXML
     public void gotoModifyTool(MouseEvent event) {
         if (event.getClickCount() == 2) {
             int index = ((TableView)event.getSource()).getSelectionModel().getFocusedIndex();
             selectedTid = tools.getTids().get(index);
-
+            ((Stage)(((TableView)event.getSource()).getScene().getWindow())).close();
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
                         "/modifyTool.fxml"));
@@ -96,8 +92,6 @@ public class ViewToolsController extends Controller{
             }
         }
 
-
-//        changeScene("FXML/modifyTool.fxml", 400, 500, "Modify Tool");
     }
 
 }

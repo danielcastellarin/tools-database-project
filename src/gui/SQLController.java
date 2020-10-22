@@ -155,6 +155,11 @@ public class SQLController {
         return -1;
     }
 
+    private static void deleteCategoriesFromHas(int tid) {
+        String query = "DELETE FROM \"Has\" WHERE tid= " + tid;
+        performUpdate(query);
+    }
+
     private static void insertCategoriesToHas(int tid, List<String> categories) {
         List<Integer> cids = getCategoryIDs(categories);
         for (int cid : cids) {
@@ -321,12 +326,15 @@ public class SQLController {
     }
 
     // TODO: this is where the tools are modified
-    public static void updateTool(int tid, String name, int price, boolean lendable, String categories) {
+    public static void updateTool(int tid, String name, int price,
+                                  boolean lendable, List<String> categories) {
         String query = "UPDATE \"Tool\" SET tool_name = '" + name + "', " +
-                "lendable = " + lendable + ", categories = '" + categories + "' WHERE tid = " + tid;
+                "lendable = " + lendable + " WHERE tid = " + tid;
         performUpdate(query);
-        String query2 = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE tid = " + tid;
-        performUpdate(query2);
+        query = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE tid = " + tid;
+        performUpdate(query);
+        deleteCategoriesFromHas(tid);
+        insertCategoriesToHas(tid, categories);
     }
 
     public static void insertNewBorrowRecord(String username, int tid, String dueDate) {
