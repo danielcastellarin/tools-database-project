@@ -288,6 +288,9 @@ public class SQLController {
         getAllOtherUsers(uid, uids, usernames);
     }
 
+    public static void getBuyableTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids, Set<String> usernames) {
+
+    }
 
     public static void getAllOtherUsers(int uid, Set<Integer> uids,
                                         Set<String> usernames) {

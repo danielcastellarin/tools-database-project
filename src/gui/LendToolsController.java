@@ -60,7 +60,7 @@ public class LendToolsController extends Controller{
         String username = userComboBox.getSelectionModel().getSelectedItem();
         String toolName = toolComboBox.getSelectionModel().getSelectedItem();
         LocalDate dueDate = dueDateDatePicker.getValue();
-        int tid = toolNames.indexOf(toolName);
+        int tid = tids.indexOf(toolName);
         String dDate = dueDate.toString();
         System.out.println(username);
         System.out.println(toolName);
