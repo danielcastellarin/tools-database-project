@@ -23,7 +23,7 @@ public class ModifyToolController extends Controller{
     @FXML
     TextField toolNameTextField;
     @FXML
-    ComboBox<Integer> priceComboBox;
+    TextField priceTextField;
     @FXML
     Text statusText;
 
@@ -39,12 +39,34 @@ public class ModifyToolController extends Controller{
         this.tool = theTool;
         this.tid = tid;
 
-        priceComboBox.getItems().addAll(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
-
         toolNameTextField.setText(tool.getName());
-        priceComboBox.getSelectionModel().select(tools.getSalePrices().get(index));
-
         super.setCategories(parseCategories(tools.getCategories().get(index)));
+    }
+
+    @FXML
+    private void changePrice(ActionEvent event) {
+        String incrementText = ((((Button)event.getSource()).getText()));
+        int initialPrice = Integer.parseInt(priceTextField.getText());
+        switch (incrementText) {
+            case "+10":
+                priceTextField.setText(String.valueOf(initialPrice + 10));
+                break;
+            case "+5":
+                priceTextField.setText(String.valueOf(initialPrice + 5));
+                break;
+            case "+1":
+                priceTextField.setText(String.valueOf(initialPrice + 1));
+                break;
+            case "-10":
+                priceTextField.setText(String.valueOf(initialPrice - 10));
+                break;
+            case "-5":
+                priceTextField.setText(String.valueOf(initialPrice - 5));
+                break;
+            case "-1":
+                priceTextField.setText(String.valueOf(initialPrice - 1));
+                break;
+        }
     }
 
     private List<String> parseCategories(String category) {
@@ -69,7 +91,7 @@ public class ModifyToolController extends Controller{
 
         String newName = toolNameTextField.getText();
         statusText.setVisible(false);
-        int newPrice = priceComboBox.getSelectionModel().getSelectedItem();
+        int newPrice = Integer.parseInt(priceTextField.getText());
         if (!newName.equals("")) {
 
             SQLController.updateTool(tid, newName, newPrice, super.getCategories());

@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,7 +23,7 @@ public class AddToolController extends Controller{
     private static List<String> categories;
 
     @FXML
-    ComboBox<Integer> priceComboBox;
+    TextField priceTextField;
     @FXML
     TextField toolNameTextField;
     @FXML
@@ -34,7 +31,6 @@ public class AddToolController extends Controller{
 
     @FXML
     public void initialize() {
-        priceComboBox.getItems().addAll(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
     }
 
     @FXML
@@ -43,12 +39,38 @@ public class AddToolController extends Controller{
     }
 
     @FXML
+    private void changePrice(ActionEvent event) {
+        String incrementText = ((((Button) event.getSource()).getText()));
+        int initialPrice = Integer.parseInt(priceTextField.getText());
+        switch (incrementText) {
+            case "+10":
+                priceTextField.setText(String.valueOf(initialPrice + 10));
+                break;
+            case "+5":
+                priceTextField.setText(String.valueOf(initialPrice + 5));
+                break;
+            case "+1":
+                priceTextField.setText(String.valueOf(initialPrice + 1));
+                break;
+            case "-10":
+                priceTextField.setText(String.valueOf(initialPrice - 10));
+                break;
+            case "-5":
+                priceTextField.setText(String.valueOf(initialPrice - 5));
+                break;
+            case "-1":
+                priceTextField.setText(String.valueOf(initialPrice - 1));
+                break;
+        }
+    }
+
+    @FXML
     public void addTool(ActionEvent event){
         String toolName = toolNameTextField.getText();
 
-        if (!toolName.equals("") && !priceComboBox.getSelectionModel().isEmpty()) {
+        if (!toolName.equals("")) {
             statusText.setVisible(false);
-            int salePrice = priceComboBox.getSelectionModel().getSelectedItem();
+            int salePrice = Integer.parseInt(priceTextField.getText());
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
