@@ -9,11 +9,14 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
 public class Controller {
+
+    private static List<String> categories;
 
     public void changeScene(String fxml, String title) {
 
@@ -44,4 +47,14 @@ public class Controller {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/home.fxml", "Home");
     }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        Controller.categories = categories;
+    }
+
+
 }

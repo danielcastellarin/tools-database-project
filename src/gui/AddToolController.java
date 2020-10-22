@@ -36,10 +36,6 @@ public class AddToolController extends Controller{
         priceComboBox.getItems().addAll(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
     }
 
-    public static void setCategoriesList(List<String> categoriesList) {
-        categories = categoriesList;
-    }
-
     @FXML
     public void addCategories() {
         changeScene("FXML/ToolCategories.fxml", "Add Categories");
@@ -47,8 +43,6 @@ public class AddToolController extends Controller{
 
     @FXML
     public void addTool(ActionEvent event){
-
-        //TODO: Make sure tool name isnt emtpty
         String toolName = toolNameTextField.getText();
         if (!toolName.equals("")) {
             statusText.setVisible(false);
@@ -59,7 +53,8 @@ public class AddToolController extends Controller{
             Date date = new Date();
             String purchaseDate = dateFormat.format(date);
 
-            SQLController.addNewTool(Main.getUID(), toolName, lendable, purchaseDate, salePrice, categories);
+            SQLController.addNewTool(Main.getUID(), toolName, lendable,
+                    purchaseDate, salePrice, super.getCategories());
 
             gotoHome(event);
         } else {

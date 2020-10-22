@@ -27,11 +27,11 @@
         </VBox>
         <TableView fx:id="table" onMouseClicked="#gotoModifyTool" prefHeight="450.0" prefWidth="200.0">
             <columns>
-                <TableColumn fx:id="nameColumn" prefWidth="125.0" resizable="false" text="Name" />
-                <TableColumn fx:id="priceColumn" prefWidth="125.0" resizable="false" text="Price" />
-                <TableColumn fx:id="lendableColumn" prefWidth="125.0" resizable="false" text="Lendable" />
-                <TableColumn fx:id="purchasableColumn" prefWidth="125.0" resizable="false" text="Purchasable" />
-                <TableColumn fx:id="categoriesColumn" prefWidth="300.0" resizable="false" text="Categories" />
+                <TableColumn fx:id="nameColumn" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
+                <TableColumn fx:id="priceColumn" prefWidth="125.0" resizable="false" sortable="false" text="Price" />
+                <TableColumn fx:id="lendableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Lendable" />
+                <TableColumn fx:id="purchasableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Purchasable" />
+                <TableColumn fx:id="categoriesColumn" prefWidth="300.0" resizable="false" sortable="false" text="Categories" />
             </columns>
         </TableView>
         <HBox>

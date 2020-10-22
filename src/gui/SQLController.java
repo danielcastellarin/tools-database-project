@@ -344,7 +344,6 @@ public class SQLController {
         performUpdate(query2);
     }
 
-
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
                 Credentials.getPassword());

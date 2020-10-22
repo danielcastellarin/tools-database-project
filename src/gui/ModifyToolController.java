@@ -82,7 +82,7 @@ public class ModifyToolController extends Controller{
 
     @FXML
     public void modifyTool(ActionEvent event){
-
+        //TODO: Update Name, Lendable, Categories, Sale Price
         gotoViewTools(event);
     }
 }

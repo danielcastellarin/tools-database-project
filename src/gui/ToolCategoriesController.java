@@ -80,7 +80,7 @@ public class ToolCategoriesController extends Controller{
                 }
             }
         }
-        AddToolController.setCategoriesList(categories);
+        super.setCategories(categories);
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
 
