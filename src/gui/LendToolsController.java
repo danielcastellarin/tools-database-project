@@ -24,9 +24,11 @@ public class LendToolsController extends Controller{
     @FXML
     Text statusText;
 
+    private List<Integer> tids;
+    private List<String> toolNames;
     private Set<String> usernames;
     private Set<Integer> uids;
-    private UserTools tools;
+//    private UserTools tools;
 
     @FXML
     public void initialize() {
@@ -40,12 +42,15 @@ public class LendToolsController extends Controller{
             }
         });
 
-        tools = new UserTools(Main.getUID());
-        toolComboBox.getItems().addAll(tools.getToolNames());
+//        tools = new UserTools(Main.getUID());
+//        toolComboBox.getItems().addAll(tools.getToolNames());
 
+        tids = new ArrayList<>();
+        toolNames = new ArrayList<>();
         usernames = new HashSet<>();
         uids = new HashSet<>();
-        SQLController.getAllOtherUsers(Main.getUID(), uids, usernames);
+        SQLController.getLendableUserTools(Main.getUID(), tids, toolNames, uids, usernames);
+        toolComboBox.getItems().addAll(toolNames);
         userComboBox.getItems().addAll(usernames);
     }
 
@@ -55,14 +60,14 @@ public class LendToolsController extends Controller{
         String username = userComboBox.getSelectionModel().getSelectedItem();
         String toolName = toolComboBox.getSelectionModel().getSelectedItem();
         LocalDate dueDate = dueDateDatePicker.getValue();
-        int tid = toolComboBox.getSelectionModel().getSelectedItem();
-        tools.getTids();
+        int tid = toolNames.indexOf(toolName);
+        String dDate = dueDate.toString();
         System.out.println(username);
         System.out.println(toolName);
         System.out.println(dueDate);
         //TODO: Update Server when a tool has been lent to someone else
-        SQLController.addNewTool(Main.getUID(), toolName, lendable,
-                purchasable, purchaseDate, salePrice, categories);
+//        SQLController.sellTool(username, tid);
+        SQLController.insertNewBorrowRecord(username, tid, dDate);
         gotoHome(event);
     }
 }

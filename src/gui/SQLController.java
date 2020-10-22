@@ -13,7 +13,7 @@ public class SQLController {
     private static Connection connection = null;
 
     public static void openConnection(String url, String username,
-                                  String password) {
+                                      String password) {
         try {
             connection = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to Database");
@@ -22,6 +22,7 @@ public class SQLController {
             System.err.println(e.getMessage());
         }
     }
+
     public static void closeConnection() {
         if (connection != null) {
             try {
@@ -72,17 +73,17 @@ public class SQLController {
     }
 
     public static boolean createNewUser(String firstName, String lastName,
-                                     String username, String password) {
+                                        String username, String password) {
         String query =
                 "INSERT INTO \"User\" (username, user_first_name, " +
                         "user_last_name, password)" +
-                        " " + "VALUES('" + username +"', '"+ firstName + "', '" + lastName + "', '" + password + "')";
+                        " " + "VALUES('" + username + "', '" + firstName + "', '" + lastName + "', '" + password + "')";
         return performUpdate(query);
     }
 
     public static int getBalance(int uid) {
         String query =
-                "SELECT balance FROM \"User\" WHERE uid = " + uid ;
+                "SELECT balance FROM \"User\" WHERE uid = " + uid;
         Statement statement = null;
         performQuery(query);
         try {
@@ -98,7 +99,7 @@ public class SQLController {
         int balance = getBalance(uid) + increment;
         String query =
                 "UPDATE \"User\" SET balance = " + balance + " WHERE " +
-                        "uid = " + uid ;
+                        "uid = " + uid;
         performUpdate(query);
         return balance;
     }
@@ -107,7 +108,7 @@ public class SQLController {
         String query = "SELECT tool_category FROM \"Category\"";
         performQuery(query);
         List<String> categories = new ArrayList<>();
-        while(true) {
+        while (true) {
             try {
                 if (!resultSet.next()) break;
                 categories.add(resultSet.getString(1));
@@ -122,7 +123,7 @@ public class SQLController {
     public static boolean insertCategory(String category_name) {
         String query =
                 "INSERT INTO \"Category\" (tool_category)" +
-                        " " + "VALUES('" + category_name +"')";
+                        " " + "VALUES('" + category_name + "')";
         return performUpdate(query);
     }
 
@@ -142,7 +143,7 @@ public class SQLController {
         return cids;
     }
 
-    public static int getNextAvailableTID(){
+    public static int getNextAvailableTID() {
         String query = "SELECT MAX(tid) FROM \"Tool\"";
         performQuery(query);
         try {
@@ -158,12 +159,12 @@ public class SQLController {
         List<Integer> cids = getCategoryIDs(categories);
         for (int cid : cids) {
             String query = "INSERT INTO \"Has\" (tid, cid)" +
-                    " " + "VALUES(" + tid + "," + cid +")";
+                    " " + "VALUES(" + tid + "," + cid + ")";
             performUpdate(query);
         }
     }
 
-    private static void insertNewToolToOwns(int uid, int tid,
+    private static void insertToolToOwns(int uid, int tid,
                                          String datePurchased,
                                          int salePrice) {
         String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
@@ -174,10 +175,10 @@ public class SQLController {
     }
 
     private static void insertNewToolToTool(int tid, String toolName,
-                                      boolean lendable) {
+                                            boolean lendable) {
         String query = "INSERT INTO \"Tool\" (tid, tool_name, lendable, " +
                 "purchasable)" +
-                " " + "VALUES(" + tid + ", '" + toolName +"', " + lendable +
+                " " + "VALUES(" + tid + ", '" + toolName + "', " + lendable +
                 ", true)";
         performUpdate(query);
     }
@@ -188,12 +189,12 @@ public class SQLController {
                                   List<String> categories) {
         int tid = getNextAvailableTID();
         insertNewToolToTool(tid, toolName, lendable);
-        insertNewToolToOwns(uid, tid, purchaseDate, sale_price);
+        insertToolToOwns(uid, tid, purchaseDate, sale_price);
         insertCategoriesToHas(tid, categories);
     }
 
     private static void getToolInfoFromOwns(int uid, List<Integer> salePrices,
-                                List<Integer> tids) {
+                                            List<Integer> tids) {
         String query =
                 "SELECT tid, sale_price FROM \"Owns\" WHERE uid=" + uid + " " +
                         "AND date_sold IS NULL";
@@ -211,10 +212,10 @@ public class SQLController {
     }
 
     private static void getToolInfoFromTool(List<Integer> tids,
-                                           List<String> toolNames,
-                                           List<Boolean> lendable,
-                                           List<Boolean> purchasable) {
-        for (int tid: tids) {
+                                            List<String> toolNames,
+                                            List<Boolean> lendable,
+                                            List<Boolean> purchasable) {
+        for (int tid : tids) {
             String query =
                     "SELECT tool_name, lendable, purchasable FROM \"Tool\" " +
                             "WHERE tid=" + tid;
@@ -232,9 +233,10 @@ public class SQLController {
         }
 
     }
+
     private static void getToolInfoFromHas(List<Integer> tids,
                                            List<String> categories) {
-        for (int tid: tids) {
+        for (int tid : tids) {
             String query = "SELECT tool_category FROM \"Category\" WHERE " +
                     "cid IN (SELECT cid FROM \"Has\" WHERE tid=" + tid + ")";
             performQuery(query);
@@ -254,6 +256,21 @@ public class SQLController {
         }
     }
 
+    private static void getLendableToolInfo(int uid, List<Integer> tids, List<String> toolNames) {
+        String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
+                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true";
+        performQuery(query);
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void getUserTools(int uid, List<Integer> tids,
                                     List<Integer> salePrices,
                                     List<String> toolNames,
@@ -263,6 +280,12 @@ public class SQLController {
         getToolInfoFromOwns(uid, salePrices, tids);
         getToolInfoFromHas(tids, categories);
         getToolInfoFromTool(tids, toolNames, lendable, purchasable);
+    }
+
+    public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
+                                            Set<String> usernames) {
+        getLendableToolInfo(uid, tids, toolNames);
+        getAllOtherUsers(uid, uids, usernames);
     }
 
 
@@ -282,11 +305,40 @@ public class SQLController {
         }
     }
 
-    public static void insertNewBorrowRecord(int uid, int tid, String dueDate, String dateLent) {
-        String query = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +
-                "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', '" + dateLent + "')" +
-                "UPDATE \"Tool\" SET lendable = FALSE AND purchasable = FALSE WHERE tid = " + tid;
-        performUpdate(query);
+    private static int getUIDFromUsername(String username) {
+        String query = "SELECT uid FROM \"User\" WHERE username = '" + username + "'";
+        performQuery(query);
+        try {
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
+    public static void insertNewBorrowRecord(String username, int tid, String dueDate) {
+        int uid = getUIDFromUsername(username);
+        String query1 = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +
+                "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', CURRENT_DATE)";
+        performUpdate(query1);
+        String query2 = "UPDATE \"Tool\" SET lendable = false, purchasable = false WHERE tid = " + tid;
+        performUpdate(query2);
+    }
+
+    public static void sellTool(String username, int tid) {
+        String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+                "date_sold, sale_price)" +
+//                " " + "VALUES(" + uid + ", " + tid + ", '" + datePurchased +
+//                "', NULL, " + salePrice + ")" +
+                "UPDATE \"Owns\" SET date_sold = CURRENT_DATE WHERE tid = " + tid + " AND date_sold = NULL";
+
+        int uid = getUIDFromUsername(username);
+        String query2 = "UPDATE Owns SET date_sold = CURRENT_DATE WHERE tid = " + tid + " AND date_sold = NULL" +
+                "INSERT INTO \"Owns\" (uid, tid, date_purchased, date_sold, sale_price)" +
+                "VALUES(" + uid + ", " + tid + ", CURRENT_DATE, NULL, (" +
+                "SELECT sale_price FROM \"Owns\" WHERE tid = " + tid + " AND date_sold = CURRENT_DATE ))";
+        performUpdate(query2);
     }
 
 

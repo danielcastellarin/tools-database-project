@@ -41,8 +41,8 @@ public class UserTools {
         return toolNames;
     }
 
-    public Integer getTidFromToolName(String name) {
-
+    public Integer getTidFromToolName(int index) {
+        return tids.get(index);
     }
 
     public List<Boolean> getLendable() {
