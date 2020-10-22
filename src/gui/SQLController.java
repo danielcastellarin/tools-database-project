@@ -320,6 +320,14 @@ public class SQLController {
         return 0;
     }
 
+    public static void updateTool(int tid, String name, int price, boolean lendable, String categories) {
+        String query = "UPDATE \"Tool\" SET tool_name = '" + name + "', " +
+                "lendable = " + lendable + ", categories = '" + categories + "' WHERE tid = " + tid;
+        performUpdate(query);
+        String query2 = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE tid = " + tid;
+        performUpdate(query2);
+    }
+
     public static void insertNewBorrowRecord(String username, int tid, String dueDate) {
         int uid = getUIDFromUsername(username);
         String query1 = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +

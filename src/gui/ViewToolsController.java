@@ -47,6 +47,7 @@ public class ViewToolsController extends Controller{
 
     UserTools tools;
     ArrayList<ViewATool> toolList;
+    int selectedTid;
 
     @FXML
     public void initialize() {
@@ -57,15 +58,7 @@ public class ViewToolsController extends Controller{
         purchasableColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, Boolean>("Purchasable"));
         categoriesColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, String>("Categories"));
 
-
-        HashMap<String, List> map = new HashMap();
         tools = new UserTools(Main.getUID());
-//        map.put("tids", tids);
-        map.put("toolnames", tools.getToolNames());
-        map.put("salePrices", tools.getSalePrices());
-        map.put("lendable", tools.getTids());
-        map.put("purchasable", tools.getTids());
-        map.put("categories", tools.getCategories());
 
         toolList = new ArrayList<>(tools.getTids().size());
         for (int i = 0; i < tools.getTids().size(); i++) {
@@ -84,6 +77,7 @@ public class ViewToolsController extends Controller{
     public void gotoModifyTool(MouseEvent event) {
         if (event.getClickCount() == 2) {
             int index = ((TableView)event.getSource()).getSelectionModel().getFocusedIndex();
+            selectedTid = tools.getTids().get(index);
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
@@ -94,7 +88,7 @@ public class ViewToolsController extends Controller{
 
                 Scene scene = new Scene(loader.load());
                 ModifyToolController controller = loader.getController();
-                controller.initialize(tools, index);
+                controller.initialize(toolList.get(index), tools, index, selectedTid);
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {

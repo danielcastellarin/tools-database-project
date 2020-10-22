@@ -29,20 +29,29 @@ public class ModifyToolController extends Controller{
 
     int index;
     UserTools tools;
+    ViewATool tool;
+    int tid;
 
     @FXML
-    public void initialize(UserTools tools, int index) {
+    public void initialize(ViewATool theTool, UserTools tools, int index, int tid) {
         this.tools = tools;
         this.index = index;
+        this.tool = theTool;
+        this.tid = tid;
 
         priceComboBox.getItems().addAll(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
 
-        if (tools.getLendable().get(index)) {
+//        if (tools.getLendable().get(index)) {
+//            yesLendableRadioButton.setSelected(true);
+//        }
+        if(tool.isLendable()) {
             yesLendableRadioButton.setSelected(true);
         }
 
-        toolNameTextField.setText(tools.getToolNames().get(index));
-        priceComboBox.getSelectionModel().select(tools.getSalePrices().get(index));
+//        toolNameTextField.setText(tools.getToolNames().get(index));
+        toolNameTextField.setText(tool.getName());
+//        priceComboBox.getSelectionModel().select(tools.getSalePrices().get(index));
+        priceComboBox.getSelectionModel().select(tool.getPrice());
     }
 
     private List<String> parseCategories(String category) {
@@ -80,7 +89,17 @@ public class ModifyToolController extends Controller{
 
     @FXML
     public void modifyTool(ActionEvent event){
+        StringBuilder categoryString = new StringBuilder();
+        for (int i = 0; i < super.getCategories().size(); i++) {
+            categoryString.append(super.getCategories().get(i)).append(", ");
+        }
+        // Remove ending ', '
+        String category = categoryString.toString().substring(0,
+                categoryString.length() - 2);
+        ViewATool newTool = new ViewATool(toolNameTextField.getText(), priceComboBox.getSelectionModel().getSelectedItem(),
+                (tool.isPurchasable() ? yesLendableRadioButton.isSelected() : tool.isPurchasable()), tool.isPurchasable(), category);
         //TODO: Update Name, Lendable, Categories, Sale Price
+        SQLController.updateTool(tid, newTool.getName(), newTool.getPrice(), newTool.isLendable(), newTool.getCategories());
         gotoViewTools(event);
     }
 }
