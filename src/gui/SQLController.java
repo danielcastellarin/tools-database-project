@@ -10,6 +10,13 @@ public class SQLController {
     private static ResultSet resultSet = null;
     private static Connection connection = null;
 
+    /**
+     * Opens the connection with the PostgresSQL database.
+     *
+     * @param url the url of the database
+     * @param username the username to use when connecting
+     * @param password the password to use when connecting
+     */
     public static void openConnection(String url, String username,
                                       String password) {
         try {
@@ -21,6 +28,9 @@ public class SQLController {
         }
     }
 
+    /**
+     * Closes the connection with the database.
+     */
     public static void closeConnection() {
         if (connection != null) {
             try {
@@ -32,6 +42,11 @@ public class SQLController {
         }
     }
 
+    /**
+     * Generic function for sending SELECT queries to the database.
+     *
+     * @param query the query to be executed
+     */
     private static void performQuery(String query) {
         System.out.println("Submitting Query: " + query);
         Statement statement = null;
@@ -43,6 +58,13 @@ public class SQLController {
         }
     }
 
+    /**
+     * Generic function for sending INSERT, UPDATE, and DELETE queries
+     * to the database.
+     *
+     * @param query the query to be executed
+     * @return true if the query successfully updates the database
+     */
     private static boolean performUpdate(String query) {
         System.out.println("Submitting Query: " + query);
         Statement statement = null;
@@ -56,6 +78,14 @@ public class SQLController {
         return true;
     }
 
+    /**
+     * Checks the credentials of the user to see if they match the
+     * credentials of a user in the database.
+     *
+     * @param user
+     * @param password
+     * @return positive number if valid, negative if not
+     */
     public static int verifyLoginCredentials(String user, String password) {
         String query =
                 "SELECT uid, username, password FROM \"User\" WHERE username " +
@@ -70,15 +100,31 @@ public class SQLController {
         return -1;
     }
 
+    /**
+     * Creates a new user in the database.
+     *
+     * @param firstName the first name of the user
+     * @param lastName the last name of the user
+     * @param username the username of the user
+     * @param password the password of the user
+     * @return true if the user is able to be created
+     */
     public static boolean createNewUser(String firstName, String lastName,
                                         String username, String password) {
         String query =
                 "INSERT INTO \"User\" (username, user_first_name, " +
                         "user_last_name, password)" +
-                        " " + "VALUES('" + username + "', '" + firstName + "', '" + lastName + "', '" + password + "')";
+                        " " + "VALUES('" + username + "', '" + firstName +
+                        "', '" + lastName + "', '" + password + "')";
         return performUpdate(query);
     }
 
+    /**
+     * Gets the balance of a particular user.
+     *
+     * @param uid the uid of the user to get the balance of
+     * @return the balance of the user, 0 if query doesn't work
+     */
     public static int getBalance(int uid) {
         String query =
                 "SELECT balance FROM \"User\" WHERE uid = " + uid;
@@ -93,6 +139,13 @@ public class SQLController {
         return 0;
     }
 
+    /**
+     * Increases the balance of a user by a specific amount
+     *
+     * @param uid the uid of the user
+     * @param increment the value to increment by
+     * @return the new balance after incrementing
+     */
     public static int incrementBalance(int uid, int increment) {
         int balance = getBalance(uid) + increment;
         String query =
@@ -102,6 +155,11 @@ public class SQLController {
         return balance;
     }
 
+    /**
+     * Gets the all the categories from the database.
+     *
+     * @return a list of all the categories
+     */
     public static List<String> getAllCategories() {
         String query = "SELECT tool_category FROM \"Category\"";
         performQuery(query);
@@ -113,11 +171,16 @@ public class SQLController {
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
-
         }
         return categories;
     }
 
+    /**
+     * Adds a category to the database.
+     *
+     * @param category_name the category's name
+     * @return true if the query was executed successfully
+     */
     public static boolean insertCategory(String category_name) {
         String query =
                 "INSERT INTO \"Category\" (tool_category)" +
@@ -125,11 +188,18 @@ public class SQLController {
         return performUpdate(query);
     }
 
+    /**
+     * Get the cids of all the categories in a list
+     *
+     * @param categories the list of category names
+     * @return the list of cids
+     */
     private static List<Integer> getCategoryIDs(List<String> categories) {
         List<Integer> cids = new ArrayList<>();
         for (String categoryName : categories) {
             String query =
-                    "SELECT cid FROM \"Category\" WHERE tool_category= '" + categoryName + "'";
+                    "SELECT cid FROM \"Category\" WHERE tool_category= '" +
+                            categoryName + "'";
             performQuery(query);
             try {
                 if (!resultSet.next()) break;
@@ -141,6 +211,11 @@ public class SQLController {
         return cids;
     }
 
+    /**
+     * Creates a new TID for adding a new tool for the database.
+     *
+     * @return the value of the available tid
+     */
     public static int getNextAvailableTID() {
         String query = "SELECT MAX(tid) FROM \"Tool\"";
         performQuery(query);
@@ -153,11 +228,22 @@ public class SQLController {
         return -1;
     }
 
+    /**
+     * Clears the categories for a specific tool so that they can be reset.
+     *
+     * @param tid the tid of the tool
+     */
     private static void deleteCategoriesFromHas(int tid) {
         String query = "DELETE FROM \"Has\" WHERE tid= " + tid;
         performUpdate(query);
     }
 
+    /**
+     * Creates new relationship between a tool and a category in the database.
+     *
+     * @param tid the tid of the tool
+     * @param categories the categories to rea
+     */
     private static void insertCategoriesToHas(int tid, List<String> categories) {
         List<Integer> cids = getCategoryIDs(categories);
         for (int cid : cids) {
