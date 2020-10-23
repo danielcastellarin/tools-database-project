@@ -453,10 +453,12 @@ public class SQLController {
         return true;
     }
 
-
-
-
-
+    public static void returnTool(int tid) {
+        String query1 = "UPDATE \"Borrows\" SET due_date = CURRENT_DATE WHERE tid = " + tid + " AND due_date > CURRENT_DATE";
+        performUpdate(query1);
+        String query2 = "UPDATE \"Tool\" SET lendable = true, purchasable = true WHERE tid = " + tid;
+        performUpdate(query2);
+    }
 
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
