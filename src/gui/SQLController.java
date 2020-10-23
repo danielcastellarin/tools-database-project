@@ -258,7 +258,8 @@ public class SQLController {
 
     private static void getLendableToolInfo(int uid, List<Integer> tids, List<String> toolNames) {
         String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
-                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true";
+                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true " +
+                "AND date_sold IS NULL";
         performQuery(query);
         while (true) {
             try {
@@ -274,7 +275,8 @@ public class SQLController {
     private static void getSellableToolInfo(int uid, List<Integer> tids,
                                                List<String> toolNames) {
         String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
-                "o.tid = t.tid AND o.uid = " + uid + " AND t.purchasable = true";
+                "o.tid = t.tid AND o.uid = " + uid + " AND t.purchasable = " +
+                "true AND date_sold IS NULL";
         performQuery(query);
         while (true) {
             try {

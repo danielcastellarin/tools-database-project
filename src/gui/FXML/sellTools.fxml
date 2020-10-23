@@ -53,13 +53,13 @@
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label text="Tool" />
-                  <ComboBox fx:id="toolComboBox" editable="true" prefWidth="150.0" />
+                  <ComboBox fx:id="toolComboBox" editable="true" onAction="#selectTool" prefWidth="150.0" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
                   <Label text="User" />
-                  <ComboBox fx:id="userComboBox" editable="true" prefWidth="150.0" />
+                  <ComboBox fx:id="userComboBox" disable="true" editable="true" prefWidth="150.0" />
                </children>
             </VBox>
          </children>

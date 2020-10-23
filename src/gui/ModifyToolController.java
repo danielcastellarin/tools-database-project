@@ -47,25 +47,27 @@ public class ModifyToolController extends Controller{
     private void changePrice(ActionEvent event) {
         String incrementText = ((((Button)event.getSource()).getText()));
         int initialPrice = Integer.parseInt(priceTextField.getText());
-        switch (incrementText) {
-            case "+10":
-                priceTextField.setText(String.valueOf(initialPrice + 10));
-                break;
-            case "+5":
-                priceTextField.setText(String.valueOf(initialPrice + 5));
-                break;
-            case "+1":
-                priceTextField.setText(String.valueOf(initialPrice + 1));
-                break;
-            case "-10":
-                priceTextField.setText(String.valueOf(initialPrice - 10));
-                break;
-            case "-5":
-                priceTextField.setText(String.valueOf(initialPrice - 5));
-                break;
-            case "-1":
-                priceTextField.setText(String.valueOf(initialPrice - 1));
-                break;
+        if (initialPrice >= 0){
+            switch (incrementText) {
+                case "+10":
+                    priceTextField.setText(String.valueOf(initialPrice + 10));
+                    break;
+                case "+5":
+                    priceTextField.setText(String.valueOf(initialPrice + 5));
+                    break;
+                case "+1":
+                    priceTextField.setText(String.valueOf(initialPrice + 1));
+                    break;
+                case "-10":
+                    priceTextField.setText(String.valueOf(initialPrice - 10));
+                    break;
+                case "-5":
+                    priceTextField.setText(String.valueOf(initialPrice - 5));
+                    break;
+                case "-1":
+                    priceTextField.setText(String.valueOf(initialPrice - 1));
+                    break;
+            }
         }
     }
 

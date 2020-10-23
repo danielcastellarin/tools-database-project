@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.text.Text;
 
+import javax.xml.ws.Action;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,6 +27,7 @@ public class SellToolsController extends Controller {
 
     private List<Integer> tids;
     private List<String> toolNames;
+    private List<Integer> toolPrices;
     private Set<String> usernames;
     private Set<Integer> uids;
 
@@ -36,6 +38,8 @@ public class SellToolsController extends Controller {
         toolNames = new ArrayList<>();
         usernames = new HashSet<>();
         uids = new HashSet<>();
+        toolPrices = new ArrayList<>();
+        // TODO change query to also get sale_price of the tools
         SQLController.getSellableUserTools(Main.getUID(), tids, toolNames, uids,
                 usernames);
 
@@ -43,6 +47,23 @@ public class SellToolsController extends Controller {
         toolComboBox.getItems().addAll(toolNames);
         userComboBox.getItems().addAll(usernames);
     }
+
+    @FXML
+    public void selectTool() {
+        // userCombobox.getitems().clear()
+        usernames.clear();
+        uids.clear();
+         int toolPrice;
+        if (toolComboBox.getSelectionModel().getSelectedItem() != null) {
+//            toolPrice =
+//                    toolPrices.get(toolComboBox.getSelectionModel().getSelectedIndex());
+            userComboBox.setDisable(false);
+//            SQLController.getUsersWithEnoughBank(Main.getUID(), uids,
+//                    usernames, toolPrice);
+            userComboBox.getItems().addAll(usernames);
+        }
+    }
+
 
     public void sell(ActionEvent event) {
         String username = userComboBox.getSelectionModel().getSelectedItem();
