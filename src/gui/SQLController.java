@@ -431,7 +431,6 @@ public class SQLController {
 
     public static boolean sellTool(String toUsername, int fromUID,
                                 int tid) {
-        //TODO: Debug and Finish
         int salePrice = getSalePrice(tid);
         int toUID = getUIDFromUsername(toUsername);
         int toBalance = getBalance(toUID);
@@ -443,7 +442,8 @@ public class SQLController {
              incrementBalance(toUID, -salePrice);
              incrementBalance(fromUID, salePrice);
 
-             String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE ";
+             String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE " +
+                     "WHERE tid=" + tid;
              performUpdate(query);
 
              query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +

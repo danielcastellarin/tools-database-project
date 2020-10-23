@@ -19,8 +19,6 @@ import java.util.ArrayList;
  */
 public class ViewToolsController extends Controller{
 
-    //TODO: Add borrowed tools to collection
-
     @FXML
     TableView ownsTable;
 

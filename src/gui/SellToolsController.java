@@ -39,7 +39,6 @@ public class SellToolsController extends Controller {
         usernames = new HashSet<>();
         uids = new HashSet<>();
         toolPrices = new ArrayList<>();
-        // TODO change query to also get sale_price of the tools
 //        SQLController.getSellableUserTools(Main.getUID(), tids, toolNames, uids,
 //                usernames, toolPrices);
         SQLController.getSellableToolInfo(Main.getUID(), tids, toolNames, toolPrices);
