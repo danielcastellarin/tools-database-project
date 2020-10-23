@@ -3,13 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
+<VBox alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
     <children>
         <VBox alignment="CENTER">
             <children>
@@ -25,15 +27,36 @@
                 </Label>
             </children>
         </VBox>
-        <TableView fx:id="table" onMouseClicked="#gotoModifyTool" prefHeight="450.0" prefWidth="200.0">
-            <columns>
-                <TableColumn fx:id="nameColumn" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
-                <TableColumn fx:id="priceColumn" prefWidth="125.0" resizable="false" sortable="false" text="Price" />
-                <TableColumn fx:id="lendableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Lendable" />
-                <TableColumn fx:id="purchasableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Purchasable" />
-                <TableColumn fx:id="categoriesColumn" prefWidth="300.0" resizable="false" sortable="false" text="Categories" />
-            </columns>
-        </TableView>
+      <TabPane prefHeight="550.0" prefWidth="1000.0">
+         <tabs>
+            <Tab closable="false" text="Owned Tools">
+               <content>
+                    <TableView fx:id="table" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
+                        <columns>
+                            <TableColumn fx:id="nameColumn" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
+                            <TableColumn fx:id="priceColumn" prefWidth="125.0" resizable="false" sortable="false" text="Price" />
+                            <TableColumn fx:id="lendableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Lendable" />
+                            <TableColumn fx:id="purchasableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Purchasable" />
+                            <TableColumn fx:id="categoriesColumn" prefWidth="500.0" resizable="false" sortable="false" text="Categories" />
+                        </columns>
+                    </TableView>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Borrowed Tools">
+               <content>
+                  <TableView fx:id="table1" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
+                     <columns>
+                        <TableColumn fx:id="nameColumn1" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
+                        <TableColumn fx:id="priceColumn1" prefWidth="125.0" resizable="false" sortable="false" text="Owner" />
+                        <TableColumn fx:id="lendableColumn1" prefWidth="125.0" resizable="false" sortable="false" text="Lendable" />
+                        <TableColumn fx:id="purchasableColumn1" prefWidth="125.0" resizable="false" sortable="false" text="Due Date" />
+                        <TableColumn fx:id="categoriesColumn1" prefWidth="500.0" resizable="false" sortable="false" text="Categories" />
+                     </columns>
+                  </TableView>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
         <HBox>
             <children>
                 <Button mnemonicParsing="false" onAction="#gotoHome" prefHeight="30.0" prefWidth="75.0" text="Back" />

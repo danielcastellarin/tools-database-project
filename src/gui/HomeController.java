@@ -28,6 +28,7 @@ public class HomeController extends Controller {
                 break;
             case "Sell Tools":
                 fxml = "FXML/sellTools.fxml";
+                break;
             case "Change Balance":
                 fxml = "FXML/balance.fxml";
                 break;

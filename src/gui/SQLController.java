@@ -271,6 +271,22 @@ public class SQLController {
         }
     }
 
+    private static void getSellableToolInfo(int uid, List<Integer> tids,
+                                               List<String> toolNames) {
+        String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
+                "o.tid = t.tid AND o.uid = " + uid + " AND t.purchasable = true";
+        performQuery(query);
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void getUserTools(int uid, List<Integer> tids,
                                     List<Integer> salePrices,
                                     List<String> toolNames,
@@ -286,6 +302,13 @@ public class SQLController {
                                             Set<String> usernames) {
         getLendableToolInfo(uid, tids, toolNames);
         getAllOtherUsers(uid, uids, usernames);
+    }
+
+    public static void getSellableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
+                                            Set<String> usernames) {
+        getSellableToolInfo(uid, tids, toolNames);
+        getAllOtherUsers(uid, uids, usernames);
+
     }
 
     public static void getAllOtherUsers(int uid, Set<Integer> uids,
@@ -334,19 +357,44 @@ public class SQLController {
         performUpdate(query2);
     }
 
-    public static void sellTool(String username, int tid) {
-        String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
-                "date_sold, sale_price)" +
-//                " " + "VALUES(" + uid + ", " + tid + ", '" + datePurchased +
-//                "', NULL, " + salePrice + ")" +
-                "UPDATE \"Owns\" SET date_sold = CURRENT_DATE WHERE tid = " + tid + " AND date_sold = NULL";
 
-        int uid = getUIDFromUsername(username);
-        String query2 = "UPDATE Owns SET date_sold = CURRENT_DATE WHERE tid = " + tid + " AND date_sold = NULL" +
-                "INSERT INTO \"Owns\" (uid, tid, date_purchased, date_sold, sale_price)" +
-                "VALUES(" + uid + ", " + tid + ", CURRENT_DATE, NULL, (" +
-                "SELECT sale_price FROM \"Owns\" WHERE tid = " + tid + " AND date_sold = CURRENT_DATE ))";
-        performUpdate(query2);
+    private static int getSalePrice(int tid) {
+        String query =
+                "SELECT sale_price FROM \"Owns\" WHERE tid= " + tid + "AND " +
+                        "date_sold IS NULL";
+        performQuery(query);
+        try {
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static boolean sellTool(String toUsername, int fromUID,
+                                int tid) {
+        //TODO: Debug and Finish
+        int salePrice = getSalePrice(tid);
+        int toUID = getUIDFromUsername(toUsername);
+        int toBalance = getBalance(toUID);
+
+        if (toBalance < salePrice) {
+            return false;
+        } else {
+             // Exchange currency
+             incrementBalance(toUID, -salePrice);
+             incrementBalance(fromUID, salePrice);
+
+             String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE ";
+             performUpdate(query);
+
+             query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+                     "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", CURRENT_DATE, NULL, " + salePrice + ")";
+            System.out.println(query);
+             performUpdate(query);
+        }
+        return true;
     }
 
 
@@ -357,7 +405,6 @@ public class SQLController {
     public static void main(String[] args) {
         openConnection(Credentials.getUrl(), Credentials.getUsername(),
                 Credentials.getPassword());
-        
         closeConnection();
     }
 }
