@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
+<VBox alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
     <children>
         <VBox alignment="CENTER">
             <children>
@@ -44,7 +44,7 @@
             </Tab>
             <Tab fx:id="borrowedToolTab" closable="false" text="Borrowed Tools">
                <content>
-                  <TableView fx:id="borrowsTable" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
+                  <TableView fx:id="borrowsTable" onMouseClicked="#returnTool" prefHeight="520.0" prefWidth="1000.0">
                      <columns>
                         <TableColumn fx:id="borrowsNameColumn" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
                         <TableColumn fx:id="borrowsOwnerColumn" prefWidth="125.0" resizable="false" sortable="false" text="Owner" />

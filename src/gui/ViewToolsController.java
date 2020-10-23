@@ -128,9 +128,15 @@ public class ViewToolsController extends Controller{
         }
     }
 
-
+    @FXML
     public void returnTool(MouseEvent event) {
-
+        if (event.getClickCount() == 2) {
+            int index = ((TableView)event.getSource()).getSelectionModel().getFocusedIndex();
+            selectedTid = borrowedTools.getTids().get(index);
+            SQLController.returnTool(selectedTid);
+            ((Stage)(((TableView)event.getSource()).getScene().getWindow())).close();
+            changeScene("FXML/viewTools.fxml", "View Tools");
+        }
     }
 
 }
