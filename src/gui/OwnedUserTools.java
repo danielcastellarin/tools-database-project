@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class UserTools {
+public class OwnedUserTools {
 
 
     private int uid;
@@ -17,7 +17,7 @@ public class UserTools {
     private List<Boolean> purchasable;
     private List<String> categories;
 
-    public UserTools(int uid) {
+    public OwnedUserTools(int uid) {
         this.uid = uid;
         this.tids = new ArrayList<>();
         this.salePrices = new ArrayList<>();

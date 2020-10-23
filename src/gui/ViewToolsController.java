@@ -1,13 +1,9 @@
 package gui;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -16,8 +12,6 @@ import javafx.scene.control.TableColumn;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -28,45 +22,72 @@ public class ViewToolsController extends Controller{
     //TODO: Add borrowed tools to collection
 
     @FXML
-    TableView table;
+    TableView ownsTable;
 
     @FXML
-    TableColumn nameColumn;
+    TableColumn ownsNameColumn;
 
     @FXML
-    TableColumn priceColumn;
+    TableColumn ownsPriceColumn;
 
     @FXML
-    TableColumn lendableColumn;
+    TableColumn ownsLendableColumn;
 
     @FXML
-    TableColumn purchasableColumn;
+    TableColumn ownsPurchasableColumn;
 
     @FXML
-    TableColumn categoriesColumn;
+    TableColumn ownsCategoriesColumn;
 
-    private UserTools tools;
-    private ArrayList<ViewATool> toolList;
+    @FXML
+    TableView borrowsTable;
+    @FXML
+    TableColumn borrowsNameColumn;
+    @FXML
+    TableColumn borrowsOwnerColumn;
+    @FXML
+    TableColumn borrowsLendDateColumn;
+    @FXML
+    TableColumn borrowsDueDateColumn;
+    @FXML
+    TableColumn borrowsCategoriesColumn;
+
+
+
+    private OwnedUserTools tools;
+    private ArrayList<OwnedTool> toolList;
     private int selectedTid;
 
     @FXML
     public void initialize() {
-        nameColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, String>("Name"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, Integer>("Price"));
-        lendableColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, Boolean>("Lendable"));
-        purchasableColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, Boolean>("Purchasable"));
-        categoriesColumn.setCellValueFactory(new PropertyValueFactory<ViewATool, String>("Categories"));
-
-        tools = new UserTools(Main.getUID());
-
+        //Owned Tools Table
+        ownsNameColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Name"));
+        ownsPriceColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Integer>("Price"));
+        ownsLendableColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Boolean>("Lendable"));
+        ownsPurchasableColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Boolean>("Purchasable"));
+        ownsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Categories"));
+        tools = new OwnedUserTools(Main.getUID());
         toolList = new ArrayList<>(tools.getTids().size());
         for (int i = 0; i < tools.getTids().size(); i++) {
-            toolList.add(new ViewATool(tools.getToolNames().get(i),
+            toolList.add(new OwnedTool(tools.getToolNames().get(i),
                     tools.getSalePrices().get(i), tools.getLendable().get(i),
                     tools.getPurchasable().get(i),
                     tools.getCategories().get(i)));
         }
-        table.setItems(FXCollections.observableList(toolList));
+        ownsTable.setItems(FXCollections.observableList(toolList));
+
+
+        //Borrowed Tools Table
+        borrowsNameColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Name"));
+        borrowsOwnerColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Owner"));
+        borrowsLendDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Lend Date"));
+        borrowsDueDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Due Date"));
+        borrowsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Categories"));
+
+        //TODO: Repeat process above but with something like BorrowedUserTools
+
+
+
     }
 
     @FXML

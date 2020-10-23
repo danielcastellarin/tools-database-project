@@ -31,26 +31,26 @@
          <tabs>
             <Tab closable="false" text="Owned Tools">
                <content>
-                    <TableView fx:id="table" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
+                    <TableView fx:id="ownsTable" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
                         <columns>
-                            <TableColumn fx:id="nameColumn" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
-                            <TableColumn fx:id="priceColumn" prefWidth="125.0" resizable="false" sortable="false" text="Price" />
-                            <TableColumn fx:id="lendableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Lendable" />
-                            <TableColumn fx:id="purchasableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Purchasable" />
-                            <TableColumn fx:id="categoriesColumn" prefWidth="500.0" resizable="false" sortable="false" text="Categories" />
+                            <TableColumn fx:id="ownsNameColumn" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
+                            <TableColumn fx:id="ownsPriceColumn" prefWidth="125.0" resizable="false" sortable="false" text="Price" />
+                            <TableColumn fx:id="ownsLendableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Lendable" />
+                            <TableColumn fx:id="ownsPurchasableColumn" prefWidth="125.0" resizable="false" sortable="false" text="Purchasable" />
+                            <TableColumn fx:id="ownsCategoriesColumn" prefWidth="500.0" resizable="false" sortable="false" text="Categories" />
                         </columns>
                     </TableView>
                </content>
             </Tab>
             <Tab closable="false" text="Borrowed Tools">
                <content>
-                  <TableView fx:id="table1" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
+                  <TableView fx:id="borrowsTable" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
                      <columns>
-                        <TableColumn fx:id="nameColumn1" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
-                        <TableColumn fx:id="priceColumn1" prefWidth="125.0" resizable="false" sortable="false" text="Owner" />
-                        <TableColumn fx:id="lendableColumn1" prefWidth="125.0" resizable="false" sortable="false" text="Lendable" />
-                        <TableColumn fx:id="purchasableColumn1" prefWidth="125.0" resizable="false" sortable="false" text="Due Date" />
-                        <TableColumn fx:id="categoriesColumn1" prefWidth="500.0" resizable="false" sortable="false" text="Categories" />
+                        <TableColumn fx:id="borrowsNameColumn" prefWidth="125.0" resizable="false" sortable="false" text="Name" />
+                        <TableColumn fx:id="borrowsOwnerColumn" prefWidth="125.0" resizable="false" sortable="false" text="Owner" />
+                        <TableColumn fx:id="borrowsLendDateColumn" prefWidth="125.0" resizable="false" sortable="false" text="Lend Date" />
+                        <TableColumn fx:id="borrowsDueDateColumn" prefWidth="125.0" resizable="false" sortable="false" text="Due Date" />
+                        <TableColumn fx:id="borrowsCategoriesColumn" prefWidth="500.0" resizable="false" sortable="false" text="Categories" />
                      </columns>
                   </TableView>
                </content>
