@@ -272,9 +272,9 @@ public class SQLController {
         }
     }
 
-    private static void getSellableToolInfo(int uid, List<Integer> tids,
-                                               List<String> toolNames) {
-        String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
+    public static void getSellableToolInfo(int uid, List<Integer> tids,
+                                               List<String> toolNames, List<Integer> toolPrices) {
+        String query = "SELECT t.tid, t.tool_name, o.sale_price FROM \"Owns\" o, \"Tool\" t WHERE " +
                 "o.tid = t.tid AND o.uid = " + uid + " AND t.purchasable = " +
                 "true AND date_sold IS NULL";
         performQuery(query);
@@ -283,6 +283,7 @@ public class SQLController {
                 if (!resultSet.next()) break;
                 tids.add(resultSet.getInt(1));
                 toolNames.add(resultSet.getString(2));
+                toolPrices.add(resultSet.getInt(3));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -306,12 +307,12 @@ public class SQLController {
         getAllOtherUsers(uid, uids, usernames);
     }
 
-    public static void getSellableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
-                                            Set<String> usernames) {
-        getSellableToolInfo(uid, tids, toolNames);
-        getAllOtherUsers(uid, uids, usernames);
-
-    }
+    // deprecated func from SellToolsController
+//    public static void getSellableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
+//                                            Set<String> usernames, List<Integer> toolPrices) {
+//        getSellableToolInfo(uid, tids, toolNames, toolPrices);
+//        getAllOtherUsers(uid, uids, usernames);
+//    }
 
     public static void getAllOtherUsers(int uid, Set<Integer> uids,
                                         Set<String> usernames) {
@@ -331,7 +332,7 @@ public class SQLController {
 
     public static void getUsersWithEnoughBank(int uid, Set<Integer> uids,
                                         Set<String> usernames, int toolPrice) {
-        String query = "SELECT uid, username FROM \"User\", \"Owns\" AS o WHERE " +
+        String query = "SELECT uid, username FROM \"User\" WHERE " +
                 "uid != " + uid + " AND balance > " + toolPrice;
         performQuery(query);
         while (true) {

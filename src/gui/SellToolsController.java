@@ -40,26 +40,24 @@ public class SellToolsController extends Controller {
         uids = new HashSet<>();
         toolPrices = new ArrayList<>();
         // TODO change query to also get sale_price of the tools
-        SQLController.getSellableUserTools(Main.getUID(), tids, toolNames, uids,
-                usernames);
-
+//        SQLController.getSellableUserTools(Main.getUID(), tids, toolNames, uids,
+//                usernames, toolPrices);
+        SQLController.getSellableToolInfo(Main.getUID(), tids, toolNames, toolPrices);
 
         toolComboBox.getItems().addAll(toolNames);
-        userComboBox.getItems().addAll(usernames);
+//        userComboBox.getItems().addAll(usernames);
     }
 
     @FXML
     public void selectTool() {
-        // userCombobox.getitems().clear()
+        userComboBox.getItems().clear();
         usernames.clear();
         uids.clear();
-         int toolPrice;
+        int toolPrice;
         if (toolComboBox.getSelectionModel().getSelectedItem() != null) {
-//            toolPrice =
-//                    toolPrices.get(toolComboBox.getSelectionModel().getSelectedIndex());
+            toolPrice = toolPrices.get(toolComboBox.getSelectionModel().getSelectedIndex());
             userComboBox.setDisable(false);
-//            SQLController.getUsersWithEnoughBank(Main.getUID(), uids,
-//                    usernames, toolPrice);
+            SQLController.getUsersWithEnoughBank(Main.getUID(), uids, usernames, toolPrice);
             userComboBox.getItems().addAll(usernames);
         }
     }
