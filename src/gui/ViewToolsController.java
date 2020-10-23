@@ -98,8 +98,8 @@ public class ViewToolsController extends Controller{
                     borrowedTools.getCategories().get(i)));
         }
         borrowsTable.setItems(FXCollections.observableList(borrowedToolList));
-        borrowedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to modify"));
-        ownedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to return it"));
+        borrowedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to return it"));
+        ownedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to modify"));
 
     }
 

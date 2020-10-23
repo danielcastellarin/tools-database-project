@@ -215,7 +215,8 @@ public class SQLController {
                                             List<String> lendDates, List<String> dueDates, List<Integer> owners, List<String> usernames) {
         String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
                 "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
-                "b.uid = " + uid + "AND b.due_date > CURRENT_DATE AND b.tid = t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
+                "b.uid = " + uid + " AND b.due_date > CURRENT_DATE AND b.tid " +
+                "= t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
         performQuery(query);
         while (true) {
             try {

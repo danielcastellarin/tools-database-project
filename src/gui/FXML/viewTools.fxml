@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewToolsController">
+<VBox alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.ViewToolsController">
     <children>
         <VBox alignment="CENTER">
             <children>

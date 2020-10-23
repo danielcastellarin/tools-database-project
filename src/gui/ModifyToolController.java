@@ -35,6 +35,7 @@ public class ModifyToolController extends Controller{
         this.tid = tid;
 
         toolNameTextField.setText(tool.getName());
+        priceTextField.setText(String.valueOf(tool.getPrice()));
         super.setCategories(parseCategories(tools.getCategories().get(index)));
     }
 
