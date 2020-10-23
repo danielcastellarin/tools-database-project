@@ -8,14 +8,12 @@ public class OwnedTool {
     private final SimpleStringProperty name;
     private final SimpleIntegerProperty price;
     private final SimpleBooleanProperty isLendable;
-    private final SimpleBooleanProperty isPurchasable;
     private final SimpleStringProperty categories;
 
-    public OwnedTool(String name, int sale_price, boolean lendable, boolean purchasable, String categories) {
+    public OwnedTool(String name, int sale_price, boolean lendable, String categories) {
         this.name = new SimpleStringProperty(name);
         this.price = new SimpleIntegerProperty(sale_price);
         this.isLendable = new SimpleBooleanProperty(lendable);
-        this.isPurchasable = new SimpleBooleanProperty(purchasable);
         this.categories = new SimpleStringProperty(categories);
     }
 
@@ -41,14 +39,6 @@ public class OwnedTool {
 
     public void setIsLendable(boolean isLendable) {
         this.isLendable.set(isLendable);
-    }
-
-    public boolean isPurchasable() {
-        return isPurchasable.get();
-    }
-
-    public void setIsPurchasable(boolean isPurchasable) {
-        this.isPurchasable.set(isPurchasable);
     }
 
     public String getCategories() {

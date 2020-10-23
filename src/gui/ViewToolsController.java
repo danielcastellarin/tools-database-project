@@ -34,9 +34,6 @@ public class ViewToolsController extends Controller{
     TableColumn ownsLendableColumn;
 
     @FXML
-    TableColumn ownsPurchasableColumn;
-
-    @FXML
     TableColumn ownsCategoriesColumn;
 
     @FXML
@@ -88,14 +85,12 @@ public class ViewToolsController extends Controller{
         ownsNameColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Name"));
         ownsPriceColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Integer>("Price"));
         ownsLendableColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Boolean>("Lendable"));
-        ownsPurchasableColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Boolean>("Purchasable"));
         ownsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Categories"));
         ownedTools = new OwnedUserTools(Main.getUID());
         ownedToolList = new ArrayList<>(ownedTools.getTids().size());
         for (int i = 0; i < ownedTools.getTids().size(); i++) {
             ownedToolList.add(new OwnedTool(ownedTools.getToolNames().get(i),
                     ownedTools.getSalePrices().get(i), ownedTools.getLendable().get(i),
-                    ownedTools.getPurchasable().get(i),
                     ownedTools.getCategories().get(i)));
         }
         ownsTable.setItems(FXCollections.observableList(ownedToolList));
