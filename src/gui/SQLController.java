@@ -327,6 +327,23 @@ public class SQLController {
         }
     }
 
+    public static void getUsersWithEnoughBank(int uid, Set<Integer> uids,
+                                        Set<String> usernames, int toolPrice) {
+        String query = "SELECT uid, username FROM \"User\", \"Owns\" AS o WHERE " +
+                "uid != " + uid + " AND balance > " + toolPrice;
+        performQuery(query);
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                uids.add(resultSet.getInt(1));
+                usernames.add(resultSet.getString(2));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     private static int getUIDFromUsername(String username) {
         String query = "SELECT uid FROM \"User\" WHERE username = '" + username + "'";
         performQuery(query);
