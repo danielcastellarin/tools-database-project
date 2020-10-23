@@ -11,6 +11,11 @@ import javafx.stage.Stage;
  */
 public class HomeController extends Controller {
 
+    /**
+     * Changes the scene to the appropriate scene based on which button from
+     * the grid of buttons is selected
+     * @param event A button click
+     */
     @FXML
     public void changeSceneFromGrid(ActionEvent event) {
         String buttonLabel = ((Button) event.getSource()).getText();

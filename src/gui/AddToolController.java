@@ -2,16 +2,12 @@ package gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,21 +19,24 @@ public class AddToolController extends Controller{
     private static List<String> categories;
 
     @FXML
-    TextField priceTextField;
+    private TextField priceTextField;
     @FXML
-    TextField toolNameTextField;
+    private TextField toolNameTextField;
     @FXML
-    Text statusText;
+    private Text statusText;
 
-    @FXML
-    public void initialize() {
-    }
-
+    /***
+     * Opens a window to select category tags for the tool
+     */
     @FXML
     public void addCategories() {
         super.gotoCategories(null, "Add Tool");
     }
 
+    /**
+     * Updates the price of the tool with the use of a series of buttons
+     * @param event A button click
+     */
     @FXML
     private void changePrice(ActionEvent event) {
         String incrementText = ((((Button) event.getSource()).getText()));
@@ -66,6 +65,11 @@ public class AddToolController extends Controller{
         }
     }
 
+    /**
+     * Gets the selected parameters for the tool and adds the tool to the
+     * appropriate tables in the database
+     * @param event A button click
+     */
     @FXML
     public void addTool(ActionEvent event){
         String toolName = toolNameTextField.getText();

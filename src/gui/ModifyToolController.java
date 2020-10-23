@@ -16,17 +16,26 @@ import java.util.List;
 public class ModifyToolController extends Controller{
 
     @FXML
-    TextField toolNameTextField;
+    private TextField toolNameTextField;
     @FXML
-    TextField priceTextField;
+    private TextField priceTextField;
     @FXML
-    Text statusText;
+    private Text statusText;
 
     private int index;
     private OwnedUserTools tools;
     private OwnedTool tool;
     private int tid;
 
+    /**
+     * Creates the necessary data for getting the current information about
+     * an owned tool and updates the UI accordingly
+     * @param theTool An OwnedTool object containing information on the tool
+     * @param tools An OwnedUserTools object containing information on all
+     *              owned tools
+     * @param index The index of the selected tool
+     * @param tid The tool id of the tool
+     */
     @FXML
     public void initialize(OwnedTool theTool, OwnedUserTools tools, int index, int tid) {
         this.tools = tools;
@@ -39,6 +48,10 @@ public class ModifyToolController extends Controller{
         super.setCategories(parseCategories(tools.getCategories().get(index)));
     }
 
+    /**
+     * Updates the sale price of the tool based on which button is clicked
+     * @param event A button click
+     */
     @FXML
     private void changePrice(ActionEvent event) {
         String incrementText = ((((Button)event.getSource()).getText()));
@@ -67,23 +80,40 @@ public class ModifyToolController extends Controller{
         }
     }
 
+    /**
+     * Parses the given String category into individual Strings
+     * @param category A String of comma separated categories
+     * @return
+     */
     private List<String> parseCategories(String category) {
         List<String> categories = Arrays.asList(category.split(", "));
         System.out.println(categories);
         return categories;
     }
 
+    /**
+     * Changes the scene to the view tools scene
+     * @param event A button click
+     */
     @FXML
     public void gotoViewTools(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/viewTools.fxml",  "View Tools");
     }
 
+    /**
+     * Opens a scene containing a list of all available categories
+     */
     @FXML
     public void modifyCategories() {
         super.gotoCategories(super.getCategories(), "Modify Tool");
     }
 
+    /**
+     * Submits the modified values to the database and returns to the view
+     * tools scene
+     * @param event A button click
+     */
     @FXML
     public void modifyTool(ActionEvent event){
 

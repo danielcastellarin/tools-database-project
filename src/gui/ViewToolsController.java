@@ -1,11 +1,13 @@
 package gui;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -66,6 +68,17 @@ public class ViewToolsController extends Controller{
     @FXML
     public void initialize() {
         //Owned Tools Table
+        updateOwnedTable();
+
+        //Borrowed Tools Table
+        updateBorrowedTable();
+
+        borrowedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to return it"));
+        ownedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to modify"));
+
+    }
+
+    private void updateOwnedTable() {
         ownsNameColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Name"));
         ownsPriceColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Integer>("Price"));
         ownsLendableColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Boolean>("Lendable"));
@@ -80,8 +93,9 @@ public class ViewToolsController extends Controller{
                     ownedTools.getCategories().get(i)));
         }
         ownsTable.setItems(FXCollections.observableList(ownedToolList));
+    }
 
-        //Borrowed Tools Table
+    private void updateBorrowedTable() {
         borrowsNameColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Name"));
         borrowsOwnerColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Owner"));
         borrowsLendDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("LendDate"));
@@ -96,9 +110,6 @@ public class ViewToolsController extends Controller{
                     borrowedTools.getCategories().get(i)));
         }
         borrowsTable.setItems(FXCollections.observableList(borrowedToolList));
-        borrowedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to return it"));
-        ownedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to modify"));
-
     }
 
 
@@ -132,8 +143,7 @@ public class ViewToolsController extends Controller{
             int index = ((TableView)event.getSource()).getSelectionModel().getFocusedIndex();
             selectedTid = borrowedTools.getTids().get(index);
             SQLController.returnTool(selectedTid);
-            ((Stage)(((TableView)event.getSource()).getScene().getWindow())).close();
-            changeScene("FXML/viewTools.fxml", "View Tools");
+            updateBorrowedTable();
         }
     }
 

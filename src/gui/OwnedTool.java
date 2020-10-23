@@ -23,32 +23,8 @@ public class OwnedTool {
         return name.get();
     }
 
-    public void setName(String name) {
-        this.name.set(name);
-    }
-
     public int getPrice() {
         return price.getValue();
-    }
-
-    public void setPrice(int price) {
-        this.price.set(price);
-    }
-
-    public boolean isLendable() {
-        return isLendable.get();
-    }
-
-    public void setIsLendable(boolean isLendable) {
-        this.isLendable.set(isLendable);
-    }
-
-    public boolean isPurchasable() {
-        return isPurchasable.get();
-    }
-
-    public void setIsPurchasable(boolean isPurchasable) {
-        this.isPurchasable.set(isPurchasable);
     }
 
     public String getCategories() {

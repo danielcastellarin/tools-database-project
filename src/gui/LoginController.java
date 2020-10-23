@@ -12,14 +12,18 @@ import javafx.stage.Stage;
 public class LoginController extends Controller{
 
     @FXML
-    TextField usernameField;
+    private TextField usernameField;
     @FXML
-    PasswordField passwordPasswordField;
+    private PasswordField passwordPasswordField;
     @FXML
-    Text loginStatusText;
+    private Text loginStatusText;
 
 
-
+    /**
+     * Gets the username and password from the UI and queries the database to
+     * make sure a valid username and password has been entered.
+     * @param event A button click
+     */
     @FXML
     public void login(ActionEvent event) {
         String user = usernameField.getText().trim();
@@ -40,6 +44,10 @@ public class LoginController extends Controller{
         }
     }
 
+    /**
+     * Goes to the create new account scene
+     * @param event A button click
+     */
     @FXML
     public void gotoCreateNewAccount(ActionEvent event) {
         ((Stage)(((Hyperlink)event.getSource()).getScene().getWindow())).close();

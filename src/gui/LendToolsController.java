@@ -16,19 +16,23 @@ import java.util.*;
 public class LendToolsController extends Controller{
 
     @FXML
-    ComboBox<String> toolComboBox;
+    private ComboBox<String> toolComboBox;
     @FXML
-    ComboBox<String> userComboBox;
+    private ComboBox<String> userComboBox;
     @FXML
-    DatePicker dueDateDatePicker;
+    private DatePicker dueDateDatePicker;
     @FXML
-    Text statusText;
+    private Text statusText;
 
     private List<Integer> tids;
     private List<String> toolNames;
     private Set<String> usernames;
     private Set<Integer> uids;
 
+    /**
+     * Queries the database to get all available lendable tools and the
+     * usernames of all other users and populates the given UI componetn
+     */
     @FXML
     public void initialize() {
         // Disables past dates
@@ -50,6 +54,11 @@ public class LendToolsController extends Controller{
         userComboBox.getItems().addAll(usernames);
     }
 
+    /**
+     * Gets the selected information from the UI fields and queries the
+     * database to show that a tool has been lent
+     * @param event A button click
+     */
     @FXML
     public void lendTool(ActionEvent event) {
         String username = userComboBox.getSelectionModel().getSelectedItem();

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.BalanceController">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.BalanceController">
    <children>
       <Label text="Balance" underline="true">
          <font>
@@ -26,10 +26,10 @@
       </HBox>
       <HBox alignment="CENTER" spacing="5.0">
          <children>
-            <Button fx:id="addOneButton" layoutX="242.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateBalance" text="Add $1" />
-            <Button fx:id="addFiveButton" mnemonicParsing="false" onAction="#updateBalance" text="Add $5" />
-            <Button fx:id="addTenButton" layoutX="180.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateBalance" text="Add $10" />
-            <Button fx:id="addTwentyButton" layoutX="225.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateBalance" text="Add $20" />
+            <Button layoutX="242.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateBalance" text="Add $1" />
+            <Button mnemonicParsing="false" onAction="#updateBalance" text="Add $5" />
+            <Button layoutX="180.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateBalance" text="Add $10" />
+            <Button layoutX="225.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateBalance" text="Add $20" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

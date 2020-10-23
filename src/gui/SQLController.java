@@ -233,10 +233,6 @@ public class SQLController {
         }
     }
 
-    private static void getBorrowedToolOwner(int uid, List<Integer> owners) {
-
-    }
-
     private static void getToolInfoFromTool(List<Integer> tids,
                                             List<String> toolNames,
                                             List<Boolean> lendable,
@@ -343,13 +339,6 @@ public class SQLController {
         getLendableToolInfo(uid, tids, toolNames);
         getAllOtherUsers(uid, uids, usernames);
     }
-
-    // deprecated func from SellToolsController
-//    public static void getSellableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
-//                                            Set<String> usernames, List<Integer> toolPrices) {
-//        getSellableToolInfo(uid, tids, toolNames, toolPrices);
-//        getAllOtherUsers(uid, uids, usernames);
-//    }
 
     public static void getAllOtherUsers(int uid, Set<Integer> uids,
                                         Set<String> usernames) {
@@ -461,9 +450,4 @@ public class SQLController {
         performUpdate(query2);
     }
 
-    public static void main(String[] args) {
-        openConnection(Credentials.getUrl(), Credentials.getUsername(),
-                Credentials.getPassword());
-        closeConnection();
-    }
 }

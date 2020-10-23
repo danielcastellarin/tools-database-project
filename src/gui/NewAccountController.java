@@ -12,16 +12,22 @@ import javafx.scene.text.Text;
 public class NewAccountController extends Controller{
 
     @FXML
-    TextField firstNameTextField;
+    private TextField firstNameTextField;
     @FXML
-    TextField lastNameTextField;
+    private TextField lastNameTextField;
     @FXML
-    PasswordField passwordPasswordField;
+    private PasswordField passwordPasswordField;
     @FXML
-    TextField usernameTextField;
+    private TextField usernameTextField;
     @FXML
-    Text creationStatusText;
+    private Text creationStatusText;
 
+    /**
+     * Collects the input from the UI components, queries the database to see
+     * if the username is taken, if not, updates the the database and returns
+     * to the login scene
+     * @param event A button click
+     */
     @FXML
     public void createNewUser(ActionEvent event) {
         creationStatusText.setText("Username Already In Use. Try Again");
