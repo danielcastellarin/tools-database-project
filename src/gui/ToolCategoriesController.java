@@ -20,23 +20,12 @@ public class ToolCategoriesController extends Controller{
 
 
     @FXML
-    VBox categoryVBox;
+    private VBox categoryVBox;
     @FXML
-    TextField newCategoryTextField;
+    private TextField newCategoryTextField;
     @FXML
-    Text statusText;
+    private Text statusText;
 
-//    @FXML
-//    public void initialize() {
-//        List<String> categories = SQLController.getAllCategories();
-//
-//        for (String category : categories) {
-//            RadioButton button = new RadioButton();
-//            button.setPrefWidth(200);
-//            button.setText(category);
-//            categoryVBox.getChildren().add(button);
-//        }
-//    }
 
     @FXML
     public void initialize(List<String> toolCategories) {

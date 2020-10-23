@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -13,12 +15,11 @@ public class BorrowedTool {
     private final SimpleStringProperty categories;
 
     /**
-     * Constructs a new Borrowed Tool Object
-     *
-     * @param name       The name of the tool
-     * @param owner      The tool's original owner
-     * @param lendDate   The date the tool was lent
-     * @param dueDate    The date the tool is due
+     *  Constructs a new Borrowed Tool Object
+     * @param name The name of the tool
+     * @param owner The tool's original owner
+     * @param lendDate The date the tool was lent
+     * @param dueDate The date the tool is due
      * @param categories The categories associated with the tool
      */
     public BorrowedTool(String name, String owner, String lendDate,
@@ -32,7 +33,6 @@ public class BorrowedTool {
 
     /**
      * Returns the name of the tool
-     *
      * @return A string of the name of tool
      */
     public String getName() {
@@ -41,7 +41,6 @@ public class BorrowedTool {
 
     /**
      * Returns the original owner of the tool
-     *
      * @return A string of the tool's owner's username
      */
     public String getOwner() {
@@ -50,7 +49,6 @@ public class BorrowedTool {
 
     /**
      * Returns the date the tool was lent
-     *
      * @return A string of the date the tool was lent
      */
     public String getLendDate() {
@@ -59,7 +57,6 @@ public class BorrowedTool {
 
     /**
      * Returns the tool's due date
-     *
      * @return A string of the tool's due date
      */
     public String getDueDate() {
@@ -68,10 +65,33 @@ public class BorrowedTool {
 
     /**
      * Returns the categories of the tool
-     *
      * @return A string of the tool's categories
      */
     public String getCategories() {
         return categories.get();
+    }
+
+    /**
+     *
+     * @param name
+     */
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public void setOwner(String owner) {
+        this.owner.set(owner);
+    }
+
+    public void setLendDate(String lendDate) {
+        this.lendDate.set(lendDate);
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate.set(dueDate);
+    }
+
+    public void setCategories(String categories) {
+        this.categories.set(categories);
     }
 }

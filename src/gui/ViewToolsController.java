@@ -65,6 +65,9 @@ public class ViewToolsController extends Controller{
     private ArrayList<OwnedTool> ownedToolList;
     private int selectedTid;
 
+    /**
+     * Fills in the tables of Owned and Borrowed tools
+     */
     @FXML
     public void initialize() {
         //Owned Tools Table
@@ -78,6 +81,9 @@ public class ViewToolsController extends Controller{
 
     }
 
+    /**
+     * Updates the table of owned tools
+     */
     private void updateOwnedTable() {
         ownsNameColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Name"));
         ownsPriceColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Integer>("Price"));
@@ -95,6 +101,9 @@ public class ViewToolsController extends Controller{
         ownsTable.setItems(FXCollections.observableList(ownedToolList));
     }
 
+    /**
+     * Updates the table of borrowed tools
+     */
     private void updateBorrowedTable() {
         borrowsNameColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Name"));
         borrowsOwnerColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Owner"));
@@ -113,6 +122,10 @@ public class ViewToolsController extends Controller{
     }
 
 
+    /**
+     * Opens the modify tools scene
+     * @param event A mouse double click
+     */
     @FXML
     public void gotoModifyTool(MouseEvent event) {
         if (event.getClickCount() == 2) {
@@ -137,6 +150,10 @@ public class ViewToolsController extends Controller{
         }
     }
 
+    /**
+     * Returns a tool to the original user
+     * @param event A mouse double click
+     */
     @FXML
     public void returnTool(MouseEvent event) {
         if (event.getClickCount() == 2) {
