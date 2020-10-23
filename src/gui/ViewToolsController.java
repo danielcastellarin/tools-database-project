@@ -53,9 +53,10 @@ public class ViewToolsController extends Controller{
     TableColumn borrowsCategoriesColumn;
 
 
-
-    private OwnedUserTools tools;
-    private ArrayList<OwnedTool> toolList;
+    private BorrowedUserTools borrowedTools;
+    private OwnedUserTools ownedTools;
+    private ArrayList<BorrowedTool> borrowedToolList;
+    private ArrayList<OwnedTool> ownedToolList;
     private int selectedTid;
 
     @FXML
@@ -66,35 +67,38 @@ public class ViewToolsController extends Controller{
         ownsLendableColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Boolean>("Lendable"));
         ownsPurchasableColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Boolean>("Purchasable"));
         ownsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Categories"));
-        tools = new OwnedUserTools(Main.getUID());
-        toolList = new ArrayList<>(tools.getTids().size());
-        for (int i = 0; i < tools.getTids().size(); i++) {
-            toolList.add(new OwnedTool(tools.getToolNames().get(i),
-                    tools.getSalePrices().get(i), tools.getLendable().get(i),
-                    tools.getPurchasable().get(i),
-                    tools.getCategories().get(i)));
+        ownedTools = new OwnedUserTools(Main.getUID());
+        ownedToolList = new ArrayList<>(ownedTools.getTids().size());
+        for (int i = 0; i < ownedTools.getTids().size(); i++) {
+            ownedToolList.add(new OwnedTool(ownedTools.getToolNames().get(i),
+                    ownedTools.getSalePrices().get(i), ownedTools.getLendable().get(i),
+                    ownedTools.getPurchasable().get(i),
+                    ownedTools.getCategories().get(i)));
         }
-        ownsTable.setItems(FXCollections.observableList(toolList));
-
+        ownsTable.setItems(FXCollections.observableList(ownedToolList));
 
         //Borrowed Tools Table
         borrowsNameColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Name"));
         borrowsOwnerColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Owner"));
-        borrowsLendDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Lend Date"));
-        borrowsDueDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Due Date"));
+        borrowsLendDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("LendDate"));
+        borrowsDueDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("DueDate"));
         borrowsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Categories"));
-
-        //TODO: Repeat process above but with something like BorrowedUserTools
-
-
-
+        borrowedTools = new BorrowedUserTools(Main.getUID());
+        borrowedToolList = new ArrayList<>(borrowedTools.getTids().size());
+        for (int i = 0; i < borrowedTools.getTids().size(); i++) {
+            borrowedToolList.add(new BorrowedTool(borrowedTools.getToolNames().get(i),
+                    borrowedTools.getOwnerNames().get(i), borrowedTools.getLendDates().get(i),
+                    borrowedTools.getDueDates().get(i),
+                    borrowedTools.getCategories().get(i)));
+        }
+        borrowsTable.setItems(FXCollections.observableList(borrowedToolList));
     }
 
     @FXML
     public void gotoModifyTool(MouseEvent event) {
         if (event.getClickCount() == 2) {
             int index = ((TableView)event.getSource()).getSelectionModel().getFocusedIndex();
-            selectedTid = tools.getTids().get(index);
+            selectedTid = ownedTools.getTids().get(index);
             ((Stage)(((TableView)event.getSource()).getScene().getWindow())).close();
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
@@ -105,7 +109,7 @@ public class ViewToolsController extends Controller{
 
                 Scene scene = new Scene(loader.load());
                 ModifyToolController controller = loader.getController();
-                controller.initialize(toolList.get(index), tools, index, selectedTid);
+                controller.initialize(ownedToolList.get(index), ownedTools, index, selectedTid);
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {

@@ -211,6 +211,31 @@ public class SQLController {
         }
     }
 
+    private static void getToolInfoFromBorrows(int uid, List<Integer> tids, List<String> toolNames,
+                                            List<String> lendDates, List<String> dueDates, List<Integer> owners, List<String> usernames) {
+        String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
+                "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
+                "b.uid = " + uid + "AND b.due_date > CURRENT_DATE AND b.tid = t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
+        performQuery(query);
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+                lendDates.add(resultSet.getString(3));
+                dueDates.add(resultSet.getString(4));
+                owners.add(resultSet.getInt(5));
+                usernames.add(resultSet.getString(6));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void getBorrowedToolOwner(int uid, List<Integer> owners) {
+
+    }
+
     private static void getToolInfoFromTool(List<Integer> tids,
                                             List<String> toolNames,
                                             List<Boolean> lendable,
@@ -299,6 +324,17 @@ public class SQLController {
         getToolInfoFromOwns(uid, salePrices, tids);
         getToolInfoFromHas(tids, categories);
         getToolInfoFromTool(tids, toolNames, lendable, purchasable);
+    }
+
+    public static void getBorrowedTools(int uid, List<Integer> tids,
+                                        List<String> toolNames,
+                                        List<Integer> owners,
+                                        List<String> usernames,
+                                        List<String> lendDates,
+                                        List<String> dueDates,
+                                        List<String> categories) {
+        getToolInfoFromBorrows(uid, tids, toolNames, lendDates, dueDates, owners, usernames);
+        getToolInfoFromHas(tids, categories);
     }
 
     public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
