@@ -26,7 +26,10 @@ public class ToolCategoriesController extends Controller{
     @FXML
     private Text statusText;
 
-
+    /**
+     * Populates the scene with a list of categories from the database
+     * @param toolCategories
+     */
     @FXML
     public void initialize(List<String> toolCategories) {
         List<String> categories = SQLController.getAllCategories();
@@ -43,6 +46,10 @@ public class ToolCategoriesController extends Controller{
         }
     }
 
+    /**
+     * Allows the user to create and insert an entirely new category into the
+     * database
+     */
     @FXML
     public void addNewCategory() {
         String category_name = newCategoryTextField.getText().toUpperCase();
@@ -62,6 +69,11 @@ public class ToolCategoriesController extends Controller{
         }
     }
 
+    /**
+     * Sets the categories list to the valued selected from the scene and
+     * closes the scene.
+     * @param event A button click
+     */
     @FXML
     public void submitCategories(ActionEvent event) {
         List<String> categories = new ArrayList<>();

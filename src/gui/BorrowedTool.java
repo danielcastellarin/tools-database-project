@@ -72,25 +72,41 @@ public class BorrowedTool {
     }
 
     /**
-     *
-     * @param name
+     * Set the name of the tool
+     * @param name A string name of the tool
      */
     public void setName(String name) {
         this.name.set(name);
     }
 
+    /**
+     * Set the original owner of the tool
+     * @param owner A string of the owner of the tool
+     */
     public void setOwner(String owner) {
         this.owner.set(owner);
     }
 
+    /**
+     * Set the lend date of the tool
+     * @param lendDate A string of the lend date of the tool
+     */
     public void setLendDate(String lendDate) {
         this.lendDate.set(lendDate);
     }
 
+    /**
+     * Set the due date of the tool
+     * @param dueDate A string of the due date of the tool
+     */
     public void setDueDate(String dueDate) {
         this.dueDate.set(dueDate);
     }
 
+    /**
+     * Set the categories of the tool
+     * @param categories A string of the categories of the tool
+     */
     public void setCategories(String categories) {
         this.categories.set(categories);
     }

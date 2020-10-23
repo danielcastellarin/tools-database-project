@@ -16,11 +16,11 @@ import java.util.Set;
 public class SellToolsController extends Controller {
 
     @FXML
-    ComboBox<String> toolComboBox;
+    private ComboBox<String> toolComboBox;
     @FXML
-    ComboBox<String> userComboBox;
+    private ComboBox<String> userComboBox;
     @FXML
-    Text statusText;
+    private Text statusText;
 
     private List<Integer> tids;
     private List<String> toolNames;
@@ -28,6 +28,10 @@ public class SellToolsController extends Controller {
     private Set<String> usernames;
     private Set<Integer> uids;
 
+    /**
+     * Gets information on sellable tools and updates to tool combo box to
+     * display those tools.
+     */
     @FXML
     public void initialize() {
 
@@ -36,14 +40,14 @@ public class SellToolsController extends Controller {
         usernames = new HashSet<>();
         uids = new HashSet<>();
         toolPrices = new ArrayList<>();
-//        SQLController.getSellableUserTools(Main.getUID(), tids, toolNames, uids,
-//                usernames, toolPrices);
         SQLController.getSellableToolInfo(Main.getUID(), tids, toolNames, toolPrices);
-
         toolComboBox.getItems().addAll(toolNames);
-//        userComboBox.getItems().addAll(usernames);
     }
 
+    /**
+     * Enables and populates the list of users who have enough in their balance
+     * based on the selected tool
+     */
     @FXML
     public void selectTool() {
         userComboBox.getItems().clear();
@@ -58,7 +62,10 @@ public class SellToolsController extends Controller {
         }
     }
 
-
+    /**
+     * Sells a tool to the selected user
+     * @param event A button click
+     */
     public void sell(ActionEvent event) {
         String username = userComboBox.getSelectionModel().getSelectedItem();
         String toolName = toolComboBox.getSelectionModel().getSelectedItem();
