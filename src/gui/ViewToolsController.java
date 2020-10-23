@@ -1,14 +1,14 @@
 package gui;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.scene.control.TableColumn;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,6 +51,12 @@ public class ViewToolsController extends Controller{
     TableColumn borrowsDueDateColumn;
     @FXML
     TableColumn borrowsCategoriesColumn;
+    @FXML
+    Label clickInstructionLabel;
+    @FXML
+    Tab ownedToolTab;
+    @FXML
+    Tab borrowedToolTab;
 
 
     private BorrowedUserTools borrowedTools;
@@ -92,7 +98,11 @@ public class ViewToolsController extends Controller{
                     borrowedTools.getCategories().get(i)));
         }
         borrowsTable.setItems(FXCollections.observableList(borrowedToolList));
+        borrowedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to modify"));
+        ownedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to return it"));
+
     }
+
 
     @FXML
     public void gotoModifyTool(MouseEvent event) {
@@ -116,6 +126,10 @@ public class ViewToolsController extends Controller{
                 System.err.println(e.getMessage());
             }
         }
+    }
+
+
+    public void returnTool(MouseEvent event) {
 
     }
 

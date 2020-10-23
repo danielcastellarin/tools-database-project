@@ -20,7 +20,7 @@
                         <Font size="36.0" />
                     </font>
                 </Label>
-                <Label text="Double click on a tool to modify">
+                <Label fx:id="clickInstructionLabel" text="Double click on a tool to modify">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -29,7 +29,7 @@
         </VBox>
       <TabPane prefHeight="550.0" prefWidth="1000.0">
          <tabs>
-            <Tab closable="false" text="Owned Tools">
+            <Tab fx:id="ownedToolTab" closable="false" text="Owned Tools">
                <content>
                     <TableView fx:id="ownsTable" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
                         <columns>
@@ -42,7 +42,7 @@
                     </TableView>
                </content>
             </Tab>
-            <Tab closable="false" text="Borrowed Tools">
+            <Tab fx:id="borrowedToolTab" closable="false" text="Borrowed Tools">
                <content>
                   <TableView fx:id="borrowsTable" onMouseClicked="#gotoModifyTool" prefHeight="520.0" prefWidth="1000.0">
                      <columns>
