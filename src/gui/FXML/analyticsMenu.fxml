@@ -19,12 +19,12 @@
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="100.0" spacing="5.0">
          <children>
             <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Top 10 Tool Categories" textAlignment="CENTER" />
-            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Top 10 Active Users" textAlignment="CENTER" />
-            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Most Frequently Lent Tools" textAlignment="CENTER" />
-            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Most Active Users" textAlignment="CENTER" />
-            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="User Lend Data By Category" textAlignment="CENTER" />
-            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Likelihood of On-Time Return" textAlignment="CENTER" />
-            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Price Comparison" textAlignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Average Lend Time By Category" textAlignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Average Sale Price By Category" textAlignment="CENTER" />
+            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" textAlignment="CENTER" />
+            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" textAlignment="CENTER" />
+            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" textAlignment="CENTER" />
+            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" textAlignment="CENTER" />
          </children>
       </VBox>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">

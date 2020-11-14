@@ -26,7 +26,22 @@ public class AnalyticsSQLController extends SQLController {
 
     }
 
+    public static ResultSet getAverageTimeLentByCategory() {
+        String query = "SELECT c.tool_category, AVG(due_date - lend_date) AS " +
+                "time_interval FROM \"Borrows\" AS b INNER JOIN \"Has\" AS h " +
+                "ON b.tid = h.tid INNER JOIN \"Category\" AS c ON h.cid = c" +
+                ".cid WHERE return_date IS NOT NULL GROUP BY c.tool_category" +
+                " ORDER BY time_interval;";
+        return getResultSet(query);
+    }
 
+    public static ResultSet getAverageSalePriceByCategory() {
+        String query = "SELECT c.tool_category, AVG(o.sale_price) as " +
+                "avg_price FROM \"Has\" AS h INNER JOIN \"Category\" c ON c" +
+                ".cid = h.cid INNER JOIN \"Owns\" AS o ON h.tid = o.tid " +
+                "GROUP BY c.tool_category ORDER BY avg_price DESC;";
+        return getResultSet(query);
+    }
 
 
 
