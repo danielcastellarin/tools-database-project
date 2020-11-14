@@ -42,8 +42,8 @@ public class AnalyticsMenuController extends Controller {
                 csvName = "Average Sale Price By Category.csv";
                 resultSet = AnalyticsSQLController.getAverageSalePriceByCategory();
                 break;
-            case "User Tool Return Time":
-                csvName = "User Tool Return Time.csv";
+            case "Return Time Statistics (All Users)":
+                csvName = "Return Time Statistics (All Users).csv";
                 resultSet = AnalyticsSQLController.getUserToolReturnTime();
                 break;
         }

@@ -21,7 +21,7 @@
             <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Top 10 Tool Categories" textAlignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Average Lend Time By Category" textAlignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Average Sale Price By Category" textAlignment="CENTER" />
-            <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" textAlignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Return Time Statistics (All Users)" textAlignment="CENTER" />
             <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" textAlignment="CENTER" />
             <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" textAlignment="CENTER" />
             <Button disable="true" mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" textAlignment="CENTER" />

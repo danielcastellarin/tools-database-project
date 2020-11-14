@@ -20,7 +20,7 @@ public class AnalyticsSQLController extends SQLController {
     public static ResultSet getTopTenCategories() {
         String query = "SELECT category, count FROM (SELECT c.tool_category AS " +
                 "category, COUNT(*) AS count FROM \"Category\" AS c INNER JOIN " +
-                "\"Has\" as h ON c.cid = h.cid\n" +
+                "\"Has\" as h ON c.cid = h.cid " +
                 "GROUP BY c.tool_category ORDER BY count DESC) as cc LIMIT 10;";
         return getResultSet(query);
 
@@ -44,14 +44,18 @@ public class AnalyticsSQLController extends SQLController {
     }
 
     public static ResultSet getUserToolReturnTime() {
-        String query = "SELECT u.username, " +
-                "SUM(CASE WHEN return_date > due_date THEN return_date - due_date ELSE 0 END) AS late_differential, " +
+        String query = "SELECT u.username, SUM(CASE WHEN return_date > " +
+                "due_date THEN return_date - due_date ELSE 0 END) AS late_differential, " +
                 "SUM(CASE WHEN return_date <= due_date THEN due_date - return_date ELSE 0 END) AS early_differential, " +
-                "COUNT(*) AS total_borrowed\nFROM \"User\" AS u, \"Borrows\" AS b\n" +
-                "WHERE u.uid != 49 AND u.uid = b.bid AND return_date IS NOT NULL\n" +
-                "GROUP BY u.username\nORDER BY late_differential DESC, early_differential, total_borrowed";
+                "COUNT(*) AS total_borrowed FROM \"User\" AS u, \"Borrows\" " +
+                "AS b WHERE u.uid != 49 AND u.uid = b.uid AND return_date IS" +
+                " NOT " +
+                "NULL GROUP BY u.username ORDER BY late_differential DESC, " +
+                "early_differential, total_borrowed";
         return getResultSet(query);
     }
+
+
 
 
 
