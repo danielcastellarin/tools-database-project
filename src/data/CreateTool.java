@@ -80,7 +80,6 @@ public class CreateTool {
                     System.out.println( currentBorrower + " Return Tool to " + currentOwner);
                     currentBorrower = -1;
                     isLent = false;
-                    //TODO: SQL
                     DataGenerationSQLController.returnTool(tid, currentDate.toString());
                 }
             } else {
@@ -89,11 +88,10 @@ public class CreateTool {
                     System.out.print("Change Price From " + salePrice + " ");
                     salePrice = (random.nextInt(8) + 1) * 5;
                     System.out.println("to " + salePrice);
-                    //TODO: SQL
+                    DataGenerationSQLController.updatePrice(tid, salePrice);
                 // Insert into Owns, Update Date_Sold
                 } else if (actionVar < 8) {
                     int newOwner = random.nextInt(numUsers + 1) + 1;
-                    System.out.println("Update Date Sold to: " + currentDate);
                     System.out.println(currentOwner + " Sell Tool To: " + newOwner);
                     System.out.println("Date Purchased: " + currentDate);
                     System.out.println("Date Sold: Null");
