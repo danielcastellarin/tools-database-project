@@ -699,4 +699,27 @@ public class SQLController {
         performUpdate(query2);
     }
 
+    /**
+     * Get the average borrow time of all users
+     *
+     * @return average borrow time, -1 if error
+     */
+    public static float avgBorrowTime() {
+        // FIXME
+        String query1 = "SELECT u.username, AVG(b.return_date - b.lend_date) AS avg_time_lent\n" +
+                "FROM \"User\" AS u\n" +
+                "INNER JOIN \"Borrows\" b ON u.uid = b.uid\n" +
+                "WHERE b.return_date IS NOT NULL\n" +
+                "GROUP BY u.username\n" +
+                "ORDER BY avg_time_lent DESC\n";
+        performQuery(query1);
+
+        try {
+            return resultSet.getFloat(2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 }
