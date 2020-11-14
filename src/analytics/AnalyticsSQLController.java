@@ -48,14 +48,25 @@ public class AnalyticsSQLController extends SQLController {
                 "due_date THEN return_date - due_date ELSE 0 END) AS late_differential, " +
                 "SUM(CASE WHEN return_date <= due_date THEN due_date - return_date ELSE 0 END) AS early_differential, " +
                 "COUNT(*) AS total_borrowed FROM \"User\" AS u, \"Borrows\" " +
-                "AS b WHERE u.uid != 49 AND u.uid = b.uid AND return_date IS" +
-                " NOT " +
-                "NULL GROUP BY u.username ORDER BY late_differential DESC, " +
+                "AS b WHERE u.uid != 49 AND u.uid = b.uid AND return_date IS NOT NULL " +
+                "GROUP BY u.username ORDER BY late_differential DESC, " +
                 "early_differential, total_borrowed";
         return getResultSet(query);
     }
 
-
+    public static ResultSet getTopTenMostActiveUsers() {
+        String query = "SELECT num_owns.username, own_count + borrow_count + lend_count AS total" +
+                "FROM (SELECT u.username, COUNT(*) AS own_count FROM \"User\" AS u, \"Owns\" AS o " +
+                "WHERE u.uid = o.uid GROUP BY u.username) AS num_owns INNER JOIN ( " +
+                "SELECT u.username, COUNT(*) AS borrow_count FROM \"User\" AS u, \"Borrows\" AS b WHERE u.uid = b.uid " +
+                "GROUP BY u.username) AS num_borrows ON num_owns.username = num_borrows.username " +
+                "INNER JOIN (SELECT u.username, COUNT(*) AS lend_count FROM \"User\" AS u, \"Owns\" AS o, \"Borrows\" AS b " +
+                "WHERE u.uid = o.uid AND o.tid = b.tid AND ((o.date_sold IS NULL AND o.date_purchased < b.lend_date) " +
+                "OR b.lend_date BETWEEN o.date_purchased AND o.date_sold) " +
+                "GROUP BY u.username) AS num_lends ON num_borrows.username = num_lends.username " +
+                "ORDER BY total DESC FETCH FIRST 10 ROWS ONLY;";
+        return getResultSet(query);
+    }
 
 
 

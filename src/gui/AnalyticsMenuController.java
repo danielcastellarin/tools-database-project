@@ -46,6 +46,10 @@ public class AnalyticsMenuController extends Controller {
                 csvName = "Return Time Statistics (All Users).csv";
                 resultSet = AnalyticsSQLController.getUserToolReturnTime();
                 break;
+            case "Top 10 Most Active Users":
+                csvName = "Top 10 Most Active Users.csv";
+                resultSet = AnalyticsSQLController.getTopTenMostActiveUsers();
+                break;
         }
         AnalyticsCSVWriter.write(file, resultSet, csvName);
         statusText.setText("CSV written to: " + file + "\\" +csvName);
