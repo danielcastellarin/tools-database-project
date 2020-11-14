@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="400.0" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.HomeController">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="400.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeController">
    <children>
       <Label text="Menu" underline="true">
          <font>
@@ -56,7 +56,7 @@
             </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="131.0" prefHeight="60.8" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button disable="true" mnemonicParsing="false" onAction="#changeSceneFromGrid" prefHeight="76.0" prefWidth="200.0" text="Analytics" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#changeSceneFromGrid" prefHeight="76.0" prefWidth="200.0" text="Analytics" textAlignment="CENTER" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="210.0" layoutY="131.0" prefHeight="60.8" prefWidth="200.0" GridPane.rowIndex="3" />

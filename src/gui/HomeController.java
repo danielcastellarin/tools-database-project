@@ -38,7 +38,7 @@ public class HomeController extends Controller {
                 fxml = "FXML/balance.fxml";
                 break;
             case "Analytics":
-                fxml = "FXML/analytics.fxml";
+                fxml = "FXML/analyticsMenu.fxml";
                 break;
             default:
                 fxml = "FXML/home.fxml";
