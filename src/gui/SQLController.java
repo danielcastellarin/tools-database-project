@@ -340,9 +340,14 @@ public class SQLController {
      */
     private static void getToolInfoFromBorrows(int uid, List<Integer> tids, List<String> toolNames,
                                             List<String> lendDates, List<String> dueDates, List<Integer> owners, List<String> usernames) {
+        // FIXME
+//        String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
+//                "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
+//                "b.uid = " + uid + " AND b.due_date > CURRENT_DATE AND b.tid " +
+//                "= t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
         String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
                 "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
-                "b.uid = " + uid + " AND b.due_date > CURRENT_DATE AND b.tid " +
+                "b.uid = " + uid + " AND b.return_date IS NULL AND b.tid " +
                 "= t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
         performQuery(query);
         while (true) {
@@ -680,8 +685,11 @@ public class SQLController {
      * @param tid tool id
      */
     public static void returnTool(int tid) {
-        String query1 = "UPDATE \"Borrows\" SET due_date = CURRENT_DATE WHERE tid = " + tid + " AND due_date > CURRENT_DATE";
+        // FIXME
+//        String query1 = "UPDATE \"Borrows\" SET due_date = CURRENT_DATE WHERE tid = " + tid + " AND due_date > CURRENT_DATE";
+        String query1 = "UPDATE \"Borrows\" SET return_date = CURRENT_DATE WHERE tid = " + tid + " AND return_date IS NULL";
         performUpdate(query1);
+
         String query2 = "UPDATE \"Tool\" SET lendable = true WHERE tid = " + tid;
         performUpdate(query2);
     }
