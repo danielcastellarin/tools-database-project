@@ -81,6 +81,7 @@ public class CreateTool {
                     currentBorrower = -1;
                     isLent = false;
                     //TODO: SQL
+                    DataGenerationSQLController.returnTool(tid, currentDate.toString());
                 }
             } else {
                 // Update Owns

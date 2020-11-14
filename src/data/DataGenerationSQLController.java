@@ -84,5 +84,12 @@ public class DataGenerationSQLController extends SQLController {
         return true;
     }
 
+    public static void returnTool(int tid, String currentDate) {
+        String query1 = "UPDATE \"Borrows\" SET return_date = '" + currentDate + "' WHERE tid = " + tid + " AND return_date IS NULL";
+        performUpdate(query1);
+
+        String query2 = "UPDATE \"Tool\" SET lendable = true WHERE tid = " + tid;
+        performUpdate(query2);
+    }
 
 }
