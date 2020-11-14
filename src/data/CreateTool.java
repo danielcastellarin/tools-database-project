@@ -122,7 +122,7 @@ public class CreateTool {
 
         int numUsers = 54;
         Random random = new Random();
-        int uid = random.nextInt(54) + 1;
+        int uid = random.nextInt(53) + 1;
         CreateTool createTool = new CreateTool();
         createTool.createDataForTool(uid, numUsers);
 

@@ -604,7 +604,8 @@ public class SQLController {
     public static void updateTool(int tid, String name, int price, List<String> categories) {
         String query = "UPDATE \"Tool\" SET tool_name = '" + name + "' WHERE tid = " + tid;
         performUpdate(query);
-        query = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE tid = " + tid;
+        query = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE " +
+                "date_sold IS NULL AND tid = " + tid;
         performUpdate(query);
         deleteCategoriesFromHas(tid);
         insertCategoriesToHas(tid, categories);

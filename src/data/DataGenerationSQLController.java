@@ -98,8 +98,10 @@ public class DataGenerationSQLController extends SQLController {
      * @param tid tool id
      * @param price tool price
      */
-    public static void updatePrice(int tid,int price) {
+    public static void updatePrice(int tid, int price) {
         String query = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE " +
+                "date_sold IS NULL " +
+                "AND " +
                 "tid = " + tid;
         performUpdate(query);
     }
