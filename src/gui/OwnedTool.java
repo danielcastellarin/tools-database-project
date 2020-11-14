@@ -88,4 +88,5 @@ public class OwnedTool {
     public void setCategories(String categories) {
         this.categories.set(categories);
     }
+
 }
