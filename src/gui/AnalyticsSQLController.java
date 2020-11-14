@@ -24,4 +24,5 @@ public class AnalyticsSQLController extends SQLController {
         return getResultSet(query);
 
     }
+
 }
