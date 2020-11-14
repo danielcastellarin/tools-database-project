@@ -1,7 +1,12 @@
 package data;
 
+import gui.Credentials;
+import gui.SQLController;
+import javafx.util.Pair;
+
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
-import java.util.Random;
+import java.util.*;
 
 public class CreateTool {
 
@@ -20,26 +25,46 @@ public class CreateTool {
         return 1 / (1.1 + Math.exp(-((5 * x) / 6 + .8)));
     }
 
-    private LocalDate createDate(int initialDay, int finalDay) {
+    public Pair<String, List<String>> generateName(int tid) {
+        String catChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        long randomDay = initialDay + random.nextInt(finalDay - initialDay);
-        LocalDate purchaseDate = LocalDate.ofEpochDay(randomDay);
-        return purchaseDate;
+        StringBuilder toolName = new StringBuilder("Tool");
+        int numCategories = random.nextInt(4) + 3;
+        List<String> categories = new ArrayList<>();
+        Set<Integer> seen = new HashSet<Integer>();
+        for (int i = 0; i < numCategories; i++) {
+            int catIndex = random.nextInt(25) + 1;
+            if (seen.contains(catIndex)) continue;
+
+            toolName.append(catChars.charAt(catIndex));
+            seen.add(catIndex);
+            categories.add(String.valueOf(catChars.charAt(catIndex)));
+        }
+        return new Pair<>(toolName.toString(), categories);
     }
 
-    private void createDataForTool(int tid, int uid, int numUsers) {
+    private LocalDate createDate(int initialDay, int finalDay) {
+        long randomDay = initialDay + random.nextInt(finalDay - initialDay);
+        return LocalDate.ofEpochDay(randomDay);
+    }
 
+    private void createDataForTool(int uid, int numUsers) {
+        int tid = SQLController.getNextAvailableTID();
         LocalDate datePurchased = createDate(initialDay, finalDay);
         int salePrice = (random.nextInt(8) + 1) * 5;
         LocalDate dateSold = null;
         System.out.println("Owns(" + uid + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
 
+        Pair<String, List<String>> pair = generateName(tid);
+        String toolName = pair.getKey();
+        List<String> categories = pair.getValue();
 
-//        int lendDateStart = 0;
+        DataGenerationSQLController.addNewTool(uid, toolName,
+                datePurchased.toString(), salePrice, categories);
+
         LocalDate dueDate = null;
         int currentOwner = uid;
         int currentBorrower = -1;
-//        int lastSold = 0;
 
         boolean isLent = false;
 
@@ -51,18 +76,19 @@ public class CreateTool {
             int actionVar = random.nextInt(101) + 1;
             if (isLent) {
                 // Update Borrows Entry
-                if (actionVar < determineReturnProbability((int) (currentDate.toEpochDay() - dueDate.toEpochDay())) * 100){
+                if (actionVar < determineReturnProbability((int) (currentDate.toEpochDay() - dueDate.toEpochDay())) * 100) {
                     System.out.println( currentBorrower + " Return Tool to " + currentOwner);
                     currentBorrower = -1;
                     isLent = false;
+                    //TODO: SQL
                 }
-
             } else {
                 // Update Owns
                 if(actionVar < 2) {
                     System.out.print("Change Price From " + salePrice + " ");
                     salePrice = (random.nextInt(8) + 1) * 5;
                     System.out.println("to " + salePrice);
+                    //TODO: SQL
                 // Insert into Owns, Update Date_Sold
                 } else if (actionVar < 8) {
                     int newOwner = random.nextInt(numUsers + 1) + 1;
@@ -71,6 +97,7 @@ public class CreateTool {
                     System.out.println("Date Purchased: " + currentDate);
                     System.out.println("Date Sold: Null");
                     currentOwner = newOwner;
+                    //TODO SQL
                 // Insert into Borrows
                 } else if (actionVar < 20) {
                     currentBorrower = random.nextInt(numUsers + 1) + 1;
@@ -80,6 +107,9 @@ public class CreateTool {
                     System.out.println("Lend Date: " + currentDate);
                     System.out.println("Due Date: " + dueDate);
                     System.out.println("Return Date: Null");
+                    //TODO TEST SQL
+                    DataGenerationSQLController.insertNewBorrowRecord(uid,
+                            tid, dueDate.toString(), currentDate.toString());
                     isLent = true;
                 }
             }
@@ -88,8 +118,16 @@ public class CreateTool {
     }
 
     public static void main(String[] args) {
+        SQLController.openConnection(Credentials.getUrl(),
+                Credentials.getUsername(), Credentials.getPassword());
+
+        int numUsers = 54;
+        Random random = new Random();
+        int uid = random.nextInt(54) + 1;
         CreateTool createTool = new CreateTool();
-        createTool.createDataForTool(1, 1, 20);
+        createTool.createDataForTool(uid, numUsers);
+
+        SQLController.closeConnection();
     }
 
 }

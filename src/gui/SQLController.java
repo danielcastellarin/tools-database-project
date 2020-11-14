@@ -245,7 +245,8 @@ public class SQLController {
      * @param tid the tid of the tool
      * @param categories the categories to rea
      */
-    private static void insertCategoriesToHas(int tid, List<String> categories) {
+    protected static void insertCategoriesToHas(int tid,
+                                              List<String> categories) {
         List<Integer> cids = getCategoryIDs(categories);
         for (int cid : cids) {
             String query = "INSERT INTO \"Has\" (tid, cid)" +
@@ -262,7 +263,7 @@ public class SQLController {
      * @param datePurchased the date purchased
      * @param salePrice the sale price
      */
-    private static void insertToolToOwns(int uid, int tid,
+    protected static void insertToolToOwns(int uid, int tid,
                                          String datePurchased,
                                          int salePrice) {
         String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
@@ -278,7 +279,7 @@ public class SQLController {
      * @param tid the tid of the tool
      * @param toolName the name of the tool
      */
-    private static void insertNewToolToTool(int tid, String toolName) {
+    protected static void insertNewToolToTool(int tid, String toolName) {
         String query = "INSERT INTO \"Tool\" (tid, tool_name, lendable)" +
                 " " + "VALUES(" + tid + ", '" + toolName + "', true)";
         performUpdate(query);
