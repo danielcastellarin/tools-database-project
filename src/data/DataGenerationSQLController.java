@@ -50,5 +50,39 @@ public class DataGenerationSQLController extends SQLController {
         performUpdate(query2);
     }
 
+    /**
+     * Sell tool
+     *
+     * @param toUID user id
+     * @param fromUID user id
+     * @param tid tool id
+     * @return if successful
+     */
+    public static boolean sellTool(int toUID, int fromUID,
+                                   int tid, int salePrice, String dateSold) {
+
+        int toBalance = getBalance(toUID);
+
+        if (toBalance < salePrice) {
+            return false;
+        } else {
+            // Exchange currency
+            incrementBalance(toUID, -salePrice);
+            incrementBalance(fromUID, salePrice);
+
+            String query = "UPDATE \"Owns\" SET date_sold = '"+ dateSold  +
+                    "' WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
+                    "date_sold IS NULL";
+
+            performUpdate(query);
+
+            query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+                    "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", '" + dateSold + "', NULL, " + salePrice + ")";
+            System.out.println(query);
+            performUpdate(query);
+        }
+        return true;
+    }
+
 
 }

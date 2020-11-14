@@ -96,8 +96,9 @@ public class CreateTool {
                     System.out.println(currentOwner + " Sell Tool To: " + newOwner);
                     System.out.println("Date Purchased: " + currentDate);
                     System.out.println("Date Sold: Null");
+                    DataGenerationSQLController.sellTool(newOwner,
+                            currentOwner, tid, salePrice, currentDate.toString());
                     currentOwner = newOwner;
-                    //TODO SQL
                 // Insert into Borrows
                 } else if (actionVar < 20) {
                     currentBorrower = random.nextInt(numUsers + 1) + 1;
@@ -107,8 +108,7 @@ public class CreateTool {
                     System.out.println("Lend Date: " + currentDate);
                     System.out.println("Due Date: " + dueDate);
                     System.out.println("Return Date: Null");
-                    //TODO TEST SQL
-                    DataGenerationSQLController.insertNewBorrowRecord(uid,
+                    DataGenerationSQLController.insertNewBorrowRecord(currentBorrower,
                             tid, dueDate.toString(), currentDate.toString());
                     isLent = true;
                 }
