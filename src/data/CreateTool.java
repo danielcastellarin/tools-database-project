@@ -1,10 +1,8 @@
 package data;
 
-import gui.Credentials;
 import gui.SQLController;
 import javafx.util.Pair;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -18,9 +16,11 @@ public class CreateTool {
         this.random = new Random();
         this.initialDay = (int) LocalDate.of(2019, 11, 13).toEpochDay();
         this.finalDay = (int) LocalDate.of(2020, 11, 13).toEpochDay();
+        int numUsers = 53;
+        int uid = random.nextInt(numUsers) + 1;
+        createDataForTool(uid, numUsers);
     }
 
-    //
     private double determineReturnProbability(double x) {
         return 1 / (1.1 + Math.exp(-((5 * x) / 6 + .8)));
     }
@@ -115,18 +115,4 @@ public class CreateTool {
             System.out.println("----------------------");
         }
     }
-
-    public static void main(String[] args) {
-        SQLController.openConnection(Credentials.getUrl(),
-                Credentials.getUsername(), Credentials.getPassword());
-
-        int numUsers = 54;
-        Random random = new Random();
-        int uid = random.nextInt(53) + 1;
-        CreateTool createTool = new CreateTool();
-        createTool.createDataForTool(uid, numUsers);
-
-        SQLController.closeConnection();
-    }
-
 }
