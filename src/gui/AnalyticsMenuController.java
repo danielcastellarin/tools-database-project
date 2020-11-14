@@ -40,8 +40,12 @@ public class AnalyticsMenuController extends Controller {
                 break;
             case "Average Sale Price By Category":
                 csvName = "Average Sale Price By Category.csv";
-                resultSet =
-                        AnalyticsSQLController.getAverageSalePriceByCategory();
+                resultSet = AnalyticsSQLController.getAverageSalePriceByCategory();
+                break;
+            case "User Tool Return Time":
+                csvName = "User Tool Return Time.csv";
+                resultSet = AnalyticsSQLController.getUserToolReturnTime();
+                break;
         }
         AnalyticsCSVWriter.write(file, resultSet, csvName);
         statusText.setText("CSV written to: " + file + "\\" +csvName);

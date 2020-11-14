@@ -43,7 +43,15 @@ public class AnalyticsSQLController extends SQLController {
         return getResultSet(query);
     }
 
-
+    public static ResultSet getUserToolReturnTime() {
+        String query = "SELECT u.username, " +
+                "SUM(CASE WHEN return_date > due_date THEN return_date - due_date ELSE 0 END) AS late_differential, " +
+                "SUM(CASE WHEN return_date <= due_date THEN due_date - return_date ELSE 0 END) AS early_differential, " +
+                "COUNT(*) AS total_borrowed\nFROM \"User\" AS u, \"Borrows\" AS b\n" +
+                "WHERE u.uid != 49 AND u.uid = b.bid AND return_date IS NOT NULL\n" +
+                "GROUP BY u.username\nORDER BY late_differential DESC, early_differential, total_borrowed";
+        return getResultSet(query);
+    }
 
 
 
