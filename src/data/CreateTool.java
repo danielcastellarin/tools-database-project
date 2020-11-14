@@ -91,7 +91,8 @@ public class CreateTool {
                     DataGenerationSQLController.updatePrice(tid, salePrice);
                 // Insert into Owns, Update Date_Sold
                 } else if (actionVar < 8) {
-                    int newOwner = random.nextInt(numUsers + 1) + 1;
+                    int newOwner = random.nextInt(numUsers) + 1;
+                    if (newOwner == currentOwner) continue;
                     System.out.println(currentOwner + " Sell Tool To: " + newOwner);
                     System.out.println("Date Purchased: " + currentDate);
                     System.out.println("Date Sold: Null");
@@ -100,7 +101,8 @@ public class CreateTool {
                     currentOwner = newOwner;
                 // Insert into Borrows
                 } else if (actionVar < 20) {
-                    currentBorrower = random.nextInt(numUsers + 1) + 1;
+                    currentBorrower = random.nextInt(numUsers) + 1;
+                    if (currentBorrower == currentOwner) continue;
                     System.out.println(currentOwner + " Lend Tool To: " + currentBorrower);
                     dueDate = createDate((int)currentDate.toEpochDay() + 7,
                             (int)currentDate.toEpochDay() + 21);

@@ -27,16 +27,18 @@ public class AnalyticsMenuController extends Controller {
     public void downloadCSV(ActionEvent event) {
         String buttonLabel = ((Button) event.getSource()).getText();
         File file = Main.openDialog();
-        ResultSet resultSet;
+        ResultSet resultSet = null;
+        String csvName = null;
         switch (buttonLabel) {
             case "Top 10 Tool Categories":
-                String csvName = "Top Ten Categories.csv";
+                csvName = "Top Ten Categories.csv";
                 resultSet = AnalyticsSQLController.getTopTenCategories();
-                AnalyticsCSVWriter.write(file, resultSet, csvName);
-                statusText.setText("CSV written to: " + file + "\\" +csvName);
-                statusText.setVisible(true);
                 break;
+
         }
+        AnalyticsCSVWriter.write(file, resultSet, csvName);
+        statusText.setText("CSV written to: " + file + "\\" +csvName);
+        statusText.setVisible(true);
     }
 
     @FXML

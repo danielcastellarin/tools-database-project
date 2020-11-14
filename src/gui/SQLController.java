@@ -635,7 +635,7 @@ public class SQLController {
      */
     private static int getSalePrice(int tid) {
         String query =
-                "SELECT sale_price FROM \"Owns\" WHERE tid= " + tid + "AND " +
+                "SELECT sale_price FROM \"Owns\" WHERE tid= " + tid + " AND " +
                         "date_sold IS NULL";
         performQuery(query);
         try {
@@ -668,15 +668,18 @@ public class SQLController {
              incrementBalance(toUID, -salePrice);
              incrementBalance(fromUID, salePrice);
 
+            System.out.println("FROM ID: " + fromUID);
+            System.out.println("TO ID: " + toUID);
             String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE " +
-                    "WHERE uid = " + fromUID + " AND tid = " + tid + " AND date_sold IS NULL";
+                    "WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
+                    "date_sold IS NULL";
 
              performUpdate(query);
 
-             query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+             String query2 = "INSERT INTO \"Owns\" (uid, tid, date_purchased," +
+                     " " +
                      "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", CURRENT_DATE, NULL, " + salePrice + ")";
-            System.out.println(query);
-             performUpdate(query);
+             performUpdate(query2);
         }
         return true;
     }
