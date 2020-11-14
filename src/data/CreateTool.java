@@ -33,7 +33,7 @@ public class CreateTool {
         List<String> categories = new ArrayList<>();
         Set<Integer> seen = new HashSet<Integer>();
         for (int i = 0; i < numCategories; i++) {
-            int catIndex = random.nextInt(25) + 1;
+            int catIndex = random.nextInt(26);
             if (seen.contains(catIndex)) continue;
 
             toolName.append(catChars.charAt(catIndex));
