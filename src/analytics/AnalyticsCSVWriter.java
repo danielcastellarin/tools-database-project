@@ -1,7 +1,6 @@
 package analytics;
 
 import com.opencsv.CSVWriter;
-import gui.AnalyticsSQLController;
 
 import java.io.File;
 import java.io.FileWriter;

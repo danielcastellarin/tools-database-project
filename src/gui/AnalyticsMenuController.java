@@ -1,12 +1,11 @@
 package gui;
 
 import analytics.AnalyticsCSVWriter;
+import analytics.AnalyticsSQLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
