@@ -661,8 +661,9 @@ public class SQLController {
              incrementBalance(toUID, -salePrice);
              incrementBalance(fromUID, salePrice);
 
-             String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE " +
-                     "WHERE tid=" + tid;
+            String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE " +
+                    "WHERE uid = " + fromUID + " AND tid = " + tid + " AND date_sold IS NULL";
+
              performUpdate(query);
 
              query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
