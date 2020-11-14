@@ -15,7 +15,10 @@ public class CreateTool {
         this.finalDay = (int) LocalDate.of(2020, 11, 13).toEpochDay();
     }
 
-
+    //
+    private double determineReturnProbability(double x) {
+        return 1 / (1.1 + Math.exp(-((5 * x) / 6 + .8)));
+    }
 
     private LocalDate createDate(int initialDay, int finalDay) {
 
@@ -33,7 +36,7 @@ public class CreateTool {
 
 
 //        int lendDateStart = 0;
-        LocalDate dueDate;
+        LocalDate dueDate = null;
         int currentOwner = uid;
         int currentBorrower = -1;
 //        int lastSold = 0;
@@ -48,11 +51,12 @@ public class CreateTool {
             int actionVar = random.nextInt(101) + 1;
             if (isLent) {
                 // Update Borrows Entry
-                if (actionVar > 70) {
+                if (actionVar < determineReturnProbability((int) (currentDate.toEpochDay() - dueDate.toEpochDay())) * 100){
                     System.out.println( currentBorrower + " Return Tool to " + currentOwner);
                     currentBorrower = -1;
                     isLent = false;
                 }
+
             } else {
                 // Update Owns
                 if(actionVar < 2) {
