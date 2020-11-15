@@ -50,6 +50,13 @@ public class AnalyticsMenuController extends Controller {
                 csvName = "Top 10 Most Active Users.csv";
                 resultSet = AnalyticsSQLController.getTopTenMostActiveUsers();
                 break;
+            case "Average Borrow Time (All Users)":
+                csvName = "Average Borrow Time (All Users).csv";
+                resultSet = AnalyticsSQLController.getAverageBorrowTimeOfAllUsers();
+                break;
+            case "Tally of Each Category You Have Owned":
+                csvName = "Tally of Each Category You Have Owned.csv";
+                resultSet = AnalyticsSQLController.getTallyOfEachCategoryType();
         }
         AnalyticsCSVWriter.write(file, resultSet, csvName);
         statusText.setText("CSV written to: " + file + "\\" +csvName);

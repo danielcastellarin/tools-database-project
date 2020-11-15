@@ -1,6 +1,7 @@
 package analytics;
 
 import analytics.AnalyticsCSVWriter;
+import gui.Main;
 import gui.SQLController;
 
 import java.io.File;
@@ -55,7 +56,8 @@ public class AnalyticsSQLController extends SQLController {
     }
 
     public static ResultSet getTopTenMostActiveUsers() {
-        String query = "SELECT num_owns.username, own_count + borrow_count + lend_count AS total" +
+        String query = "SELECT num_owns.username, own_count + borrow_count + " +
+                "lend_count AS total " +
                 "FROM (SELECT u.username, COUNT(*) AS own_count FROM \"User\" AS u, \"Owns\" AS o " +
                 "WHERE u.uid = o.uid GROUP BY u.username) AS num_owns INNER JOIN ( " +
                 "SELECT u.username, COUNT(*) AS borrow_count FROM \"User\" AS u, \"Borrows\" AS b WHERE u.uid = b.uid " +
@@ -68,6 +70,29 @@ public class AnalyticsSQLController extends SQLController {
         return getResultSet(query);
     }
 
+    /**
+     * Get the average borrow time of all users
+     *
+     * @return average borrow time, -1 if error
+     */
+    public static ResultSet getAverageBorrowTimeOfAllUsers() {
+        String query = "SELECT u.username, AVG(b.return_date - b.lend_date) " +
+                "AS avg_time_lent FROM \"User\" AS u " +
+                "INNER JOIN \"Borrows\" b ON u.uid = b.uid " +
+                "WHERE b.return_date IS NOT NULL " +
+                "GROUP BY u.username ORDER BY avg_time_lent DESC;";
+        return getResultSet(query);
+
+    }
+
+    public static ResultSet getTallyOfEachCategoryType() {
+        String query = "SELECT c.tool_category, COUNT(*) " +
+                "FROM \"Category\" AS c INNER JOIN \"Has\" AS h ON c.cid = h" +
+                ".cid INNER JOIN \"Owns\" AS o on h.tid = o.tid WHERE o.uid =" +
+                " " + Main.getUID() + " GROUP BY c.tool_category " +
+                "ORDER BY COUNT(*) DESC;";
+        return getResultSet(query);
+    }
 
 
 }
