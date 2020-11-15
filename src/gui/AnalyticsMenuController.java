@@ -44,7 +44,7 @@ public class AnalyticsMenuController extends Controller {
                 break;
             case "Return Time Statistics (All Users)":
                 csvName = "Return Time Statistics (All Users).csv";
-                resultSet = AnalyticsSQLController.getUserToolReturnTime();
+                resultSet = AnalyticsSQLController.getUserToolReturnTimeDifferential();
                 break;
             case "Top 10 Most Active Users":
                 csvName = "Top 10 Most Active Users.csv";
