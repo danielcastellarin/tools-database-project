@@ -42,7 +42,7 @@ public class AnalyticsMenuController extends Controller {
                 csvName = "Average Sale Price By Category.csv";
                 resultSet = AnalyticsSQLController.getAverageSalePriceByCategory();
                 break;
-            case "Return Time Statistics (All Users)":
+            case "Return Time Statistics (All Users)":      // TODO make this name Return Time Differentials for All Users
                 csvName = "Return Time Statistics (All Users).csv";
                 resultSet = AnalyticsSQLController.getUserToolReturnTimeDifferential();
                 break;
