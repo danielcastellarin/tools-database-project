@@ -44,17 +44,6 @@ public class AnalyticsSQLController extends SQLController {
     }
 
     public static ResultSet getUserToolReturnTimeDifferential() {
-        String query = "SELECT u.username, SUM(CASE WHEN return_date > " +
-                "due_date THEN return_date - due_date ELSE 0 END) AS late_differential, " +
-                "SUM(CASE WHEN return_date <= due_date THEN due_date - return_date ELSE 0 END) AS early_differential, " +
-                "COUNT(*) AS total_borrowed FROM \"User\" AS u, \"Borrows\" " +
-                "AS b WHERE u.uid = b.uid AND return_date IS NOT NULL " +
-                "GROUP BY u.username ORDER BY late_differential DESC, " +
-                "early_differential, total_borrowed";
-        return getResultSet(query);
-    }
-
-    public static ResultSet getUserToolReturnTimeDifferential2() {
         String query = "SELECT uname, ((early_differential - late_differential)::FLOAT / total_borrowed::FLOAT) AS diff FROM (" +
                 " SELECT username AS uname, SUM(CASE WHEN return_date > due_date THEN return_date - due_date ELSE 0 END) AS late_differential," +
                 " SUM(CASE WHEN return_date <= due_date THEN due_date - return_date ELSE 0 END) AS early_differential," +
