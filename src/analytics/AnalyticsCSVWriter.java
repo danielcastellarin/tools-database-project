@@ -17,7 +17,7 @@ public class AnalyticsCSVWriter{
     public static void write(File filePath,
                              ResultSet resultSet, String fileName) {
         try {
-            FileWriter output = new FileWriter(filePath + "\\" + fileName);
+            FileWriter output = new FileWriter(filePath + "/" + fileName);
             CSVWriter writer = new CSVWriter(output);
             writer.writeAll(resultSet, true);
             writer.close();
@@ -29,7 +29,7 @@ public class AnalyticsCSVWriter{
     }
 
     public static void main(String[] args) {
-        String st = System.getProperty("user.home") + "\\Desktop";
+        String st = System.getProperty("user.home") + "/Desktop";
 
         ResultSet resultSet = AnalyticsSQLController.getTopTenCategories();
         File file = new File(st);
