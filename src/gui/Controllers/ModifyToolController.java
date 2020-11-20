@@ -1,5 +1,8 @@
-package gui;
+package gui.Controllers;
 
+import gui.OwnedTool;
+import gui.OwnedUserTools;
+import gui.SQLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

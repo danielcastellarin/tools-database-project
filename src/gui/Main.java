@@ -27,7 +27,7 @@ public class Main extends Application {
         SQLController.openConnection(Credentials.getUrl(),
                 Credentials.getUsername(), Credentials.getPassword());
 
-        Parent root = FXMLLoader.load(getClass().getResource("FXML/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Controllers/FXML/login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 400, 500));
