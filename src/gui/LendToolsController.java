@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class LendToolsController extends Controller{
+public class LendToolsController extends Controller {
 
     @FXML
     private ComboBox<String> toolComboBox;
@@ -31,7 +31,7 @@ public class LendToolsController extends Controller{
 
     /**
      * Queries the database to get all available lendable tools and the
-     * usernames of all other users and populates the given UI componetn
+     * usernames of all other users and populates the given UI component
      */
     @FXML
     public void initialize() {
@@ -41,7 +41,7 @@ public class LendToolsController extends Controller{
                 super.updateItem(date, empty);
                 LocalDate today = LocalDate.now();
 
-                setDisable(empty || date.compareTo(today) <= 0 );
+                setDisable(empty || date.compareTo(today) <= 0);
             }
         });
 
@@ -57,6 +57,7 @@ public class LendToolsController extends Controller{
     /**
      * Gets the selected information from the UI fields and queries the
      * database to show that a tool has been lent
+     *
      * @param event A button click
      */
     @FXML
@@ -74,7 +75,5 @@ public class LendToolsController extends Controller{
         } else {
             statusText.setVisible(true);
         }
-
-
     }
 }

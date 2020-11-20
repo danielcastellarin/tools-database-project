@@ -34,7 +34,6 @@ public class SellToolsController extends Controller {
      */
     @FXML
     public void initialize() {
-
         tids = new ArrayList<>();
         toolNames = new ArrayList<>();
         usernames = new HashSet<>();
@@ -64,6 +63,7 @@ public class SellToolsController extends Controller {
 
     /**
      * Sells a tool to the selected user
+     *
      * @param event A button click
      */
     public void sell(ActionEvent event) {
@@ -82,12 +82,9 @@ public class SellToolsController extends Controller {
             } else {
                 gotoHome(event);
             }
-
         } else {
             statusText.setText("Fill Out All Fields");
             statusText.setVisible(true);
         }
     }
-
-
 }

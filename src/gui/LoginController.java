@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class LoginController extends Controller{
+public class LoginController extends Controller {
 
     @FXML
     private TextField usernameField;
@@ -22,6 +22,7 @@ public class LoginController extends Controller{
     /**
      * Gets the username and password from the UI and queries the database to
      * make sure a valid username and password has been entered.
+     *
      * @param event A button click
      */
     @FXML
@@ -35,7 +36,7 @@ public class LoginController extends Controller{
                 loginStatusText.setVisible(false);
                 Main.setUID(uid);
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-                changeScene("FXML/home.fxml",  "Home");
+                changeScene("FXML/home.fxml", "Home");
             } else {
                 loginStatusText.setVisible(true);
             }
@@ -46,14 +47,14 @@ public class LoginController extends Controller{
 
     /**
      * Goes to the create new account scene
+     *
      * @param event A button click
      */
     @FXML
     public void gotoCreateNewAccount(ActionEvent event) {
-        ((Stage)(((Hyperlink)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Hyperlink) event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/newAccount.fxml", "Create New Account");
     }
-
 
 
 }

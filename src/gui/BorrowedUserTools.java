@@ -15,6 +15,7 @@ public class BorrowedUserTools {
 
     /**
      * Constructs a new BorrowedUserTools Object
+     *
      * @param uid The user id of the user
      */
     public BorrowedUserTools(int uid) {
@@ -30,6 +31,7 @@ public class BorrowedUserTools {
 
     /**
      * Returns a list of the TIDs the user has borrowed
+     *
      * @return A list of integer TIDs
      */
     public List<Integer> getTids() {
@@ -38,6 +40,7 @@ public class BorrowedUserTools {
 
     /**
      * Returns a list of the usernames of owners borrowed from
+     *
      * @return A list of Strings of usernames
      */
     public List<String> getOwnerNames() {
@@ -46,6 +49,7 @@ public class BorrowedUserTools {
 
     /**
      * Returns a list of the tool names being borrowed
+     *
      * @return A list of Strings of tool names
      */
     public List<String> getToolNames() {
@@ -54,6 +58,7 @@ public class BorrowedUserTools {
 
     /**
      * Returns a list of lend dates
+     *
      * @return A list of Strings of lend dates
      */
     public List<String> getLendDates() {
@@ -62,6 +67,7 @@ public class BorrowedUserTools {
 
     /**
      * Returns a list of due dates
+     *
      * @return A list of Strings of due dates
      */
     public List<String> getDueDates() {
@@ -70,6 +76,7 @@ public class BorrowedUserTools {
 
     /**
      * Returns a list of categories for each tool
+     *
      * @return A list of Strings of categories
      */
     public List<String> getCategories() {

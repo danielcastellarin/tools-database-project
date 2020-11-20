@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class ModifyToolController extends Controller{
+public class ModifyToolController extends Controller {
 
     @FXML
     private TextField toolNameTextField;
@@ -30,11 +30,12 @@ public class ModifyToolController extends Controller{
     /**
      * Creates the necessary data for getting the current information about
      * an owned tool and updates the UI accordingly
+     *
      * @param theTool An OwnedTool object containing information on the tool
-     * @param tools An OwnedUserTools object containing information on all
-     *              owned tools
-     * @param index The index of the selected tool
-     * @param tid The tool id of the tool
+     * @param tools   An OwnedUserTools object containing information on all
+     *                owned tools
+     * @param index   The index of the selected tool
+     * @param tid     The tool id of the tool
      */
     @FXML
     public void initialize(OwnedTool theTool, OwnedUserTools tools, int index, int tid) {
@@ -50,13 +51,14 @@ public class ModifyToolController extends Controller{
 
     /**
      * Updates the sale price of the tool based on which button is clicked
+     *
      * @param event A button click
      */
     @FXML
     private void changePrice(ActionEvent event) {
-        String incrementText = ((((Button)event.getSource()).getText()));
+        String incrementText = ((((Button) event.getSource()).getText()));
         int initialPrice = Integer.parseInt(priceTextField.getText());
-        if (initialPrice >= 0){
+        if (initialPrice >= 0) {
             switch (incrementText) {
                 case "+10":
                     priceTextField.setText(String.valueOf(initialPrice + 10));
@@ -82,6 +84,7 @@ public class ModifyToolController extends Controller{
 
     /**
      * Parses the given String category into individual Strings
+     *
      * @param category A String of comma separated categories
      * @return
      */
@@ -93,12 +96,13 @@ public class ModifyToolController extends Controller{
 
     /**
      * Changes the scene to the view tools scene
+     *
      * @param event A button click
      */
     @FXML
     public void gotoViewTools(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-        changeScene("FXML/viewTools.fxml",  "View Tools");
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+        changeScene("FXML/viewTools.fxml", "View Tools");
     }
 
     /**
@@ -112,10 +116,11 @@ public class ModifyToolController extends Controller{
     /**
      * Submits the modified values to the database and returns to the view
      * tools scene
+     *
      * @param event A button click
      */
     @FXML
-    public void modifyTool(ActionEvent event){
+    public void modifyTool(ActionEvent event) {
 
         String newName = toolNameTextField.getText();
         statusText.setVisible(false);

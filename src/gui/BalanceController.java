@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class BalanceController extends Controller{
+public class BalanceController extends Controller {
 
     @FXML
     private TextField balanceTextField;
@@ -25,11 +25,12 @@ public class BalanceController extends Controller{
     /**
      * Updates the balance of the user in both the database and UI based on the
      * button selected
+     *
      * @param event A button click
      */
     @FXML
     public void updateBalance(ActionEvent event) {
-        String id = (((Button)event.getSource()).getText());
+        String id = (((Button) event.getSource()).getText());
         System.out.println(id);
         int increment = 0;
         switch (id) {

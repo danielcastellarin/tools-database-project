@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class AddToolController extends Controller{
+public class AddToolController extends Controller {
 
     private static List<String> categories;
 
@@ -35,6 +35,7 @@ public class AddToolController extends Controller{
 
     /**
      * Updates the price of the tool with the use of a series of buttons
+     *
      * @param event A button click
      */
     @FXML
@@ -68,10 +69,11 @@ public class AddToolController extends Controller{
     /**
      * Gets the selected parameters for the tool and adds the tool to the
      * appropriate tables in the database
+     *
      * @param event A button click
      */
     @FXML
-    public void addTool(ActionEvent event){
+    public void addTool(ActionEvent event) {
         String toolName = toolNameTextField.getText();
 
         if (!toolName.equals("")) {

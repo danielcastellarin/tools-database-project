@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class ViewToolsController extends Controller{
+public class ViewToolsController extends Controller {
 
     @FXML
     TableView ownsTable;
@@ -63,19 +63,15 @@ public class ViewToolsController extends Controller{
     private int selectedTid;
 
     /**
-     * Fills in the tables of Owned and Borrowed tools
+     * Fills in the tables of the user's Owned and Borrowed tools
      */
     @FXML
     public void initialize() {
-        //Owned Tools Table
         updateOwnedTable();
-
-        //Borrowed Tools Table
         updateBorrowedTable();
 
         borrowedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to return it"));
         ownedToolTab.setOnSelectionChanged(event -> clickInstructionLabel.setText("Double click on a tool to modify"));
-
     }
 
     /**
@@ -116,17 +112,17 @@ public class ViewToolsController extends Controller{
         borrowsTable.setItems(FXCollections.observableList(borrowedToolList));
     }
 
-
     /**
      * Opens the modify tools scene
+     *
      * @param event A mouse double click
      */
     @FXML
     public void gotoModifyTool(MouseEvent event) {
         if (event.getClickCount() == 2) {
-            int index = ((TableView)event.getSource()).getSelectionModel().getFocusedIndex();
+            int index = ((TableView) event.getSource()).getSelectionModel().getFocusedIndex();
             selectedTid = ownedTools.getTids().get(index);
-            ((Stage)(((TableView)event.getSource()).getScene().getWindow())).close();
+            ((Stage) (((TableView) event.getSource()).getScene().getWindow())).close();
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
                         "/modifyTool.fxml"));
@@ -147,16 +143,16 @@ public class ViewToolsController extends Controller{
 
     /**
      * Returns a tool to the original user
+     *
      * @param event A mouse double click
      */
     @FXML
     public void returnTool(MouseEvent event) {
         if (event.getClickCount() == 2) {
-            int index = ((TableView)event.getSource()).getSelectionModel().getFocusedIndex();
+            int index = ((TableView) event.getSource()).getSelectionModel().getFocusedIndex();
             selectedTid = borrowedTools.getTids().get(index);
             SQLController.returnTool(selectedTid);
             updateBorrowedTable();
         }
     }
-
 }

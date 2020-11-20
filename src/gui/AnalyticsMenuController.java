@@ -21,6 +21,7 @@ public class AnalyticsMenuController extends Controller {
 
     /**
      * Downloads an appropriate CSV in accordance with the button clicked
+     *
      * @param event A button click
      */
     @FXML
@@ -60,7 +61,7 @@ public class AnalyticsMenuController extends Controller {
                 resultSet = AnalyticsSQLController.getTallyOfEachCategoryType();
         }
         AnalyticsCSVWriter.write(file, resultSet, csvName);
-        statusText.setText("CSV written to: " + file + "\\" +csvName);
+        statusText.setText("CSV written to: " + file + "\\" + csvName);
         statusText.setVisible(true);
     }
 
@@ -68,6 +69,6 @@ public class AnalyticsMenuController extends Controller {
     public void gotoHome(ActionEvent event) {
         changeScene("FXML/home.fxml", "Home");
         statusText.setVisible(false);
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 }

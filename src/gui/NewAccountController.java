@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class NewAccountController extends Controller{
+public class NewAccountController extends Controller {
 
     @FXML
     private TextField firstNameTextField;
@@ -26,6 +26,7 @@ public class NewAccountController extends Controller{
      * Collects the input from the UI components, queries the database to see
      * if the username is taken, if not, updates the the database and returns
      * to the login scene
+     *
      * @param event A button click
      */
     @FXML
@@ -51,6 +52,4 @@ public class NewAccountController extends Controller{
             creationStatusText.setVisible(true);
         }
     }
-
-
 }

@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
@@ -14,12 +13,13 @@ public class HomeController extends Controller {
     /**
      * Changes the scene to the appropriate scene based on which button from
      * the grid of buttons is selected
+     *
      * @param event A button click
      */
     @FXML
     public void changeSceneFromGrid(ActionEvent event) {
         String buttonLabel = ((Button) event.getSource()).getText();
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
         String fxml;
         switch (buttonLabel) {
             case "Add Tool":
@@ -46,5 +46,4 @@ public class HomeController extends Controller {
         }
         changeScene(fxml, buttonLabel);
     }
-
 }

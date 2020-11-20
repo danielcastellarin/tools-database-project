@@ -16,7 +16,8 @@ public class OwnedUserTools {
 
     /**
      * Constructs a new Owned User Tools Object
-     * @param uid  The ID of the user
+     *
+     * @param uid The ID of the user
      */
     public OwnedUserTools(int uid) {
         this.tids = new ArrayList<>();
@@ -29,6 +30,7 @@ public class OwnedUserTools {
 
     /**
      * Returns the list of Tools ID's
+     *
      * @return a list of Tool ID's
      */
     public List<Integer> getTids() {
@@ -37,6 +39,7 @@ public class OwnedUserTools {
 
     /**
      * Returns the list of Tool prices
+     *
      * @return a list of Tool prices
      */
     public List<Integer> getSalePrices() {
@@ -45,6 +48,7 @@ public class OwnedUserTools {
 
     /**
      * Returns the list of Tool names
+     *
      * @return a list of Tool names
      */
     public List<String> getToolNames() {
@@ -53,6 +57,7 @@ public class OwnedUserTools {
 
     /**
      * Returns a Tool ID based on the index given
+     *
      * @param index an index that we're using to access the list of Tool ID's
      * @return a Tool ID
      */
@@ -62,6 +67,7 @@ public class OwnedUserTools {
 
     /**
      * Returns a list of booleans that state whether a Tool is available
+     *
      * @return the Tool availability list
      */
     public List<Boolean> getLendable() {
@@ -70,6 +76,7 @@ public class OwnedUserTools {
 
     /**
      * Returns a list of the Tool categories
+     *
      * @return the Tool category list
      */
     public List<String> getCategories() {

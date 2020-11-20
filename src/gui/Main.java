@@ -16,12 +16,13 @@ public class Main extends Application {
     private static Stage stage;
 
     /**
-     * Opens a connection to the databse and displays the login scene
+     * Opens a connection to the database and displays the login scene
+     *
      * @param primaryStage The Stage of the scene
      * @throws Exception if anything goes wrong on startup
      */
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         this.stage = stage;
         SQLController.openConnection(Credentials.getUrl(),
                 Credentials.getUsername(), Credentials.getPassword());
@@ -43,12 +44,13 @@ public class Main extends Application {
      * Closes the database connection when the application closes
      */
     @Override
-    public void stop(){
+    public void stop() {
         SQLController.closeConnection();
     }
 
     /**
      * Sets the UID of the user for the current session
+     *
      * @param uid The integer UID of the user
      */
     public static void setUID(int uid) {
@@ -57,6 +59,7 @@ public class Main extends Application {
 
     /**
      * Gets the UID of the user for the current session
+     *
      * @return The integer UID of the user
      */
     public static int getUID() {
@@ -65,6 +68,7 @@ public class Main extends Application {
 
     /**
      * Launches the application
+     *
      * @param args
      */
     public static void main(String[] args) {

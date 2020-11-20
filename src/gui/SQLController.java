@@ -14,7 +14,7 @@ public class SQLController {
     /**
      * Opens the connection with the PostgresSQL database.
      *
-     * @param url the url of the database
+     * @param url      the url of the database
      * @param username the username to use when connecting
      * @param password the password to use when connecting
      */
@@ -105,9 +105,9 @@ public class SQLController {
      * Creates a new user in the database.
      *
      * @param firstName the first name of the user
-     * @param lastName the last name of the user
-     * @param username the username of the user
-     * @param password the password of the user
+     * @param lastName  the last name of the user
+     * @param username  the username of the user
+     * @param password  the password of the user
      * @return true if the user is able to be created
      */
     public static boolean createNewUser(String firstName, String lastName,
@@ -143,7 +143,7 @@ public class SQLController {
     /**
      * Increases the balance of a user by a specific amount
      *
-     * @param uid the user id
+     * @param uid       the user id
      * @param increment the value to increment by
      * @return the new balance after incrementing
      */
@@ -242,11 +242,11 @@ public class SQLController {
     /**
      * Creates new relationship between a tool and a category in the database.
      *
-     * @param tid the tid of the tool
+     * @param tid        the tid of the tool
      * @param categories the categories to rea
      */
     protected static void insertCategoriesToHas(int tid,
-                                              List<String> categories) {
+                                                List<String> categories) {
         List<Integer> cids = getCategoryIDs(categories);
         for (int cid : cids) {
             String query = "INSERT INTO \"Has\" (tid, cid)" +
@@ -258,14 +258,14 @@ public class SQLController {
     /**
      * Inserts tool into Owns table.
      *
-     * @param uid the uid of the user
-     * @param tid the tid of the tool
+     * @param uid           the uid of the user
+     * @param tid           the tid of the tool
      * @param datePurchased the date purchased
-     * @param salePrice the sale price
+     * @param salePrice     the sale price
      */
     protected static void insertToolToOwns(int uid, int tid,
-                                         String datePurchased,
-                                         int salePrice) {
+                                           String datePurchased,
+                                           int salePrice) {
         String query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
                 "date_sold, sale_price)" +
                 " " + "VALUES(" + uid + ", " + tid + ", '" + datePurchased +
@@ -276,7 +276,7 @@ public class SQLController {
     /**
      * Inserts new tool into tool table
      *
-     * @param tid the tid of the tool
+     * @param tid      the tid of the tool
      * @param toolName the name of the tool
      */
     protected static void insertNewToolToTool(int tid, String toolName) {
@@ -288,11 +288,11 @@ public class SQLController {
     /**
      * Adds new tool
      *
-     * @param uid the user id
-     * @param toolName tool name
+     * @param uid          the user id
+     * @param toolName     tool name
      * @param purchaseDate date of purchase
-     * @param sale_price sale price
-     * @param categories categories list
+     * @param sale_price   sale price
+     * @param categories   categories list
      */
     public static void addNewTool(int uid, String toolName,
                                   String purchaseDate, int sale_price,
@@ -306,9 +306,9 @@ public class SQLController {
     /**
      * Gets tool info from owns table
      *
-     * @param uid the user id
+     * @param uid        the user id
      * @param salePrices sale prices
-     * @param tids tool ids
+     * @param tids       tool ids
      */
     private static void getToolInfoFromOwns(int uid, List<Integer> salePrices,
                                             List<Integer> tids) {
@@ -331,21 +331,16 @@ public class SQLController {
     /**
      * Gets tool info from borrows table
      *
-     * @param uid the user id
-     * @param tids list of tool ids
+     * @param uid       the user id
+     * @param tids      list of tool ids
      * @param toolNames list of tool names
      * @param lendDates list of lend dates
-     * @param dueDates list of due dates
-     * @param owners list of owners
+     * @param dueDates  list of due dates
+     * @param owners    list of owners
      * @param usernames list of owners
      */
     private static void getToolInfoFromBorrows(int uid, List<Integer> tids, List<String> toolNames,
-                                            List<String> lendDates, List<String> dueDates, List<Integer> owners, List<String> usernames) {
-        // FIXME
-//        String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
-//                "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
-//                "b.uid = " + uid + " AND b.due_date > CURRENT_DATE AND b.tid " +
-//                "= t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
+                                               List<String> lendDates, List<String> dueDates, List<Integer> owners, List<String> usernames) {
         String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
                 "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
                 "b.uid = " + uid + " AND b.return_date IS NULL AND b.tid " +
@@ -369,9 +364,9 @@ public class SQLController {
     /**
      * Gets tool info from tool table
      *
-     * @param tids list of tool ids
+     * @param tids      list of tool ids
      * @param toolNames list of tool names
-     * @param lendable is lendable
+     * @param lendable  is lendable
      */
     private static void getToolInfoFromTool(List<Integer> tids,
                                             List<String> toolNames,
@@ -397,7 +392,7 @@ public class SQLController {
     /**
      * Gets tool info from has table
      *
-     * @param tids tool ids
+     * @param tids       tool ids
      * @param categories list of categories
      */
     private static void getToolInfoFromHas(List<Integer> tids,
@@ -425,7 +420,7 @@ public class SQLController {
     /**
      * Gets lendable tool info
      *
-     * @param tids list of tool ids
+     * @param tids      list of tool ids
      * @param toolNames list of tool names
      */
     private static void getLendableToolInfo(int uid, List<Integer> tids, List<String> toolNames) {
@@ -447,13 +442,13 @@ public class SQLController {
     /**
      * Gets sellable tool info
      *
-     * @param uid user id
-     * @param tids list of tool ids
-     * @param toolNames list of tool names
+     * @param uid        user id
+     * @param tids       list of tool ids
+     * @param toolNames  list of tool names
      * @param toolPrices list of tool prices
      */
     public static void getSellableToolInfo(int uid, List<Integer> tids,
-                                               List<String> toolNames, List<Integer> toolPrices) {
+                                           List<String> toolNames, List<Integer> toolPrices) {
         String query = "SELECT t.tid, t.tool_name, o.sale_price FROM \"Owns\" o, \"Tool\" t WHERE " +
                 "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = " +
                 "true AND date_sold IS NULL";
@@ -473,11 +468,11 @@ public class SQLController {
     /**
      * Get user tools
      *
-     * @param uid user id
-     * @param tids list of tool ids
+     * @param uid        user id
+     * @param tids       list of tool ids
      * @param salePrices list of sale price
-     * @param toolNames list of tool names
-     * @param lendable is lendable
+     * @param toolNames  list of tool names
+     * @param lendable   is lendable
      * @param categories list of categories
      */
     public static void getUserTools(int uid, List<Integer> tids,
@@ -493,13 +488,13 @@ public class SQLController {
     /**
      * Get borrowed tools
      *
-     * @param uid user id
-     * @param tids list of tool ids
-     * @param toolNames list of tool names
-     * @param owners list of owners
-     * @param usernames list of usernames
-     * @param lendDates list of lend dates
-     * @param dueDates list of due dates
+     * @param uid        user id
+     * @param tids       list of tool ids
+     * @param toolNames  list of tool names
+     * @param owners     list of owners
+     * @param usernames  list of usernames
+     * @param lendDates  list of lend dates
+     * @param dueDates   list of due dates
      * @param categories list of categories
      */
     public static void getBorrowedTools(int uid, List<Integer> tids,
@@ -516,10 +511,10 @@ public class SQLController {
     /**
      * Gets lendable user tools
      *
-     * @param uid user id
-     * @param tids list of tool ids
+     * @param uid       user id
+     * @param tids      list of tool ids
      * @param toolNames list of tool names
-     * @param uids set of user ids
+     * @param uids      set of user ids
      * @param usernames set of usernames
      */
     public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
@@ -531,8 +526,8 @@ public class SQLController {
     /**
      * Get all other users from user table
      *
-     * @param uid user id
-     * @param uids set of user ids
+     * @param uid       user id
+     * @param uids      set of user ids
      * @param usernames set of usernames
      */
     public static void getAllOtherUsers(int uid, Set<Integer> uids,
@@ -554,13 +549,13 @@ public class SQLController {
     /**
      * Get users with enough money for tool
      *
-     * @param uid user id
-     * @param uids set of user ids
+     * @param uid       user id
+     * @param uids      set of user ids
      * @param usernames set of usernames
      * @param toolPrice tool price
      */
     public static void getUsersWithEnoughBank(int uid, Set<Integer> uids,
-                                        Set<String> usernames, int toolPrice) {
+                                              Set<String> usernames, int toolPrice) {
         String query = "SELECT uid, username FROM \"User\" WHERE " +
                 "uid != " + uid + " AND balance > " + toolPrice;
         performQuery(query);
@@ -596,9 +591,9 @@ public class SQLController {
     /**
      * Update tool in tool and owns tables
      *
-     * @param tid tool id
-     * @param name tool name
-     * @param price tool price
+     * @param tid        tool id
+     * @param name       tool name
+     * @param price      tool price
      * @param categories list of categories
      */
     public static void updateTool(int tid, String name, int price, List<String> categories) {
@@ -615,8 +610,8 @@ public class SQLController {
      * Insert new record into borrow table
      *
      * @param username username
-     * @param tid tool id
-     * @param dueDate date tool is due
+     * @param tid      tool id
+     * @param dueDate  date tool is due
      */
     public static void insertNewBorrowRecord(String username, int tid, String dueDate) {
         int uid = getUIDFromUsername(username);
@@ -651,12 +646,12 @@ public class SQLController {
      * Sell tool
      *
      * @param toUsername username
-     * @param fromUID user id
-     * @param tid tool id
-     * @return if successful
+     * @param fromUID    user id
+     * @param tid        tool id
+     * @return true if tool was successfully sold
      */
     public static boolean sellTool(String toUsername, int fromUID,
-                                int tid) {
+                                   int tid) {
         int salePrice = getSalePrice(tid);
         int toUID = getUIDFromUsername(toUsername);
         int toBalance = getBalance(toUID);
@@ -664,9 +659,9 @@ public class SQLController {
         if (toBalance < salePrice) {
             return false;
         } else {
-             // Exchange currency
-             incrementBalance(toUID, -salePrice);
-             incrementBalance(fromUID, salePrice);
+            // Exchange currency
+            incrementBalance(toUID, -salePrice);
+            incrementBalance(fromUID, salePrice);
 
             System.out.println("FROM ID: " + fromUID);
             System.out.println("TO ID: " + toUID);
@@ -674,12 +669,12 @@ public class SQLController {
                     "WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
                     "date_sold IS NULL";
 
-             performUpdate(query);
+            performUpdate(query);
 
-             String query2 = "INSERT INTO \"Owns\" (uid, tid, date_purchased," +
-                     " " +
-                     "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", CURRENT_DATE, NULL, " + salePrice + ")";
-             performUpdate(query2);
+            String query2 = "INSERT INTO \"Owns\" (uid, tid, date_purchased," +
+                    " " +
+                    "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", CURRENT_DATE, NULL, " + salePrice + ")";
+            performUpdate(query2);
         }
         return true;
     }
@@ -690,13 +685,9 @@ public class SQLController {
      * @param tid tool id
      */
     public static void returnTool(int tid) {
-        // FIXME
-//        String query1 = "UPDATE \"Borrows\" SET due_date = CURRENT_DATE WHERE tid = " + tid + " AND due_date > CURRENT_DATE";
         String query1 = "UPDATE \"Borrows\" SET return_date = CURRENT_DATE WHERE tid = " + tid + " AND return_date IS NULL";
         performUpdate(query1);
-
         String query2 = "UPDATE \"Tool\" SET lendable = true WHERE tid = " + tid;
         performUpdate(query2);
     }
-
 }

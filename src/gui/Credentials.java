@@ -8,7 +8,8 @@ public class Credentials {
 
     /**
      * Returns the server url
-      * @return url to the server
+     *
+     * @return url to the server
      */
     public static String getUrl() {
         return url;
@@ -16,6 +17,7 @@ public class Credentials {
 
     /**
      * Returns the username for postgres
+     *
      * @return username for postgres
      */
     public static String getUsername() {
@@ -24,6 +26,7 @@ public class Credentials {
 
     /**
      * Returns the password for postgres
+     *
      * @return password for postgres
      */
     public static String getPassword() {
