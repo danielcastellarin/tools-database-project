@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class ToolCategoriesController extends Controller {
 
+    // TODO: migrate this class to be under ToolController as well?
+
     @FXML
     private VBox categoryVBox;
     @FXML
@@ -26,10 +28,12 @@ public class ToolCategoriesController extends Controller {
     @FXML
     private Text statusText;
 
+
+    // FIXME: categories and toolcategories are the same I believe, so the nested if's should be simplified
     /**
      * Populates the scene with a list of categories from the database
      *
-     * @param toolCategories
+     * @param toolCategories the tool categories from the database
      */
     @FXML
     public void initialize(List<String> toolCategories) {

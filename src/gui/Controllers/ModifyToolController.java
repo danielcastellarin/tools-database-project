@@ -6,8 +6,6 @@ import gui.SQLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -16,18 +14,8 @@ import java.util.List;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class ModifyToolController extends Controller {
+public class ModifyToolController extends ToolController {
 
-    @FXML
-    private TextField toolNameTextField;
-    @FXML
-    private TextField priceTextField;
-    @FXML
-    private Text statusText;
-
-    private int index;
-    private OwnedUserTools tools;
-    private OwnedTool tool;
     private int tid;
 
     /**
@@ -42,54 +30,18 @@ public class ModifyToolController extends Controller {
      */
     @FXML
     public void initialize(OwnedTool theTool, OwnedUserTools tools, int index, int tid) {
-        this.tools = tools;
-        this.index = index;
-        this.tool = theTool;
         this.tid = tid;
 
-        toolNameTextField.setText(tool.getName());
-        priceTextField.setText(String.valueOf(tool.getPrice()));
-        super.setCategories(parseCategories(tools.getCategories().get(index)));
-    }
-
-    /**
-     * Updates the sale price of the tool based on which button is clicked
-     *
-     * @param event A button click
-     */
-    @FXML
-    private void changePrice(ActionEvent event) {
-        String incrementText = ((((Button) event.getSource()).getText()));
-        int initialPrice = Integer.parseInt(priceTextField.getText());
-        if (initialPrice >= 0) {
-            switch (incrementText) {
-                case "+10":
-                    priceTextField.setText(String.valueOf(initialPrice + 10));
-                    break;
-                case "+5":
-                    priceTextField.setText(String.valueOf(initialPrice + 5));
-                    break;
-                case "+1":
-                    priceTextField.setText(String.valueOf(initialPrice + 1));
-                    break;
-                case "-10":
-                    priceTextField.setText(String.valueOf(initialPrice - 10));
-                    break;
-                case "-5":
-                    priceTextField.setText(String.valueOf(initialPrice - 5));
-                    break;
-                case "-1":
-                    priceTextField.setText(String.valueOf(initialPrice - 1));
-                    break;
-            }
-        }
+        toolNameTextField.setText(theTool.getName());
+        priceTextField.setText(String.valueOf(theTool.getPrice()));
+        setCategories(parseCategories(tools.getCategories().get(index)));
     }
 
     /**
      * Parses the given String category into individual Strings
      *
      * @param category A String of comma separated categories
-     * @return
+     * @return a list of Categories as a comma separated list
      */
     private List<String> parseCategories(String category) {
         List<String> categories = Arrays.asList(category.split(", "));
@@ -108,12 +60,13 @@ public class ModifyToolController extends Controller {
         changeScene("FXML/viewTools.fxml", "View Tools");
     }
 
+    // TODO migrate FXML calls to gotoCategories directly in ToolController if possible
     /**
      * Opens a scene containing a list of all available categories
      */
     @FXML
     public void modifyCategories() {
-        super.gotoCategories(super.getCategories(), "Modify Tool");
+        gotoCategories(getCategories(), "Modify Tool");
     }
 
     /**
@@ -130,7 +83,7 @@ public class ModifyToolController extends Controller {
         int newPrice = Integer.parseInt(priceTextField.getText());
         if (!newName.equals("")) {
 
-            SQLController.updateTool(tid, newName, newPrice, super.getCategories());
+            SQLController.updateTool(tid, newName, newPrice, getCategories());
         } else {
             statusText.setVisible(true);
         }

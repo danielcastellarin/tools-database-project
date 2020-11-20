@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Controller {
 
-    private static List<String> categories;
+    protected static List<String> categories;
 
     /**
      * Changes the scene to the desired scene
@@ -23,8 +23,7 @@ public class Controller {
      * @param fxml  The scene to be displayed
      * @param title The title of the scene
      */
-    public void changeScene(String fxml, String title) {
-
+    void changeScene(String fxml, String title) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Stage stage = new Stage();
         stage.setResizable(false);
@@ -38,7 +37,6 @@ public class Controller {
         }
         stage.setScene(scene);
         stage.show();
-
     }
 
     /**
@@ -63,15 +61,7 @@ public class Controller {
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 
-    /**
-     * Gets a list of categories
-     *
-     * @return A list of strings of categories
-     */
-    public List<String> getCategories() {
-        return categories;
-    }
-
+    // TODO migrate this to ToolController
     /**
      * Sets the static list of categories to a given list of categories
      *
@@ -80,30 +70,4 @@ public class Controller {
     public void setCategories(List<String> categories) {
         Controller.categories = categories;
     }
-
-    /**
-     * Changes the scene to the tool category selection scene
-     *
-     * @param categories The list of strings of categories
-     * @param title      The title of the scene
-     */
-    public void gotoCategories(List<String> categories, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML" +
-                    "/ToolCategories.fxml"));
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setTitle(title);
-
-            Scene scene = new Scene(loader.load());
-            ToolCategoriesController controller = loader.getController();
-            controller.initialize(categories);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-
 }
