@@ -1,4 +1,4 @@
-package gui;
+package gui.Controllers;
 
 /**
  * @author Ryan LaRue, rml5169@rit.edu

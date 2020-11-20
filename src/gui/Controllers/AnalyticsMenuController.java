@@ -1,7 +1,8 @@
-package gui;
+package gui.Controllers;
 
 import analytics.AnalyticsCSVWriter;
 import analytics.AnalyticsSQLController;
+import gui.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
