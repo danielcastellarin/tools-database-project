@@ -50,9 +50,8 @@ public class SQLController {
      */
     protected static void performQuery(String query) {
         System.out.println("Submitting Query: " + query);
-        Statement statement = null;
         try {
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -67,10 +66,9 @@ public class SQLController {
      * @return true if the query successfully updates the database
      */
     protected static boolean performUpdate(String query) {
-        System.out.println("Submitting Query: " + query);
-        Statement statement = null;
+        System.out.println("Submitting Update: " + query);
         try {
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
