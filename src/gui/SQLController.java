@@ -65,7 +65,7 @@ public class SQLController {
      * @param query the query to be executed
      * @return true if the query successfully updates the database
      */
-    protected static boolean performUpdate(String query) {
+    public static boolean performUpdate(String query) {
         System.out.println("Submitting Update: " + query);
         try {
             Statement statement = connection.createStatement();

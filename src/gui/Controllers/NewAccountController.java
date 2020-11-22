@@ -39,10 +39,16 @@ public class NewAccountController extends Controller {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
-        if (!firstName.isEmpty() && !lastName.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
-            boolean success = SQLController.createNewUser(
-                    firstName, lastName, username, password);
-            if (success) {
+        if (!(firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty())) {
+//        if (!firstName.isEmpty() && !lastName.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
+//            boolean success = SQLController.createNewUser(
+//                    firstName, lastName, username, password);
+            String query =
+                    "INSERT INTO \"User\" (username, user_first_name, " +
+                            "user_last_name, password)" +
+                            " " + "VALUES('" + username + "', '" + firstName +
+                            "', '" + lastName + "', '" + password + "')";
+            if (SQLController.performUpdate(query)) {
                 creationStatusText.setVisible(false);
                 gotoLogin(event);
             } else {
