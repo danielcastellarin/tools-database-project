@@ -126,7 +126,6 @@ public class SQLController {
     }
 
 
-
     /**
      * Creates a new user in the database.
      *
