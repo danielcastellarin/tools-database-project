@@ -1,5 +1,6 @@
 package gui.Controllers;
 
+import gui.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,12 +41,13 @@ public class Controller {
     }
 
     /**
-     * Goes to the login scene
+     * Goes to the login scene, either when logging out or creating a new user
      *
      * @param event A button click
      */
     @FXML
     public void gotoLogin(ActionEvent event) {
+        Main.setUID(-1);
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
         changeScene("FXML/login.fxml", "Login");
     }

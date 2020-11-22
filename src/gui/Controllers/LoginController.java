@@ -32,8 +32,14 @@ public class LoginController extends Controller {
         String user = usernameField.getText().trim();
         String pass = passwordPasswordField.getText().trim();
 
-        if (!user.isEmpty() && !pass.isEmpty()) {
-            int uid = SQLController.verifyLoginCredentials(user, pass);
+        if(!(user.isEmpty() || pass.isEmpty())) {
+//        if (!user.isEmpty() && !pass.isEmpty()) {
+            //TODO: don't need query var, but leave for now
+            String query = "SELECT uid FROM \"User\" WHERE username ='" +
+                    user + "' AND password='" + pass + "'";
+//            SQLController.performQuery(query);
+            int uid = SQLController.readUID(query);
+//            int uid = SQLController.verifyLoginCredentials(user, pass);
             if (uid != -1) {
                 loginStatusText.setVisible(false);
                 Main.setUID(uid);

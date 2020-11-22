@@ -77,6 +77,15 @@ public class SQLController {
         return true;
     }
 
+    // proposed generic format for classes doing SQL queries
+    // first gather any info needed for the queryString
+    // then initialize the queryString and call performQuery/Update with the queryString as the only parameter
+    // in the class, immediately call a function that reads from the resultSet that is needed
+//    ...
+//    SQLController.performQuery(queryString);
+//    infoNeeded = SQLController.readInfoFromQuery;
+//    ...
+
     /**
      * Checks the credentials of the user to see if they match the
      * credentials of a user in the database.
@@ -98,6 +107,25 @@ public class SQLController {
         }
         return -1;
     }
+
+    /**
+     * Queries the database for UID upon logging into the app
+     *
+     * @param query SQL to retrieve UID using username and password
+     * @return the UID of the user with the specified username and password
+     */
+    public static int readUID(String query) {
+        performQuery(query);
+        try {
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return -1;
+    }
+
+
 
     /**
      * Creates a new user in the database.
