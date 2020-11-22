@@ -21,7 +21,9 @@ public class BalanceController extends Controller {
      */
     @FXML
     public void initialize() {
-        balanceTextField.setText(Integer.toString(SQLController.getBalance(Main.getUID())));
+        String query = "SELECT balance FROM \"User\" WHERE uid = " + Main.getUID();
+        balanceTextField.setText(Integer.toString(SQLController.readBalance(query)));
+//        balanceTextField.setText(Integer.toString(SQLController.getBalance(Main.getUID())));
     }
 
     /**

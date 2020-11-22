@@ -60,8 +60,9 @@ public class DataGenerationSQLController extends SQLController {
      */
     public static boolean sellTool(int toUID, int fromUID,
                                    int tid, int salePrice, String dateSold) {
-
-        int toBalance = getBalance(toUID);
+        String q = "SELECT balance FROM \"User\" WHERE uid = " + toUID;
+        int toBalance = readBalance(q);
+//        int toBalance = getBalance(toUID);
 
         if (toBalance < salePrice) {
             return false;

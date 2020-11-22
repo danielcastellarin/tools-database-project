@@ -77,6 +77,7 @@ public class SQLController {
         return true;
     }
 
+    // TODO first implementing where queries are performed here, but will probably have those done by the classes as well.
     // proposed generic format for classes doing SQL queries
     // first gather any info needed for the queryString
     // then initialize the queryString and call performQuery/Update with the queryString as the only parameter
@@ -125,7 +126,6 @@ public class SQLController {
         return -1;
     }
 
-
     /**
      * Creates a new user in the database.
      *
@@ -152,9 +152,25 @@ public class SQLController {
      * @return the balance of the user, 0 if query doesn't work
      */
     public static int getBalance(int uid) {
-        String query =
-                "SELECT balance FROM \"User\" WHERE uid = " + uid;
-        Statement statement = null;
+        String query = "SELECT balance FROM \"User\" WHERE uid = " + uid;
+        performQuery(query);
+        try {
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
+    // TODO Find way to combine this with readUID, because its basically the same
+    /**
+     * Fetches a user's balance from the database
+     *
+     * @param query SQL to retrieve balance using a user's uid
+     * @return the user's balance
+     */
+    public static int readBalance(String query) {
         performQuery(query);
         try {
             resultSet.next();
@@ -173,7 +189,9 @@ public class SQLController {
      * @return the new balance after incrementing
      */
     public static int incrementBalance(int uid, int increment) {
-        int balance = getBalance(uid) + increment;
+        String q = "SELECT balance FROM \"User\" WHERE uid = " + uid;
+//        int balance = getBalance(uid) + increment;
+        int balance = readBalance(q) + increment;
         String query =
                 "UPDATE \"User\" SET balance = " + balance + " WHERE " +
                         "uid = " + uid;
@@ -679,7 +697,9 @@ public class SQLController {
                                    int tid) {
         int salePrice = getSalePrice(tid);
         int toUID = getUIDFromUsername(toUsername);
-        int toBalance = getBalance(toUID);
+//        int toBalance = getBalance(toUID);
+        String q = "SELECT balance FROM \"User\" WHERE uid = " + toUID;
+        int toBalance = readBalance(q);
 
         if (toBalance < salePrice) {
             return false;
