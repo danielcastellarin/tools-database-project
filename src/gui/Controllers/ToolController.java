@@ -32,27 +32,31 @@ public class ToolController extends Controller {
     private void changePrice(ActionEvent event) {       // TODO: maybe use this in balanceController too?
         String incrementText = ((((Button) event.getSource()).getText()));
         int initialPrice = Integer.parseInt(priceTextField.getText());
-        if (initialPrice >= 0) {
-            switch (incrementText) {
-                case "+10":
-                    priceTextField.setText(String.valueOf(initialPrice + 10));
-                    break;
-                case "+5":
-                    priceTextField.setText(String.valueOf(initialPrice + 5));
-                    break;
-                case "+1":
-                    priceTextField.setText(String.valueOf(initialPrice + 1));
-                    break;
-                case "-10":
+        switch (incrementText) {
+            case "+10":
+                priceTextField.setText(String.valueOf(initialPrice + 10));
+                break;
+            case "+5":
+                priceTextField.setText(String.valueOf(initialPrice + 5));
+                break;
+            case "+1":
+                priceTextField.setText(String.valueOf(initialPrice + 1));
+                break;
+            case "-10":
+                if (initialPrice >= 10) {
                     priceTextField.setText(String.valueOf(initialPrice - 10));
-                    break;
-                case "-5":
+                }
+                break;
+            case "-5":
+                if (initialPrice >= 5) {
                     priceTextField.setText(String.valueOf(initialPrice - 5));
-                    break;
-                case "-1":
+                }
+                break;
+            case "-1":
+                if (initialPrice >= 1) {
                     priceTextField.setText(String.valueOf(initialPrice - 1));
-                    break;
-            }
+                }
+                break;
         }
     }
 

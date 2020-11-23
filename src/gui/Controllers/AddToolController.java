@@ -34,7 +34,7 @@ public class AddToolController extends ToolController {
     public void addTool(ActionEvent event) {
         String toolName = toolNameTextField.getText();
 
-        if (!toolName.equals("")) {
+        if (!(toolName.equals("") || getCategories().isEmpty())) {
             statusText.setVisible(false);
             int salePrice = Integer.parseInt(priceTextField.getText());
 

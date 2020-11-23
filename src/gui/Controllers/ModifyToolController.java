@@ -80,11 +80,11 @@ public class ModifyToolController extends ToolController {
         String newName = toolNameTextField.getText();
         statusText.setVisible(false);
         int newPrice = Integer.parseInt(priceTextField.getText());
-        if (!newName.equals("")) {
+        if (!(newName.equals("") || getCategories().isEmpty())) {
             SQLController.updateTool(tid, newName, newPrice, getCategories());
+            gotoViewTools(event);
         } else {
             statusText.setVisible(true);
         }
-        gotoViewTools(event);
     }
 }
