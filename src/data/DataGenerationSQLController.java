@@ -33,7 +33,8 @@ public class DataGenerationSQLController extends SQLController {
         int tid = getNextAvailableTID();
         insertNewToolToTool(tid, toolName);
         insertToolToOwns(uid, tid, purchaseDate, sale_price);
-        insertCategoriesToHas(tid, categories);
+//        insertCategoriesToHas(tid, categories);
+        insertNewHasRelations(tid, categories);
     }
 
     /**

@@ -328,7 +328,6 @@ public class SQLController {
         performUpdate(query);
     }
 
-    // TODO: need to test getting the CIDs more, but I think it works
     /**
      * Creates new relationship between a tool and a category in the database.
      *
@@ -351,6 +350,21 @@ public class SQLController {
                     " " + "VALUES(" + tid + "," + cid + ")";
             performUpdate(query);
         }
+    }
+
+    // TODO: will probably combine with others in the future
+    /**
+     * Creates new relations between a tool and a list of categories.
+     *
+     * @param tid        the tool's unique id
+     * @param categories the list of categories to be applied to the tool
+     */
+    protected static void insertNewHasRelations(int tid, List<String> categories) {
+        String queryCats = "";
+        for (int i = 0; i < categories.size(); i++) {
+            queryCats += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'");
+        }
+        performQuery("SELECT addCategories(" + tid + ", VARIADIC ARRAY[" + queryCats + "])");
     }
 
     /**
@@ -399,7 +413,8 @@ public class SQLController {
         int tid = getNextAvailableTID();
         insertNewToolToTool(tid, toolName);
         insertToolToOwns(uid, tid, purchaseDate, sale_price);
-        insertCategoriesToHas(tid, categories);
+//        insertCategoriesToHas(tid, categories);
+        insertNewHasRelations(tid, categories);
     }
 
     /**
@@ -703,7 +718,8 @@ public class SQLController {
         performUpdate(query);
 //        deleteCategoriesFromHas(tid);
         performUpdate("DELETE FROM \"Has\" WHERE tid = " + tid);
-        insertCategoriesToHas(tid, categories);
+//        insertCategoriesToHas(tid, categories);
+        insertNewHasRelations(tid, categories);
     }
 
     /**
