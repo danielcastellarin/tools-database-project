@@ -32,7 +32,12 @@ public class DataGenerationSQLController extends SQLController {
                                   List<String> categories) {
         int tid = getNextAvailableTID();
         insertNewToolToTool(tid, toolName);
-        insertToolToOwns(uid, tid, purchaseDate, sale_price);
+//        insertToolToOwns(uid, tid, purchaseDate, sale_price);
+        // TODO: I believe this is a duplicate function. Whenever a tool is sold, this query is also run.
+        //  Only replacing actual calls for now
+        performUpdate("INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+                "date_sold, sale_price) VALUES(" + uid + ", " + tid + ", '" +
+                purchaseDate + "', NULL, " + sale_price + ")");
 //        insertCategoriesToHas(tid, categories);
         insertNewHasRelations(tid, categories);
     }

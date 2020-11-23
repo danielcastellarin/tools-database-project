@@ -367,6 +367,8 @@ public class SQLController {
         performQuery("SELECT addCategories(" + tid + ", VARIADIC ARRAY[" + queryCats + "])");
     }
 
+    // TODO: I believe this is a duplicate function. Whenever a tool is sold, this query is also run.
+    //  Only replacing actual calls for now (this is also pasted where this function was originally called)
     /**
      * Inserts tool into Owns table.
      *
@@ -412,7 +414,12 @@ public class SQLController {
                                   List<String> categories) {
         int tid = getNextAvailableTID();
         insertNewToolToTool(tid, toolName);
-        insertToolToOwns(uid, tid, purchaseDate, sale_price);
+//        insertToolToOwns(uid, tid, purchaseDate, sale_price);
+        // TODO: I believe this is a duplicate function. Whenever a tool is sold, this query is also run.
+        //  Only replacing actual calls for now
+        performUpdate("INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+                "date_sold, sale_price) VALUES(" + uid + ", " + tid + ", '" +
+                purchaseDate + "', NULL, " + sale_price + ")");
 //        insertCategoriesToHas(tid, categories);
         insertNewHasRelations(tid, categories);
     }
