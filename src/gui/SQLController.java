@@ -181,6 +181,7 @@ public class SQLController {
         return 0;
     }
 
+    // TODO: Create SQL function for exchanging money when user sells a tool
     /**
      * Increases the balance of a user by a specific amount
      *
