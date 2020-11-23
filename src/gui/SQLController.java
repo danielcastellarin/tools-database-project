@@ -299,8 +299,10 @@ public class SQLController {
         }
     }
 
+    // TODO Skipping for now, but might move performQuery call elsewhere later
+    //  >>>> also really similar to readBalance and readUID
     /**
-     * Creates a new TID for adding a new tool for the database.
+     * Finds the next possible TID when adding a new tool to the database.
      *
      * @return the value of the available tid
      */
@@ -381,6 +383,7 @@ public class SQLController {
         performUpdate(query);
     }
 
+    // TODO merge these methods with the ones in DataGenerationSQLController
     /**
      * Adds new tool
      *
@@ -698,7 +701,8 @@ public class SQLController {
         query = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE " +
                 "date_sold IS NULL AND tid = " + tid;
         performUpdate(query);
-        deleteCategoriesFromHas(tid);
+//        deleteCategoriesFromHas(tid);
+        performUpdate("DELETE FROM \"Has\" WHERE tid = " + tid);
         insertCategoriesToHas(tid, categories);
     }
 

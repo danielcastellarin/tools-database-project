@@ -17,6 +17,7 @@ public class DataGenerationSQLController extends SQLController {
         }
     }
 
+    // TODO merge these methods with the ones in SQLController
     /**
      * Adds new tool
      *
