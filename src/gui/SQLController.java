@@ -283,6 +283,23 @@ public class SQLController {
     }
 
     /**
+     * Retrieves the cids of all the categories in a given list
+     *
+     * @param query SQL to retrieve the cids from the database
+     * @param cids  the list to store the cids
+     */
+    private static void readCategoriesForCIDs(String query, List<Integer> cids) {
+        performQuery(query);
+        try {
+            while (resultSet.next()) {
+                cids.add(resultSet.getInt(1));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    /**
      * Creates a new TID for adding a new tool for the database.
      *
      * @return the value of the available tid
@@ -309,6 +326,7 @@ public class SQLController {
         performUpdate(query);
     }
 
+    // TODO: need to test getting the CIDs more, but I think it works
     /**
      * Creates new relationship between a tool and a category in the database.
      *
@@ -317,7 +335,15 @@ public class SQLController {
      */
     protected static void insertCategoriesToHas(int tid,
                                                 List<String> categories) {
-        List<Integer> cids = getCategoryIDs(categories);
+        List<Integer> cids = new ArrayList<>();
+        String queryCats = "";
+        for (int i = 0; i < categories.size(); i++) {
+            queryCats += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'");
+        }
+        String q = "SELECT cid FROM \"Category\" WHERE tool_category IN (" + queryCats + ")";
+        SQLController.readCategoriesForCIDs(q, cids);
+//        List<Integer> cids = getCategoryIDs(categories);
+
         for (int cid : cids) {
             String query = "INSERT INTO \"Has\" (tid, cid)" +
                     " " + "VALUES(" + tid + "," + cid + ")";
