@@ -181,7 +181,8 @@ public class SQLController {
         return 0;
     }
 
-    // TODO: Create SQL function for exchanging money when user sells a tool
+    // SQL Function is transfermoney(buyer, seller, price)
+
     /**
      * Increases the balance of a user by a specific amount
      *
@@ -706,8 +707,9 @@ public class SQLController {
             return false;
         } else {
             // Exchange currency
-            incrementBalance(toUID, -salePrice);
-            incrementBalance(fromUID, salePrice);
+//            incrementBalance(toUID, -salePrice);
+//            incrementBalance(fromUID, salePrice);
+            performQuery("SELECT transfermoney(" + toUID + ", " + fromUID + ", " + salePrice + ")");
 
             System.out.println("FROM ID: " + fromUID);
             System.out.println("TO ID: " + toUID);

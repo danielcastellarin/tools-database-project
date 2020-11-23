@@ -68,8 +68,9 @@ public class DataGenerationSQLController extends SQLController {
             return false;
         } else {
             // Exchange currency
-            incrementBalance(toUID, -salePrice);
-            incrementBalance(fromUID, salePrice);
+//            incrementBalance(toUID, -salePrice);
+//            incrementBalance(fromUID, salePrice);
+            performQuery("SELECT transfermoney(" + toUID + ", " + fromUID + ", " + salePrice + ")");
 
             String query = "UPDATE \"Owns\" SET date_sold = '"+ dateSold  +
                     "' WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
