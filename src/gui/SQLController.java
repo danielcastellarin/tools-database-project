@@ -413,7 +413,9 @@ public class SQLController {
                                   String purchaseDate, int sale_price,
                                   List<String> categories) {
         int tid = getNextAvailableTID();
-        insertNewToolToTool(tid, toolName);
+//        insertNewToolToTool(tid, toolName);
+        performUpdate("INSERT INTO \"Tool\" (tid, tool_name, lendable)" +
+                " VALUES(" + tid + ", '" + toolName + "', true)");
 //        insertToolToOwns(uid, tid, purchaseDate, sale_price);
         // TODO: I believe this is a duplicate function. Whenever a tool is sold, this query is also run.
         //  Only replacing actual calls for now
