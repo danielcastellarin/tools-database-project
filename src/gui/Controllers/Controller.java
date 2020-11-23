@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class Controller {
 
-    protected static List<String> categories;
-
     /**
      * Changes the scene to the desired scene
      *
@@ -61,15 +59,5 @@ public class Controller {
     public void gotoHome(ActionEvent event) {
         changeScene("FXML/home.fxml", "Home");
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-    }
-
-    // TODO migrate this to ToolController
-    /**
-     * Sets the static list of categories to a given list of categories
-     *
-     * @param categories A list of strings of categories
-     */
-    public void setCategories(List<String> categories) {
-        Controller.categories = categories;
     }
 }

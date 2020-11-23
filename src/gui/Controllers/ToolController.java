@@ -14,6 +14,8 @@ import java.util.List;
 
 public class ToolController extends Controller {
 
+    protected static List<String> categories;
+
     @FXML
     protected TextField toolNameTextField;
     @FXML
@@ -76,6 +78,15 @@ public class ToolController extends Controller {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    /**
+     * Sets the static list of categories to a given list of categories
+     *
+     * @param cat A list of strings of categories
+     */
+    public void setCategories(List<String> cat) {
+        categories = cat;
     }
 
     /**

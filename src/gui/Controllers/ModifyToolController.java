@@ -77,12 +77,10 @@ public class ModifyToolController extends ToolController {
      */
     @FXML
     public void modifyTool(ActionEvent event) {
-
         String newName = toolNameTextField.getText();
         statusText.setVisible(false);
         int newPrice = Integer.parseInt(priceTextField.getText());
         if (!newName.equals("")) {
-
             SQLController.updateTool(tid, newName, newPrice, getCategories());
         } else {
             statusText.setVisible(true);

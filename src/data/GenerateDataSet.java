@@ -5,13 +5,13 @@ import gui.SQLController;
 
 public class GenerateDataSet extends SQLController{
 
-    public void generate() {
+    private static void generate() {
         for (int i = 0; i < 150; i++) {
             new CreateTool();
         }
     }
 
-    public static void the_purge() {
+    private static void the_purge() {
         String purge = "DELETE FROM \"Has\";";
         performUpdate(purge);
         purge = "DELETE FROM \"Owns\";";
@@ -23,7 +23,6 @@ public class GenerateDataSet extends SQLController{
     }
 
     public static void main(String[] args) {
-        GenerateDataSet g = new GenerateDataSet();
         SQLController.openConnection(Credentials.getUrl(),
                 Credentials.getUsername(), Credentials.getPassword());
 
@@ -31,7 +30,7 @@ public class GenerateDataSet extends SQLController{
         if (isPurge) {
             the_purge();
         } else {
-            g.generate();
+            generate();
         }
 
         SQLController.closeConnection();

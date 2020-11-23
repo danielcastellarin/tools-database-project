@@ -17,9 +17,7 @@ import java.util.List;
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
-public class ToolCategoriesController extends Controller {
-
-    // TODO: migrate this class to be under ToolController as well?
+public class ToolCategoriesController extends ToolController {
 
     @FXML
     private VBox categoryVBox;
@@ -28,8 +26,6 @@ public class ToolCategoriesController extends Controller {
     @FXML
     private Text statusText;
 
-
-    // FIXME: categories and toolcategories are the same I believe, so the nested if's should be simplified
     /**
      * Populates the scene with a list of categories from the database
      *
@@ -37,20 +33,26 @@ public class ToolCategoriesController extends Controller {
      */
     @FXML
     public void initialize(List<String> toolCategories) {
-        List<String> categories = SQLController.getAllCategories();
-        for (String category : categories) {
+        List<String> allCategories = SQLController.getAllCategories();
+        for (String cat : allCategories) {
             RadioButton button = new RadioButton();
             button.setPrefWidth(200);
-            button.setText(category);
-            if (toolCategories != null) {
-                if (toolCategories.contains(category)) {
-                    button.setSelected(true);
-                }
+            button.setText(cat);
+            if (!toolCategories.isEmpty() && toolCategories.contains(cat)) {
+                button.setSelected(true);
             }
+            // TODO if we below version of the if, we need to change the categories
+            //  variable in AddToolCategory call of gotoCategories
+//            try {
+//                if (toolCategories.contains(cat)) {
+//                    button.setSelected(true);
+//                }
+//            } catch (NullPointerException ignored) {}
             categoryVBox.getChildren().add(button);
         }
     }
 
+    // FIXME: remove this once we remove button from UI
     /**
      * Allows the user to create and insert an entirely new category into the
      * database
@@ -84,13 +86,11 @@ public class ToolCategoriesController extends Controller {
     public void submitCategories(ActionEvent event) {
         List<String> categories = new ArrayList<>();
         for (Node node : categoryVBox.getChildren()) {
-            if (node instanceof RadioButton) {
-                if (((RadioButton) node).isSelected()) {
-                    categories.add(((RadioButton) node).getText());
-                }
+            if (((RadioButton) node).isSelected()) {
+                categories.add(((RadioButton) node).getText());
             }
         }
-        super.setCategories(categories);
+        setCategories(categories);
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 }

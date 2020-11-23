@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -20,7 +21,7 @@ public class AddToolController extends ToolController {
      */
     @FXML
     public void addCategories() {
-        gotoCategories(null, "Add Tool");
+        gotoCategories(new ArrayList<>(), "Add Tool");
     }
 
     /**
@@ -42,7 +43,7 @@ public class AddToolController extends ToolController {
             String purchaseDate = dateFormat.format(date);
 
             SQLController.addNewTool(Main.getUID(), toolName,
-                    purchaseDate, salePrice, super.getCategories());
+                    purchaseDate, salePrice, getCategories());
 
             gotoHome(event);
         } else {

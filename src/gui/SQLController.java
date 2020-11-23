@@ -91,8 +91,8 @@ public class SQLController {
      * Checks the credentials of the user to see if they match the
      * credentials of a user in the database.
      *
-     * @param user
-     * @param password
+     * @param user     the username
+     * @param password the password
      * @return positive number if valid, negative if not
      */
     public static int verifyLoginCredentials(String user, String password) {
@@ -221,6 +221,7 @@ public class SQLController {
         return categories;
     }
 
+    // TODO: delete this method once addNewCategory in ToolCategoriesController is removed
     /**
      * Adds a category to the database.
      *
