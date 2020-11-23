@@ -210,15 +210,39 @@ public class SQLController {
         String query = "SELECT tool_category FROM \"Category\"";
         performQuery(query);
         List<String> categories = new ArrayList<>();
-        while (true) {
-            try {
-                if (!resultSet.next()) break;
+//        while (true) {
+//            try {
+//                if (!resultSet.next()) break;
+//                categories.add(resultSet.getString(1));
+//            } catch (SQLException e) {
+//                System.err.println(e.getMessage());
+//            }
+//        }
+        try {
+            while (resultSet.next()) {
                 categories.add(resultSet.getString(1));
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
             }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
         }
         return categories;
+    }
+
+    /**
+     * Fetches all tool categories from the database
+     *
+     * @param query      SQL to retrieve the tool categories from the database
+     * @param categories the list to store the categories
+     */
+    public static void readCategories(String query, List<String> categories) {
+        performQuery(query);
+        try {
+            while (resultSet.next()) {
+                categories.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     // TODO: delete this method once addNewCategory in ToolCategoriesController is removed

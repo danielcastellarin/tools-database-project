@@ -33,7 +33,11 @@ public class ToolCategoriesController extends ToolController {
      */
     @FXML
     public void initialize(List<String> toolCategories) {
-        List<String> allCategories = SQLController.getAllCategories();
+        String query = "SELECT tool_category FROM \"Category\"";
+        List<String> allCategories = new ArrayList<>();
+        SQLController.readCategories(query, allCategories);
+//        List<String> allCategories = SQLController.getAllCategories();
+
         for (String cat : allCategories) {
             RadioButton button = new RadioButton();
             button.setPrefWidth(200);
