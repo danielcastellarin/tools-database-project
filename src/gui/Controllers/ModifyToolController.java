@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -83,6 +84,7 @@ public class ModifyToolController extends ToolController {
         if (!(newName.equals("") || getCategories().isEmpty())) {
             SQLController.updateTool(tid, newName, newPrice, getCategories());
             gotoViewTools(event);
+            setCategories(new ArrayList<>());
         } else {
             statusText.setVisible(true);
         }

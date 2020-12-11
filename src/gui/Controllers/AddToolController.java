@@ -21,7 +21,7 @@ public class AddToolController extends ToolController {
      */
     @FXML
     public void addCategories() {
-        gotoCategories(new ArrayList<>(), "Add Tool");
+        gotoCategories(getCategories(), "Add Tool");
     }
 
     /**
@@ -44,6 +44,8 @@ public class AddToolController extends ToolController {
 
             SQLController.addNewTool(Main.getUID(), toolName,
                     purchaseDate, salePrice, getCategories());
+
+            setCategories(new ArrayList<>());
 
             gotoHome(event);
         } else {
