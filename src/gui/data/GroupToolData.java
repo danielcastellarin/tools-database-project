@@ -37,8 +37,8 @@ public class GroupToolData {
         this.lendable = new ArrayList<>();
         this.ownedCategories = new ArrayList<>();
         SQLController.getBorrowedTools(uid, tids, toolNames, owners, ownerNames, lendDates, dueDates, categories);
-        SQLController.getUserTools(uid, ownedTids, salePrices, ownedToolNames,
-                lendable, ownedCategories);
+//        SQLController.getUserTools(uid, ownedTids, salePrices, ownedToolNames, lendable, ownedCategories);
+        SQLController.getGoodUserTools(uid, tids, toolNames, salePrices, lendable, categories);
     }
 
 

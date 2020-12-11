@@ -164,6 +164,7 @@ public class SQLController {
     }
 
     // TODO Find way to combine this with readUID, because its basically the same
+
     /**
      * Fetches a user's balance from the database
      *
@@ -246,6 +247,7 @@ public class SQLController {
     }
 
     // TODO: delete this method once addNewCategory in ToolCategoriesController is removed
+
     /**
      * Adds a category to the database.
      *
@@ -301,6 +303,7 @@ public class SQLController {
 
     // TODO Skipping for now, but might move performQuery call elsewhere later
     //  >>>> also really similar to readBalance and readUID
+
     /**
      * Finds the next possible TID when adding a new tool to the database.
      *
@@ -353,6 +356,7 @@ public class SQLController {
     }
 
     // TODO: will probably combine with others in the future
+
     /**
      * Creates new relations between a tool and a list of categories.
      *
@@ -369,6 +373,7 @@ public class SQLController {
 
     // TODO: I believe this is a duplicate function. Whenever a tool is sold, this query is also run.
     //  Only replacing actual calls for now (this is also pasted where this function was originally called)
+
     /**
      * Inserts tool into Owns table.
      *
@@ -400,6 +405,7 @@ public class SQLController {
     }
 
     // TODO merge these methods with the ones in DataGenerationSQLController
+
     /**
      * Adds new tool
      *
@@ -449,45 +455,12 @@ public class SQLController {
                         "AND date_sold IS NULL";
         performQuery(query);
         try {
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 tids.add(resultSet.getInt(1));
                 salePrices.add(resultSet.getInt(2));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Gets tool info from borrows table
-     *
-     * @param uid       the user id
-     * @param tids      list of tool ids
-     * @param toolNames list of tool names
-     * @param lendDates list of lend dates
-     * @param dueDates  list of due dates
-     * @param owners    list of owners
-     * @param usernames list of owners
-     */
-    private static void getToolInfoFromBorrows(int uid, List<Integer> tids, List<String> toolNames,
-                                               List<String> lendDates, List<String> dueDates, List<Integer> owners, List<String> usernames) {
-        String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
-                "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
-                "b.uid = " + uid + " AND b.return_date IS NULL AND b.tid " +
-                "= t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
-        performQuery(query);
-        while (true) {
-            try {
-                if (!resultSet.next()) break;
-                tids.add(resultSet.getInt(1));
-                toolNames.add(resultSet.getString(2));
-                lendDates.add(resultSet.getString(3));
-                dueDates.add(resultSet.getString(4));
-                owners.add(resultSet.getInt(5));
-                usernames.add(resultSet.getString(6));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -506,17 +479,15 @@ public class SQLController {
                     "SELECT tool_name, lendable FROM \"Tool\" " +
                             "WHERE tid=" + tid;
             performQuery(query);
-            while (true) {
-                try {
-                    if (!resultSet.next()) break;
+            try {
+                while (resultSet.next()) {
                     toolNames.add(resultSet.getString(1));
                     lendable.add(resultSet.getBoolean(2));
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-
     }
 
     /**
@@ -610,9 +581,71 @@ public class SQLController {
                                     List<String> toolNames,
                                     List<Boolean> lendable,
                                     List<String> categories) {
-        getToolsFromOwns(uid, salePrices, tids);
-        getToolInfoFromHas(tids, categories);
-        getToolInfoFromTool(tids, toolNames, lendable);
+//        getToolsFromOwns(uid, salePrices, tids);
+//        getToolInfoFromHas(tids, categories);
+//        getToolInfoFromTool(tids, toolNames, lendable);
+    }
+
+    /**
+     * Retrieves a user's owned tool information so that it can be viewed
+     *
+     * @param uid        the user's identification
+     * @param tids       a list to store the tids of tools
+     * @param toolNames  a list to store the tool names
+     * @param salePrices a list to store the prices of tools
+     * @param lendable   a list to store whether tools are lendable
+     * @param categories a list to store tool categories
+     */
+    public static void getGoodUserTools(int uid, List<Integer> tids,
+                                        List<String> toolNames,
+                                        List<Integer> salePrices,
+                                        List<Boolean> lendable,
+                                        List<String> categories) {
+        performQuery("SELECT * FROM getOwnedTools(" + uid + ")");
+        try {
+            while (resultSet.next()) {
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+                salePrices.add(resultSet.getInt(3));
+                lendable.add(resultSet.getBoolean(4));
+                categories.add(resultSet.getString(5));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets tool info from borrows table
+     *
+     * @param uid       the user id
+     * @param tids      list of tool ids
+     * @param toolNames list of tool names
+     * @param lendDates list of lend dates
+     * @param dueDates  list of due dates
+     * @param owners    list of owners
+     * @param usernames list of owners
+     */
+    private static void getToolInfoFromBorrows(int uid, List<Integer> tids, List<String> toolNames,
+                                               List<String> lendDates, List<String> dueDates, List<Integer> owners, List<String> usernames) {
+        String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
+                "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
+                "b.uid = " + uid + " AND b.return_date IS NULL AND b.tid " +
+                "= t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
+        performQuery(query);
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+                lendDates.add(resultSet.getString(3));
+                dueDates.add(resultSet.getString(4));
+                owners.add(resultSet.getInt(5));
+                usernames.add(resultSet.getString(6));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

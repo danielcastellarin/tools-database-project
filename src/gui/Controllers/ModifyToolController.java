@@ -45,7 +45,8 @@ public class ModifyToolController extends ToolController {
      * @return a list of Categories as a comma separated list
      */
     private List<String> parseCategories(String category) {
-        List<String> categories = Arrays.asList(category.split(", "));
+        String cat = category.substring(1, category.length() - 1);
+        List<String> categories = Arrays.asList(cat.split(","));
         System.out.println(categories);
         return categories;
     }

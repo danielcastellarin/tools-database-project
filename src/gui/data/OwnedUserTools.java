@@ -27,7 +27,8 @@ public class OwnedUserTools {
         this.toolNames = new ArrayList<>();
         this.lendable = new ArrayList<>();
         this.categories = new ArrayList<>();
-        SQLController.getUserTools(uid, tids, salePrices, toolNames, lendable, categories);
+//        SQLController.getUserTools(uid, tids, salePrices, toolNames, lendable, categories);
+        SQLController.getGoodUserTools(uid, tids, toolNames, salePrices, lendable, categories);
     }
 
     /**
