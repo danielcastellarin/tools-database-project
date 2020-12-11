@@ -56,30 +56,6 @@ public class ToolCategoriesController extends ToolController {
         }
     }
 
-    // FIXME: remove this once we remove button from UI
-    /**
-     * Allows the user to create and insert an entirely new category into the
-     * database
-     */
-    @FXML
-    public void addNewCategory() {
-        String category_name = newCategoryTextField.getText().toUpperCase();
-        if (category_name.equals("")) {
-            statusText.setVisible(true);
-        } else {
-            boolean status = SQLController.insertCategory(category_name);
-            if (status) {
-                statusText.setVisible(false);
-                RadioButton button = new RadioButton();
-                button.setPrefWidth(200);
-                button.setText(category_name);
-                categoryVBox.getChildren().add(button);
-            } else {
-                statusText.setVisible(true);
-            }
-        }
-    }
-
     /**
      * Sets the categories list to the valued selected from the scene and
      * closes the scene.

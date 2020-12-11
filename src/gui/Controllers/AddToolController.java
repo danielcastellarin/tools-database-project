@@ -21,7 +21,11 @@ public class AddToolController extends ToolController {
      */
     @FXML
     public void addCategories() {
-        gotoCategories(getCategories(), "Add Tool");
+        if(getCategories() == null) {
+            gotoCategories(new ArrayList<>(), "Add Tool");
+        } else {
+            gotoCategories(getCategories(), "Add Tool");
+        }
     }
 
     /**

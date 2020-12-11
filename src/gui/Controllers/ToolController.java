@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ToolController extends Controller {
 
-    protected static List<String> categories;
+    protected static List<String> categories = null;
 
     @FXML
     protected TextField toolNameTextField;
