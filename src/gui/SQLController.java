@@ -435,8 +435,6 @@ public class SQLController {
         performQuery(query);
     }
 
-
-
     /**
      * Gets tool info from owns table
      *
@@ -444,21 +442,19 @@ public class SQLController {
      * @param salePrices sale prices
      * @param tids       tool ids
      */
-    private static void getToolInfoFromOwns(int uid, List<Integer> salePrices,
-                                            List<Integer> tids) {
+    private static void getToolsFromOwns(int uid, List<Integer> salePrices,
+                                         List<Integer> tids) {
         String query =
                 "SELECT tid, sale_price FROM \"Owns\" WHERE uid=" + uid + " " +
                         "AND date_sold IS NULL";
         performQuery(query);
-        while (true) {
-            try {
-                if (!resultSet.next()) break;
-                salePrices.add(resultSet.getInt(2));
+        try {
+            while(resultSet.next()) {
                 tids.add(resultSet.getInt(1));
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+                salePrices.add(resultSet.getInt(2));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -614,7 +610,7 @@ public class SQLController {
                                     List<String> toolNames,
                                     List<Boolean> lendable,
                                     List<String> categories) {
-        getToolInfoFromOwns(uid, salePrices, tids);
+        getToolsFromOwns(uid, salePrices, tids);
         getToolInfoFromHas(tids, categories);
         getToolInfoFromTool(tids, toolNames, lendable);
     }
