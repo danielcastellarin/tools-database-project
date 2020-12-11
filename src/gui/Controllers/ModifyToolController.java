@@ -1,7 +1,7 @@
 package gui.Controllers;
 
-import gui.OwnedTool;
-import gui.OwnedUserTools;
+import gui.data.OwnedTool;
+import gui.data.OwnedUserTools;
 import gui.SQLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,6 +1,10 @@
 package gui.Controllers;
 
 import gui.*;
+import gui.data.BorrowedTool;
+import gui.data.BorrowedUserTools;
+import gui.data.OwnedTool;
+import gui.data.OwnedUserTools;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

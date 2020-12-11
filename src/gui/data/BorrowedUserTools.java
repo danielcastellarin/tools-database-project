@@ -1,4 +1,6 @@
-package gui;
+package gui.data;
+
+import gui.SQLController;
 
 import java.util.ArrayList;
 import java.util.List;
