@@ -44,6 +44,10 @@ public class DataGenerationSQLController extends SQLController {
         insertNewHasRelations(tid, categories);
     }
 
+    public static void addTool(String query) {
+        performQuery(query);
+    }
+
     /**
      * Insert new record into borrow table
      *

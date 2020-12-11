@@ -42,12 +42,19 @@ public class AddToolController extends ToolController {
             statusText.setVisible(false);
             int salePrice = Integer.parseInt(priceTextField.getText());
 
+            // TODO: Keep date for now since this might be combined with DataGeneration
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
             String purchaseDate = dateFormat.format(date);
 
-            SQLController.addNewTool(Main.getUID(), toolName,
-                    purchaseDate, salePrice, getCategories());
+//            SQLController.addNewTool(Main.getUID(), toolName,
+//                    purchaseDate, salePrice, getCategories());
+
+            String query = "SELECT addTool(" + Main.getUID() + ", '" + toolName + "', CURRENT_DATE, " + salePrice + ", VARIADIC ARRAY[";
+            for (int i = 0; i < categories.size(); i++) {
+                query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
+            }
+            SQLController.addTool(query);
 
             setCategories(new ArrayList<>());
 

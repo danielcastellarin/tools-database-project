@@ -427,6 +427,17 @@ public class SQLController {
     }
 
     /**
+     * Adds a new tool to the database using the stored function in the database.
+     *
+     * @param query The addTool function call for the database
+     */
+    public static void addTool(String query) {
+        performQuery(query);
+    }
+
+
+
+    /**
      * Gets tool info from owns table
      *
      * @param uid        the user id

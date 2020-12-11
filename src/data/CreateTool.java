@@ -59,8 +59,14 @@ public class CreateTool {
         String toolName = pair.getKey();
         List<String> categories = pair.getValue();
 
-        DataGenerationSQLController.addNewTool(uid, toolName,
-                datePurchased.toString(), salePrice, categories);
+//        DataGenerationSQLController.addNewTool(uid, toolName,
+//                datePurchased.toString(), salePrice, categories);
+
+        String query = "SELECT addTool(" + uid + ", '" + toolName + "', '" + datePurchased.toString() + "', " + salePrice + ", VARIADIC ARRAY[";
+        for (int i = 0; i < categories.size(); i++) {
+            query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
+        }
+        DataGenerationSQLController.addTool(query);
 
         LocalDate dueDate = null;
         int currentOwner = uid;
