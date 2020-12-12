@@ -301,23 +301,23 @@ public class SQLController {
         }
     }
 
-    // TODO Skipping for now, but might move performQuery call elsewhere later
-    //  >>>> also really similar to readBalance and readUID
+    // TODO Remove once a tid return is added to addTool stored function
 
     /**
      * Finds the next possible TID when adding a new tool to the database.
      *
      * @return the value of the available tid
      */
-    public static int getNextAvailableTID() {
-        String query = "SELECT MAX(tid) FROM \"Tool\"";
+    public static int getNextAvailableTID(String query) {
+//        String query = "SELECT MAX(tid) FROM \"Tool\"";
         performQuery(query);
         try {
             resultSet.next();
-            return resultSet.getInt(1) + 1;
+            return resultSet.getInt(1);//+ 1;
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+        // This should never reach
         return -1;
     }
 
@@ -418,7 +418,8 @@ public class SQLController {
     public static void addNewTool(int uid, String toolName,
                                   String purchaseDate, int sale_price,
                                   List<String> categories) {
-        int tid = getNextAvailableTID();
+//        int tid = getNextAvailableTID();
+        int tid = 0;    // <-- placeholder
 //        insertNewToolToTool(tid, toolName);
         performUpdate("INSERT INTO \"Tool\" (tid, tool_name, lendable)" +
                 " VALUES(" + tid + ", '" + toolName + "', true)");

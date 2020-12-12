@@ -25,7 +25,7 @@ public class CreateTool {
         return 1 / (1.1 + Math.exp(-((5 * x) / 6 + .8)));
     }
 
-    public Pair<String, List<String>> generateName(int tid) {
+    public Pair<String, List<String>> generateName() {
         String catChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         StringBuilder toolName = new StringBuilder("Tool");
@@ -49,13 +49,16 @@ public class CreateTool {
     }
 
     private void createDataForTool(int uid, int numUsers) {
-        int tid = SQLController.getNextAvailableTID();
+        // TODO return tid from addTool stored func so that this method becomes obsolete
+        String idQuery = "SELECT COALESCE(MAX(tid) + 1, 1) FROM \"Tool\"";
+        int tid = SQLController.getNextAvailableTID(idQuery);
+
         LocalDate datePurchased = createDate(initialDay, finalDay);
         int salePrice = (random.nextInt(8) + 1) * 5;
         LocalDate dateSold = null;
-        System.out.println("Owns(" + uid + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
+//        System.out.println("Owns(" + uid + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
 
-        Pair<String, List<String>> pair = generateName(tid);
+        Pair<String, List<String>> pair = generateName();
         String toolName = pair.getKey();
         List<String> categories = pair.getValue();
 

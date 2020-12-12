@@ -30,7 +30,8 @@ public class DataGenerationSQLController extends SQLController {
     public static void addNewTool(int uid, String toolName,
                                   String purchaseDate, int sale_price,
                                   List<String> categories) {
-        int tid = getNextAvailableTID();
+//        int tid = getNextAvailableTID();
+        int tid = 0;    // <-- placeholder
 //        insertNewToolToTool(tid, toolName);
         performUpdate("INSERT INTO \"Tool\" (tid, tool_name, lendable)" +
                 " VALUES(" + tid + ", '" + toolName + "', true)");
