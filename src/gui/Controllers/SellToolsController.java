@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -83,7 +84,8 @@ public class SellToolsController extends Controller {
             int tid = tids.get(toolNames.indexOf(toolName));
 
 //            boolean success = SQLController.sellTool(users.get(username), Main.getUID(), tid);
-            String query = "SELECT sellTool(" + tid + ", " + users.get(username) + ", " + Main.getUID() + ")";
+            String query = "SELECT sellTool(" + tid + ", " + users.get(username) +
+                    ", " + Main.getUID() + ", '" + LocalDate.now() + "')";
             boolean success = SQLController.sellToolFunc(query);
             if (!success) {
                 statusText.setText("User does not have enough money");

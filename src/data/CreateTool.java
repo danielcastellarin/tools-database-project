@@ -99,12 +99,15 @@ public class CreateTool {
                 // Insert into Owns, Update Date_Sold
                 } else if (actionVar < 8) {
                     int newOwner = random.nextInt(numUsers) + 1;
-                    if (newOwner == currentOwner) continue;
+//                    DataGenerationSQLController.sellTool(newOwner,
+//                            currentOwner, tid, salePrice, currentDate.toString());
+                    String sellQuery = "SELECT sellTool(" + tid + ", " +
+                            newOwner + ", " + currentOwner + ", '" + currentDate + "')";
+                    boolean success = SQLController.sellToolFunc(sellQuery);
+                    if (newOwner == currentOwner || !success) continue;
                     System.out.println(currentOwner + " Sell Tool To: " + newOwner);
                     System.out.println("Date Purchased: " + currentDate);
                     System.out.println("Date Sold: Null");
-                    DataGenerationSQLController.sellTool(newOwner,
-                            currentOwner, tid, salePrice, currentDate.toString());
                     currentOwner = newOwner;
                 // Insert into Borrows
                 } else if (actionVar < 20) {

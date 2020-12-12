@@ -70,30 +70,30 @@ public class DataGenerationSQLController extends SQLController {
      */
     public static boolean sellTool(int toUID, int fromUID,
                                    int tid, int salePrice, String dateSold) {
-        String q = "SELECT balance FROM \"User\" WHERE uid = " + toUID;
-//        int toBalance = readBalance(q);
-        int toBalance = readInt(q);
-//        int toBalance = getBalance(toUID);
-
-        if (toBalance < salePrice) {
-            return false;
-        } else {
-            // Exchange currency
-//            incrementBalance(toUID, -salePrice);
-//            incrementBalance(fromUID, salePrice);
-            performQuery("SELECT transfermoney(" + toUID + ", " + fromUID + ", " + salePrice + ")");
-
-            String query = "UPDATE \"Owns\" SET date_sold = '"+ dateSold  +
-                    "' WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
-                    "date_sold IS NULL";
-
-            performUpdate(query);
-
-            query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
-                    "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", '" + dateSold + "', NULL, " + salePrice + ")";
-            System.out.println(query);
-            performUpdate(query);
-        }
+//        String q = "SELECT balance FROM \"User\" WHERE uid = " + toUID;
+////        int toBalance = readBalance(q);
+//        int toBalance = readInt(q);
+////        int toBalance = getBalance(toUID);
+//
+//        if (toBalance < salePrice) {
+//            return false;
+//        } else {
+//            // Exchange currency
+////            incrementBalance(toUID, -salePrice);
+////            incrementBalance(fromUID, salePrice);
+//            performQuery("SELECT transfermoney(" + toUID + ", " + fromUID + ", " + salePrice + ")");
+//
+//            String query = "UPDATE \"Owns\" SET date_sold = '"+ dateSold  +
+//                    "' WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
+//                    "date_sold IS NULL";
+//
+//            performUpdate(query);
+//
+//            query = "INSERT INTO \"Owns\" (uid, tid, date_purchased, " +
+//                    "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", '" + dateSold + "', NULL, " + salePrice + ")";
+//            System.out.println(query);
+//            performUpdate(query);
+//        }
         return true;
     }
 
