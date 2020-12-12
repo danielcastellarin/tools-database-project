@@ -163,8 +163,6 @@ public class SQLController {
         return 0;
     }
 
-    // TODO Find way to combine this with readUID, because its basically the same
-
     /**
      * Fetches a user's balance from the database
      *
@@ -278,7 +276,6 @@ public class SQLController {
     }
 
     // TODO: delete this method once addNewCategory in ToolCategoriesController is removed
-
     /**
      * Adds a category to the database.
      *
@@ -332,8 +329,6 @@ public class SQLController {
         }
     }
 
-    // TODO Remove once a tid return is added to addTool stored function
-
     /**
      * Finds the next possible TID when adding a new tool to the database.
      *
@@ -386,8 +381,6 @@ public class SQLController {
         }
     }
 
-    // TODO: will probably combine with others in the future
-
     /**
      * Creates new relations between a tool and a list of categories.
      *
@@ -434,8 +427,6 @@ public class SQLController {
                 " " + "VALUES(" + tid + ", '" + toolName + "', true)";
         performUpdate(query);
     }
-
-    // TODO merge these methods with the ones in DataGenerationSQLController
 
     /**
      * Adds new tool
@@ -851,22 +842,6 @@ public class SQLController {
     }
 
     /**
-     * This is called when a user lends a tool to someone else.
-     * It creates a new Borrow record and sets the tool to not lendable.
-     *
-     * @param uid      the borrower's identification
-     * @param tid      the borrowed tool's id
-     * @param dueDate  the date tool should be returned to the owner
-     */
-    public static void lendTool(int uid, int tid, String dueDate) {
-        String query1 = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +
-                "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', CURRENT_DATE)";
-        performUpdate(query1);
-        String query2 = "UPDATE \"Tool\" SET lendable = false WHERE tid = " + tid;
-        performUpdate(query2);
-    }
-
-    /**
      * Gets sale price of tool from id
      *
      * @param query the SQL query for the database
@@ -944,6 +919,24 @@ public class SQLController {
             return false;
         }
     }
+
+    /**
+     * This is called when a user lends a tool to someone else.
+     * It creates a new Borrow record and sets the tool to not lendable.
+     *
+     * @param uid      the borrower's identification
+     * @param tid      the borrowed tool's id
+     * @param dueDate  the date tool should be returned to the owner
+     */
+    public static void lendTool(int uid, int tid, String dueDate) {
+        String query1 = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +
+                "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', CURRENT_DATE)";
+        performUpdate(query1);
+        String query2 = "UPDATE \"Tool\" SET lendable = false WHERE tid = " + tid;
+        performUpdate(query2);
+    }
+
+    // TODO: Consider merging these functions into two updates and pass in the two queries
 
     /**
      * Update tool date and lendable status

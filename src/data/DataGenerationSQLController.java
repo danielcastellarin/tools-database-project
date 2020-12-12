@@ -17,7 +17,6 @@ public class DataGenerationSQLController extends SQLController {
         }
     }
 
-    // TODO merge these methods with the ones in SQLController
     /**
      * Adds new tool
      *
@@ -43,10 +42,6 @@ public class DataGenerationSQLController extends SQLController {
                 purchaseDate + "', NULL, " + sale_price + ")");
 //        insertCategoriesToHas(tid, categories);
 //        insertNewHasRelations(tid, categories);
-    }
-
-    public static void addTool(String query) {
-        performQuery(query);
     }
 
     /**
@@ -109,6 +104,7 @@ public class DataGenerationSQLController extends SQLController {
         performUpdate(query2);
     }
 
+    // TODO: Consider using performStoredFunc for updateTool
     /**
      * Update tool in tool and owns tables
      *
@@ -117,9 +113,7 @@ public class DataGenerationSQLController extends SQLController {
      */
     public static void updatePrice(int tid, int price) {
         String query = "UPDATE \"Owns\" SET sale_price = " + price + " WHERE " +
-                "date_sold IS NULL " +
-                "AND " +
-                "tid = " + tid;
+                "date_sold IS NULL AND tid = " + tid;
         performUpdate(query);
     }
 

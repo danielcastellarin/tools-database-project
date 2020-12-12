@@ -50,14 +50,13 @@ public class CreateTool {
 
     private void createDataForTool(int uid, int numUsers) {
         // TODO return tid from addTool stored func so that this method becomes obsolete
-        String idQuery = "SELECT COALESCE(MAX(tid) + 1, 1) FROM \"Tool\"";
+//        String idQuery = "SELECT COALESCE(MAX(tid) + 1, 1) FROM \"Tool\"";
 //        int tid = SQLController.getNextAvailableTID(idQuery);
-        int tid = SQLController.readInt(idQuery);
+//        int tid = SQLController.readInt(idQuery);
 
         LocalDate datePurchased = createDate(initialDay, finalDay);
         int salePrice = (random.nextInt(8) + 1) * 5;
         LocalDate dateSold = null;
-//        System.out.println("Owns(" + uid + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
 
         Pair<String, List<String>> pair = generateName();
         String toolName = pair.getKey();
@@ -70,7 +69,9 @@ public class CreateTool {
         for (int i = 0; i < categories.size(); i++) {
             query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
         }
-        DataGenerationSQLController.addTool(query);
+//        DataGenerationSQLController.addTool(query);
+        int tid = SQLController.readInt(query);
+        System.out.println("Owns(" + uid + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
 
         LocalDate dueDate = null;
         int currentOwner = uid;
