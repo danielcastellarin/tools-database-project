@@ -491,28 +491,6 @@ public class SQLController {
     }
 
     /**
-     * Retrieves information necessary for selling a tool
-     *
-     * @param query      the SQL query for obtaining the data
-     * @param tids       a list to store tids of tools that can be sold
-     * @param toolNames  a list to store names of tools that can be sold
-     * @param toolPrices a list to store prices of tools that can be sold
-     */
-    public static void getSellableToolInfo(String query, List<Integer> tids,
-                                           List<String> toolNames, List<Integer> toolPrices) {
-        performQuery(query);
-        try {
-            while (resultSet.next()) {
-                tids.add(resultSet.getInt(1));
-                toolNames.add(resultSet.getString(2));
-                toolPrices.add(resultSet.getInt(3));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Get user tools
      *
      * @param uid        user id
@@ -727,6 +705,7 @@ public class SQLController {
      */
     public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames,
                          Map<String, Integer> users) {
+        // Gather Tool information
         String toolQuery = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
                 "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true " +
                 "AND date_sold IS NULL";
@@ -740,8 +719,9 @@ public class SQLController {
             e.printStackTrace();
         }
 
-        String userQuery = "SELECT username, uid FROM \"User\" WHERE uid != " + uid;
-        performQuery(userQuery);
+        // Gather User (Borrower) information
+        String borrowerQuery = "SELECT username, uid FROM \"User\" WHERE uid != " + uid;
+        performQuery(borrowerQuery);
         try {
             while (resultSet.next()) {
                 users.put(resultSet.getString(1), resultSet.getInt(2));
@@ -752,27 +732,41 @@ public class SQLController {
     }
 
     /**
-     * Get users with enough money for tool
+     * Retrieves information necessary for selling a tool
      *
-     * @param uid       user id
-     * @param uids      set of user ids
-     * @param usernames set of usernames
-     * @param toolPrice tool price
+     * @param query      the SQL query for obtaining the data
+     * @param tids       a list to store tids of tools that can be sold
+     * @param toolNames  a list to store names of tools that can be sold
+     * @param toolPrices a list to store prices of tools that can be sold
      */
-    public static void getUsersWithEnoughBank(int uid, Set<Integer> uids,
-                                              Set<String> usernames, int toolPrice) {
-        String query = "SELECT uid, username FROM \"User\" WHERE " +
-                "uid != " + uid + " AND balance > " + toolPrice;
+    public static void getSellableToolInfo(String query, List<Integer> tids,
+                                           List<String> toolNames, List<Integer> toolPrices) {
         performQuery(query);
-        while (true) {
-            try {
-                if (!resultSet.next()) break;
-                uids.add(resultSet.getInt(1));
-                usernames.add(resultSet.getString(2));
-            } catch (SQLException e) {
-                e.printStackTrace();
+        try {
+            while (resultSet.next()) {
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+                toolPrices.add(resultSet.getInt(3));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * Retrieve the users who have enough money to buy a specific tool.
+     *
+     * @param query     the SQL query for the database
+     * @param users     a map to store user names and ids
+     */
+    public static void getUsersWithEnoughBank(String query, Map<String, Integer> users) {
+        performQuery(query);
+        try {
+            while (resultSet.next()) {
+                users.put(resultSet.getString(1), resultSet.getInt(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -852,15 +846,15 @@ public class SQLController {
     /**
      * Sell tool
      *
-     * @param toUsername username
-     * @param fromUID    user id
-     * @param tid        tool id
+     * @param toUID   the buyer's user id
+     * @param fromUID the seller's user id
+     * @param tid     the id of the tool being sold
      * @return true if tool was successfully sold
      */
-    public static boolean sellTool(String toUsername, int fromUID,
+    public static boolean sellTool(int toUID, int fromUID,
                                    int tid) {
         int salePrice = getSalePrice(tid);
-        int toUID = getUIDFromUsername(toUsername);
+//        int toUID = getUIDFromUsername(toUsername);
 //        int toBalance = getBalance(toUID);
         String q = "SELECT balance FROM \"User\" WHERE uid = " + toUID;
         int toBalance = readBalance(q);

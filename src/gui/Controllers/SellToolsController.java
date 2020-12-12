@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Ryan LaRue, rml5169@rit.edu
@@ -27,8 +24,7 @@ public class SellToolsController extends Controller {
     private List<Integer> tids;
     private List<String> toolNames;
     private List<Integer> toolPrices;
-    private Set<String> usernames;
-    private Set<Integer> uids;
+    private Map<String, Integer> users;
 
     /**
      * Gets information on sellable tools and updates to tool combo box to
@@ -38,9 +34,9 @@ public class SellToolsController extends Controller {
     public void initialize() {
         tids = new ArrayList<>();
         toolNames = new ArrayList<>();
-        usernames = new HashSet<>();
-        uids = new HashSet<>();
+        users = new HashMap<>();
         toolPrices = new ArrayList<>();
+
         String query = "SELECT t.tid, t.tool_name, o.sale_price FROM \"Owns\" o, \"Tool\" t WHERE " +
                 "o.tid = t.tid AND o.uid = " + Main.getUID() + " AND t.lendable = " +
                 "true AND date_sold IS NULL";
@@ -55,14 +51,16 @@ public class SellToolsController extends Controller {
     @FXML
     public void selectTool() {
         userComboBox.getItems().clear();
-        usernames.clear();
-        uids.clear();
+        users.clear();
         int toolPrice;
+
         if (toolComboBox.getSelectionModel().getSelectedItem() != null) {
             toolPrice = toolPrices.get(toolComboBox.getSelectionModel().getSelectedIndex());
             userComboBox.setDisable(false);
-            SQLController.getUsersWithEnoughBank(Main.getUID(), uids, usernames, toolPrice);
-            userComboBox.getItems().addAll(usernames);
+            String query = "SELECT username, uid FROM \"User\" WHERE " +
+                    "uid != " + Main.getUID() + " AND balance > " + toolPrice;
+            SQLController.getUsersWithEnoughBank(query, users);
+            userComboBox.getItems().addAll(users.keySet());
         }
     }
 
@@ -74,13 +72,13 @@ public class SellToolsController extends Controller {
     public void sell(ActionEvent event) {
         String username = userComboBox.getSelectionModel().getSelectedItem();
         String toolName = toolComboBox.getSelectionModel().getSelectedItem();
-        if (usernames.contains(username) && toolNames.contains(toolName)) {
+        if (users.containsKey(username) && toolNames.contains(toolName)) {
             statusText.setVisible(false);
 
             // tids & toolNames have equal indexes
             int tid = tids.get(toolNames.indexOf(toolName));
 
-            boolean success = SQLController.sellTool(username, Main.getUID(), tid);
+            boolean success = SQLController.sellTool(users.get(username), Main.getUID(), tid);
             if (!success) {
                 statusText.setText("User does not have enough money");
                 statusText.setVisible(true);
