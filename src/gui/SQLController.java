@@ -275,7 +275,6 @@ public class SQLController {
         performQuery(query);
     }
 
-    // TODO: delete this method once addNewCategory in ToolCategoriesController is removed
     /**
      * Adds a category to the database.
      *
@@ -394,9 +393,6 @@ public class SQLController {
         }
         performQuery("SELECT addCategories(" + tid + ", VARIADIC ARRAY[" + queryCats + "])");
     }
-
-    // TODO: I believe this is a duplicate function. Whenever a tool is sold, this query is also run.
-    //  Only replacing actual calls for now (this is also pasted where this function was originally called)
 
     /**
      * Inserts tool into Owns table.
