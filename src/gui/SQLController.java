@@ -807,6 +807,16 @@ public class SQLController {
         insertNewHasRelations(tid, categories);
     }
 
+    // TODO: Merge with addfunction because it does the same thing.
+    /**
+     * Use a stored function to execute an (action) update on a tool in the database.
+     *
+     * @param query the SQL query used to call to stored function
+     */
+    public static void updateToolFunc(String query) {
+        performQuery(query);
+    }
+
     /**
      * This is called when a user lends a tool to someone else.
      * It creates a new Borrow record and sets the tool to not lendable.

@@ -83,7 +83,12 @@ public class ModifyToolController extends ToolController {
         statusText.setVisible(false);
         int newPrice = Integer.parseInt(priceTextField.getText());
         if (!(newName.equals("") || getCategories().isEmpty())) {
-            SQLController.updateTool(tid, newName, newPrice, getCategories());
+//            SQLController.updateTool(tid, newName, newPrice, getCategories());
+            String query = "SELECT updateTool(" + tid + ", '" + newName + "', " + newPrice + ", VARIADIC ARRAY[";
+            for (int i = 0; i < categories.size(); i++) {
+                query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
+            }
+            SQLController.updateToolFunc(query);
             gotoViewTools(event);
             setCategories(new ArrayList<>());
         } else {
