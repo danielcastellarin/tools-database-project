@@ -718,7 +718,6 @@ public class SQLController {
 //        getAllOtherUsers(uid, uids, usernames);
     }
 
-    // TODO: try to generalize tool query so it can be used in the getSellableToolInfo
     /**
      * Retrieves information necessary for lending a tool
      *
@@ -745,7 +744,7 @@ public class SQLController {
 
         // Gather User (Borrower) information
         String borrowerQuery = "SELECT username, uid FROM \"User\" WHERE uid != " + uid;
-        getOtherUsers(borrowerQuery, users);
+        getUsers(borrowerQuery, users);
 //        performQuery(borrowerQuery);
 //        try {
 //            while (resultSet.next()) {
@@ -754,6 +753,29 @@ public class SQLController {
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    /**
+     * Retrieves information necessary for lending or selling a tool
+     *
+     * @param query the SQL query for obtaining the data
+     * @param tids a list to store tids of tools that can be lent/sold
+     * @param toolNames a list to store names of tools that can be lent/sold
+     * @param prices a list to store prices of tools that can be sold if applicable
+     */
+    public static void getToolInfo(String query, List<Integer> tids, List<String> toolNames, List<Integer> prices) {
+        performQuery(query);
+        try {
+            while (resultSet.next()) {
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+                if (prices != null) {
+                    prices.add(resultSet.getInt(3));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -784,7 +806,7 @@ public class SQLController {
      * @param query     the SQL query for the database
      * @param users     a map to store user names and ids
      */
-    public static void getOtherUsers(String query, Map<String, Integer> users) {
+    public static void getUsers(String query, Map<String, Integer> users) {
         performQuery(query);
         try {
             while (resultSet.next()) {

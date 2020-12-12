@@ -51,8 +51,16 @@ public class LendToolsController extends Controller {
         users = new HashMap<>();
 
         // TODO: maybe separate this query into tool and user parts
-        SQLController.getLendableUserTools(Main.getUID(), tids, toolNames, users);
+//        SQLController.getLendableUserTools(Main.getUID(), tids, toolNames, users);
+
+        String toolQuery = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
+                "o.tid = t.tid AND o.uid = " + Main.getUID() + " AND t.lendable = true " +
+                "AND date_sold IS NULL";
+        SQLController.getToolInfo(toolQuery, tids, toolNames, null);
         toolComboBox.getItems().addAll(toolNames);
+
+        String borrowerQuery = "SELECT username, uid FROM \"User\" WHERE uid != " + Main.getUID();
+        SQLController.getUsers(borrowerQuery, users);
         userComboBox.getItems().addAll(users.keySet());
     }
 
