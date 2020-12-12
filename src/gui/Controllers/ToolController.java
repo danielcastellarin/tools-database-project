@@ -10,11 +10,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ToolController extends Controller {
 
-    protected static List<String> categories = null;
+    protected static List<String> categories = new ArrayList<>();
 
     @FXML
     protected TextField toolNameTextField;

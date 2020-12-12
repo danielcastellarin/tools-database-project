@@ -5,10 +5,7 @@ import gui.SQLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author Ryan LaRue, rml5169@rit.edu
@@ -21,11 +18,12 @@ public class AddToolController extends ToolController {
      */
     @FXML
     public void addCategories() {
-        if(getCategories() == null) {
-            gotoCategories(new ArrayList<>(), "Add Tool");
-        } else {
-            gotoCategories(getCategories(), "Add Tool");
-        }
+//        if(getCategories() == null) {
+//            gotoCategories(new ArrayList<>(), "Add Tool");
+//        } else {
+//            gotoCategories(getCategories(), "Add Tool");
+//        }
+        gotoCategories(getCategories(), "Add Tool");
     }
 
     /**
@@ -38,15 +36,9 @@ public class AddToolController extends ToolController {
     public void addTool(ActionEvent event) {
         String toolName = toolNameTextField.getText();
 
-        // FIXME: Nullpointer thrown because of getCategories
         if (!(toolName.equals("") || getCategories().isEmpty())) {
             statusText.setVisible(false);
             int salePrice = Integer.parseInt(priceTextField.getText());
-
-            // TODO: Keep date for now since this might be combined with DataGeneration
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            Date date = new Date();
-            String purchaseDate = dateFormat.format(date);
 
 //            SQLController.addNewTool(Main.getUID(), toolName,
 //                    purchaseDate, salePrice, getCategories());
