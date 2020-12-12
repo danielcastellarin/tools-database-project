@@ -491,56 +491,6 @@ public class SQLController {
     }
 
     /**
-     * Gets tool info from has table
-     *
-     * @param tids       tool ids
-     * @param categories list of categories
-     */
-    private static void getToolInfoFromHas(List<Integer> tids,
-                                           List<String> categories) {
-        for (int tid : tids) {
-            String query = "SELECT tool_category FROM \"Category\" WHERE " +
-                    "cid IN (SELECT cid FROM \"Has\" WHERE tid=" + tid + ")";
-            performQuery(query);
-            try {
-                StringBuilder categoryString = new StringBuilder();
-                while (resultSet.next()) {
-                    categoryString.append(resultSet.getString(1)).append(", ");
-                }
-                // Remove ending ', '
-                String category = categoryString.toString().substring(0,
-                        categoryString.length() - 2);
-                categories.add(category);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Gets lendable tool info
-     *
-     * @param tids      list of tool ids
-     * @param toolNames list of tool names
-     */
-    private static void getLendableToolInfo(int uid, List<Integer> tids, List<String> toolNames) {
-        String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
-                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true " +
-                "AND date_sold IS NULL";
-        performQuery(query);
-        while (true) {
-            try {
-                if (!resultSet.next()) break;
-                tids.add(resultSet.getInt(1));
-                toolNames.add(resultSet.getString(2));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
      * Gets sellable tool info
      *
      * @param uid        user id
@@ -587,7 +537,7 @@ public class SQLController {
     }
 
     /**
-     * Retrieves a user's owned tool information so that it can be viewed
+     * Retrieves the information about a user's owned tools
      *
      * @param uid        the user's identification
      * @param tids       a list to store the tids of tools
@@ -616,6 +566,34 @@ public class SQLController {
     }
 
     /**
+     * Gets tool info from has table
+     *
+     * @param tids       tool ids
+     * @param categories list of categories
+     */
+    private static void getToolInfoFromHas(List<Integer> tids,
+                                           List<String> categories) {
+        for (int tid : tids) {
+            String query = "SELECT tool_category FROM \"Category\" WHERE " +
+                    "cid IN (SELECT cid FROM \"Has\" WHERE tid=" + tid + ")";
+            performQuery(query);
+            try {
+                StringBuilder categoryString = new StringBuilder();
+                while (resultSet.next()) {
+                    categoryString.append(resultSet.getString(1)).append(", ");
+                }
+                // Remove ending ', '
+                String category = categoryString.toString().substring(0,
+                        categoryString.length() - 2);
+                categories.add(category);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * Gets tool info from borrows table
      *
      * @param uid       the user id
@@ -628,62 +606,83 @@ public class SQLController {
      */
     private static void getToolInfoFromBorrows(int uid, List<Integer> tids, List<String> toolNames,
                                                List<String> lendDates, List<String> dueDates, List<Integer> owners, List<String> usernames) {
-        String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
-                "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
-                "b.uid = " + uid + " AND b.return_date IS NULL AND b.tid " +
-                "= t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
+//        String query = "SELECT b.tid, t.tool_name, b.lend_date, b.due_date, o.uid, u.username FROM " +
+//                "\"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u WHERE " +
+//                "b.uid = " + uid + " AND b.return_date IS NULL AND b.tid " +
+//                "= t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid";
+//        performQuery(query);
+//        while (true) {
+//            try {
+//                if (!resultSet.next()) break;
+//                tids.add(resultSet.getInt(1));
+//                toolNames.add(resultSet.getString(2));
+//                lendDates.add(resultSet.getString(3));
+//                dueDates.add(resultSet.getString(4));
+//                owners.add(resultSet.getInt(5));
+//                usernames.add(resultSet.getString(6));
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+    }
+
+    /**
+     * Retrieves the information about a user's borrowed tools
+     *
+     * @param uid        the user's identification
+     * @param tids       a list to store the tids of tools
+     * @param toolNames  a list to store the tool names
+     * @param usernames  a list to store the tools' owner's usernames
+     * @param lendDates  a list to store the dates tools were lent
+     * @param dueDates   a list to store the dates tools should be returned
+     * @param categories a list to store tool categories
+     */
+    public static void getBorrowedTools(int uid, List<Integer> tids,
+                                        List<String> toolNames,
+                                        List<String> usernames,
+                                        List<String> lendDates,
+                                        List<String> dueDates,
+                                        List<String> categories) {
+        String query = "SELECT b.tid, t.tool_name, u.username, b.lend_date, b.due_date, array_agg(tool_category::CHAR(1)) " +
+                "FROM \"Borrows\" AS b, \"Tool\" AS t, \"Owns\" AS o, \"User\" AS u, \"Has\" AS h, \"Category\" AS c " +
+                "WHERE b.uid = " + uid + " AND b.return_date IS NULL AND b.tid = t.tid AND t.tid = o.tid AND o.date_sold IS NULL AND o.uid = u.uid " +
+                "AND t.tid = h.tid AND h.cid = c.cid " +
+                "GROUP BY b.tid, t.tool_name, b.lend_date, b.due_date, u.username;";
+        performQuery(query);
+        try {
+            while (resultSet.next()) {
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+                usernames.add(resultSet.getString(3));
+                lendDates.add(resultSet.getString(4));
+                dueDates.add(resultSet.getString(5));
+                categories.add(resultSet.getString(6));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets lendable tool info
+     *
+     * @param tids      list of tool ids
+     * @param toolNames list of tool names
+     */
+    private static void getLendableToolInfo(int uid, List<Integer> tids, List<String> toolNames) {
+        String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
+                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true " +
+                "AND date_sold IS NULL";
         performQuery(query);
         while (true) {
             try {
                 if (!resultSet.next()) break;
                 tids.add(resultSet.getInt(1));
                 toolNames.add(resultSet.getString(2));
-                lendDates.add(resultSet.getString(3));
-                dueDates.add(resultSet.getString(4));
-                owners.add(resultSet.getInt(5));
-                usernames.add(resultSet.getString(6));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Get borrowed tools
-     *
-     * @param uid        user id
-     * @param tids       list of tool ids
-     * @param toolNames  list of tool names
-     * @param owners     list of owners
-     * @param usernames  list of usernames
-     * @param lendDates  list of lend dates
-     * @param dueDates   list of due dates
-     * @param categories list of categories
-     */
-    public static void getBorrowedTools(int uid, List<Integer> tids,
-                                        List<String> toolNames,
-                                        List<Integer> owners,
-                                        List<String> usernames,
-                                        List<String> lendDates,
-                                        List<String> dueDates,
-                                        List<String> categories) {
-        getToolInfoFromBorrows(uid, tids, toolNames, lendDates, dueDates, owners, usernames);
-        getToolInfoFromHas(tids, categories);
-    }
-
-    /**
-     * Gets lendable user tools
-     *
-     * @param uid       user id
-     * @param tids      list of tool ids
-     * @param toolNames list of tool names
-     * @param uids      set of user ids
-     * @param usernames set of usernames
-     */
-    public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
-                                            Set<String> usernames) {
-        getLendableToolInfo(uid, tids, toolNames);
-        getAllOtherUsers(uid, uids, usernames);
     }
 
     /**
@@ -707,6 +706,21 @@ public class SQLController {
             }
 
         }
+    }
+
+    /**
+     * Gets lendable user tools
+     *
+     * @param uid       user id
+     * @param tids      list of tool ids
+     * @param toolNames list of tool names
+     * @param uids      set of user ids
+     * @param usernames set of usernames
+     */
+    public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
+                                            Set<String> usernames) {
+        getLendableToolInfo(uid, tids, toolNames);
+        getAllOtherUsers(uid, uids, usernames);
     }
 
     /**

@@ -9,7 +9,7 @@ public class BorrowedUserTools {
 
     private List<Integer> tids;
     private List<String> toolNames;
-    private List<Integer> owners;
+//    private List<Integer> owners;
     private List<String> ownerNames;
     private List<String> lendDates;
     private List<String> dueDates;
@@ -23,12 +23,12 @@ public class BorrowedUserTools {
     public BorrowedUserTools(int uid) {
         this.tids = new ArrayList<>();
         this.toolNames = new ArrayList<>();
-        this.owners = new ArrayList<>();
+//        this.owners = new ArrayList<>();
         this.ownerNames = new ArrayList<>();
         this.lendDates = new ArrayList<>();
         this.dueDates = new ArrayList<>();
         this.categories = new ArrayList<>();
-        SQLController.getBorrowedTools(uid, tids, toolNames, owners, ownerNames, lendDates, dueDates, categories);
+        SQLController.getBorrowedTools(uid, tids, toolNames, ownerNames, lendDates, dueDates, categories);
     }
 
     /**
