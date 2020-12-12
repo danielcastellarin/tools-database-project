@@ -430,7 +430,7 @@ public class SQLController {
                 "date_sold, sale_price) VALUES(" + uid + ", " + tid + ", '" +
                 purchaseDate + "', NULL, " + sale_price + ")");
 //        insertCategoriesToHas(tid, categories);
-        insertNewHasRelations(tid, categories);
+//        insertNewHasRelations(tid, categories);
     }
 
     /**
@@ -805,7 +805,7 @@ public class SQLController {
 //        deleteCategoriesFromHas(tid);
         performUpdate("DELETE FROM \"Has\" WHERE tid = " + tid);
 //        insertCategoriesToHas(tid, categories);
-        insertNewHasRelations(tid, categories);
+//        insertNewHasRelations(tid, categories);
     }
 
     // TODO: Merge with addfunction because it does the same thing.
@@ -865,35 +865,53 @@ public class SQLController {
      */
     public static boolean sellTool(int toUID, int fromUID,
                                    int tid) {
-        String priceQuery = "SELECT sale_price FROM \"Owns\" WHERE tid= " + tid
-                + " AND date_sold IS NULL";
-        int salePrice = getSalePrice(priceQuery);
-//        int toUID = getUIDFromUsername(toUsername);
-//        int toBalance = getBalance(toUID);
-        String q = "SELECT balance FROM \"User\" WHERE uid = " + toUID;
-        int toBalance = readBalance(q);
-
-        if (toBalance < salePrice) {
-            return false;
-        } else {
-            // Exchange currency
-//            incrementBalance(toUID, -salePrice);
-//            incrementBalance(fromUID, salePrice);
-            performQuery("SELECT transfermoney(" + toUID + ", " + fromUID + ", " + salePrice + ")");
-
-            System.out.println("FROM ID: " + fromUID);
-            System.out.println("TO ID: " + toUID);
-            String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE " +
-                    "WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
-                    "date_sold IS NULL";
-            performUpdate(query);
-
-            String query2 = "INSERT INTO \"Owns\" (uid, tid, date_purchased," +
-                    " " +
-                    "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", CURRENT_DATE, NULL, " + salePrice + ")";
-            performUpdate(query2);
-        }
+//        String priceQuery = "SELECT sale_price FROM \"Owns\" WHERE tid= " + tid
+//                + " AND date_sold IS NULL";
+//        int salePrice = getSalePrice(priceQuery);
+////        int toUID = getUIDFromUsername(toUsername);
+////        int toBalance = getBalance(toUID);
+//        String q = "SELECT balance FROM \"User\" WHERE uid = " + toUID;
+//        int toBalance = readBalance(q);
+//
+//        if (toBalance < salePrice) {
+//            return false;
+//        } else {
+//            // Exchange currency
+////            incrementBalance(toUID, -salePrice);
+////            incrementBalance(fromUID, salePrice);
+//            performQuery("SELECT transfermoney(" + toUID + ", " + fromUID + ", " + salePrice + ")");
+//
+//            System.out.println("FROM ID: " + fromUID);
+//            System.out.println("TO ID: " + toUID);
+//            String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE " +
+//                    "WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
+//                    "date_sold IS NULL";
+//            performUpdate(query);
+//
+//            String query2 = "INSERT INTO \"Owns\" (uid, tid, date_purchased," +
+//                    " " +
+//                    "date_sold, sale_price) " + "VALUES(" + toUID + ", " + tid + ", CURRENT_DATE, NULL, " + salePrice + ")";
+//            performUpdate(query2);
+//        }
         return true;
+    }
+
+    /**
+     * Performs the action of selling a tool to another user in the database
+     * using a stored function.
+     *
+     * @param query the SQL query to for the database
+     * @return true if tool was successfully sold
+     */
+    public static boolean sellToolFunc(String query) {
+        performQuery(query);
+        try {
+            resultSet.next();
+            return resultSet.getBoolean(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

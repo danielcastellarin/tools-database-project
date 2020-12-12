@@ -42,7 +42,7 @@ public class DataGenerationSQLController extends SQLController {
                 "date_sold, sale_price) VALUES(" + uid + ", " + tid + ", '" +
                 purchaseDate + "', NULL, " + sale_price + ")");
 //        insertCategoriesToHas(tid, categories);
-        insertNewHasRelations(tid, categories);
+//        insertNewHasRelations(tid, categories);
     }
 
     public static void addTool(String query) {

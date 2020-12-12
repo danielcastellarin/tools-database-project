@@ -64,6 +64,8 @@ public class SellToolsController extends Controller {
         }
     }
 
+    // TODO: balance and toolprice check done twice (above and in sell func) remove one (preferably above)
+
     /**
      * Sells a tool to the selected user
      *
@@ -78,7 +80,9 @@ public class SellToolsController extends Controller {
             // tids & toolNames have equal indexes
             int tid = tids.get(toolNames.indexOf(toolName));
 
-            boolean success = SQLController.sellTool(users.get(username), Main.getUID(), tid);
+//            boolean success = SQLController.sellTool(users.get(username), Main.getUID(), tid);
+            String query = "SELECT sellTool(" + tid + ", " + users.get(username) + ", " + Main.getUID() + ")";
+            boolean success = SQLController.sellToolFunc(query);
             if (!success) {
                 statusText.setText("User does not have enough money");
                 statusText.setVisible(true);
