@@ -38,7 +38,8 @@ public class LoginController extends Controller {
             String query = "SELECT uid FROM \"User\" WHERE username ='" +
                     user + "' AND password='" + pass + "'";
 //            SQLController.performQuery(query);
-            int uid = SQLController.readUID(query);
+//            int uid = SQLController.readUID(query);
+            int uid = SQLController.readInt(query);
 //            int uid = SQLController.verifyLoginCredentials(user, pass);
             if (uid != -1) {
                 loginStatusText.setVisible(false);

@@ -182,6 +182,24 @@ public class SQLController {
         return 0;
     }
 
+    /**
+     * Performs a query on the database that returns an integer.
+     * Used when retrieving a user's uid and balance.
+     *
+     * @param query the SQL query for the database
+     * @return an integer
+     */
+    public static int readInt(String query) {
+        performQuery(query);
+        try {
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
+    }
+
     // SQL Function is transfermoney(buyer, seller, price)
 
     /**
@@ -194,7 +212,8 @@ public class SQLController {
     public static int incrementBalance(int uid, int increment) {
         String q = "SELECT balance FROM \"User\" WHERE uid = " + uid;
 //        int balance = getBalance(uid) + increment;
-        int balance = readBalance(q) + increment;
+//        int balance = readBalance(q) + increment;     <-- most recent
+        int balance = 0;
         String query =
                 "UPDATE \"User\" SET balance = " + balance + " WHERE " +
                         "uid = " + uid;
