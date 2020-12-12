@@ -96,7 +96,7 @@ public class DataGenerationSQLController extends SQLController {
         }
         return true;
     }
-    // TODO: this is same as returnTool in SQLController but with currentDate variable
+
     public static void returnTool(int tid, String currentDate) {
         String query1 = "UPDATE \"Borrows\" SET return_date = '" + currentDate + "' WHERE tid = " + tid + " AND return_date IS NULL";
         performUpdate(query1);

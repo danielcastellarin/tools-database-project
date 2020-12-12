@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -156,7 +157,7 @@ public class ViewToolsController extends Controller {
         if (event.getClickCount() == 2) {
             int index = ((TableView) event.getSource()).getSelectionModel().getFocusedIndex();
             selectedTid = borrowedTools.getTids().get(index);
-            SQLController.returnTool(selectedTid);
+            SQLController.returnTool(selectedTid, LocalDate.now());
             updateBorrowedTable();
         }
     }

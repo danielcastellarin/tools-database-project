@@ -60,7 +60,7 @@ public class CreateTool {
 //        DataGenerationSQLController.addNewTool(uid, toolName,
 //                datePurchased.toString(), salePrice, categories);
 
-        String query = "SELECT addTool(" + uid + ", '" + toolName + "', '" + datePurchased.toString() + "', " + salePrice + ", VARIADIC ARRAY[";
+        String query = "SELECT addTool(" + uid + ", '" + toolName + "', '" + datePurchased + "', " + salePrice + ", VARIADIC ARRAY[";
         for (int i = 0; i < categories.size(); i++) {
             query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
         }
@@ -86,7 +86,8 @@ public class CreateTool {
                     System.out.println( currentBorrower + " Return Tool to " + currentOwner);
                     currentBorrower = -1;
                     isLent = false;
-                    DataGenerationSQLController.returnTool(tid, currentDate.toString());
+//                    DataGenerationSQLController.returnTool(tid, currentDate.toString());
+                    SQLController.returnTool(tid, currentDate);
                 }
             } else {
                 // Update Owns

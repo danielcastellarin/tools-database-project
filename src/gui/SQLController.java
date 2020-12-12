@@ -964,8 +964,8 @@ public class SQLController {
      *
      * @param tid tool id
      */
-    public static void returnTool(int tid) {
-        String query1 = "UPDATE \"Borrows\" SET return_date = CURRENT_DATE WHERE tid = " + tid + " AND return_date IS NULL";
+    public static void returnTool(int tid, LocalDate currentDate) {
+        String query1 = "UPDATE \"Borrows\" SET return_date = '" + currentDate + "' WHERE tid = " + tid + " AND return_date IS NULL";
         performUpdate(query1);
         String query2 = "UPDATE \"Tool\" SET lendable = true WHERE tid = " + tid;
         performUpdate(query2);

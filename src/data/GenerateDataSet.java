@@ -6,7 +6,7 @@ import gui.SQLController;
 public class GenerateDataSet extends SQLController{
 
     private static void generate() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 150; i++) {
             new CreateTool();
         }
     }
