@@ -834,16 +834,17 @@ public class SQLController {
         performUpdate(query2);
     }
 
+    // TODO: merge either with sellTool or something like getNextAvailableTID because it's the same Java but a different query
     /**
      * Gets sale price of tool from id
      *
-     * @param tid tool id
-     * @return sale price
+     * @param query the SQL query for the database
+     * @return the sale price obtained from the query
      */
-    private static int getSalePrice(int tid) {
-        String query =
-                "SELECT sale_price FROM \"Owns\" WHERE tid= " + tid + " AND " +
-                        "date_sold IS NULL";
+    private static int getSalePrice(String query) {
+//        String query =
+//                "SELECT sale_price FROM \"Owns\" WHERE tid= " + tid + " AND " +
+//                        "date_sold IS NULL";
         performQuery(query);
         try {
             resultSet.next();
@@ -864,7 +865,9 @@ public class SQLController {
      */
     public static boolean sellTool(int toUID, int fromUID,
                                    int tid) {
-        int salePrice = getSalePrice(tid);
+        String priceQuery = "SELECT sale_price FROM \"Owns\" WHERE tid= " + tid
+                + " AND date_sold IS NULL";
+        int salePrice = getSalePrice(priceQuery);
 //        int toUID = getUIDFromUsername(toUsername);
 //        int toBalance = getBalance(toUID);
         String q = "SELECT balance FROM \"User\" WHERE uid = " + toUID;
@@ -883,7 +886,6 @@ public class SQLController {
             String query = "UPDATE \"Owns\" SET date_sold = CURRENT_DATE " +
                     "WHERE uid = " + fromUID + " AND tid = " + tid + " AND " +
                     "date_sold IS NULL";
-
             performUpdate(query);
 
             String query2 = "INSERT INTO \"Owns\" (uid, tid, date_purchased," +
