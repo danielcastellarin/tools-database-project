@@ -660,47 +660,45 @@ public class SQLController {
     }
 
     /**
-     * Gets lendable tool info
+     * Retrieves information necessary for lending a tool
      *
-     * @param tids      list of tool ids
-     * @param toolNames list of tool names
+     * @param uid the lender's identification
+     * @param tids a list to store the lendable tool tids
+     * @param toolNames a list to store the lendable tool names
      */
     private static void getLendableToolInfo(int uid, List<Integer> tids, List<String> toolNames) {
         String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
                 "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true " +
                 "AND date_sold IS NULL";
         performQuery(query);
-        while (true) {
-            try {
-                if (!resultSet.next()) break;
+        try {
+            while (resultSet.next()) {
                 tids.add(resultSet.getInt(1));
                 toolNames.add(resultSet.getString(2));
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     /**
-     * Get all other users from user table
+     * Obtain the ids and names of the users that can be lent to
      *
-     * @param uid       user id
-     * @param uids      set of user ids
-     * @param usernames set of usernames
+     * @param uid       the lender's identification
+     * @param uids      a list to store user ids
+     * @param usernames a list to store usernames
      */
-    public static void getAllOtherUsers(int uid, Set<Integer> uids,
-                                        Set<String> usernames) {
+    private static void getAllOtherUsers(int uid, Set<Integer> uids,
+                                         Set<String> usernames) {
         String query = "SELECT uid, username FROM \"User\" WHERE uid != " + uid;
         performQuery(query);
-        while (true) {
-            try {
-                if (!resultSet.next()) break;
+        try {
+            while (resultSet.next()) {
                 uids.add(resultSet.getInt(1));
                 usernames.add(resultSet.getString(2));
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
