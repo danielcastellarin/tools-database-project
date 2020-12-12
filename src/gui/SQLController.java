@@ -801,7 +801,7 @@ public class SQLController {
     }
 
     /**
-     * Retrieve the users who have enough money to buy a specific tool.
+     * Retrieve users who can borrow/buy a certain tool.
      *
      * @param query     the SQL query for the database
      * @param users     a map to store user names and ids

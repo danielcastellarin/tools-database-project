@@ -40,7 +40,9 @@ public class SellToolsController extends Controller {
         String query = "SELECT t.tid, t.tool_name, o.sale_price FROM \"Owns\" o, \"Tool\" t WHERE " +
                 "o.tid = t.tid AND o.uid = " + Main.getUID() + " AND t.lendable = " +
                 "true AND date_sold IS NULL";
-        SQLController.getSellableToolInfo(query, tids, toolNames, toolPrices);
+//        SQLController.getSellableToolInfo(query, tids, toolNames, toolPrices);
+        SQLController.getToolInfo(query, tids, toolNames, toolPrices);
+
         toolComboBox.getItems().addAll(toolNames);
     }
 
