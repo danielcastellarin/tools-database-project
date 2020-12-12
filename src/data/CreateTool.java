@@ -95,7 +95,9 @@ public class CreateTool {
                     System.out.print("Change Price From " + salePrice + " ");
                     salePrice = (random.nextInt(8) + 1) * 5;
                     System.out.println("to " + salePrice);
-                    DataGenerationSQLController.updatePrice(tid, salePrice);
+//                    DataGenerationSQLController.updatePrice(tid, salePrice);
+                    SQLController.performUpdate("UPDATE \"Owns\" SET sale_price = " +
+                            salePrice + " WHERE date_sold IS NULL AND tid = " + tid);
                 // Insert into Owns, Update Date_Sold
                 } else if (actionVar < 8) {
                     int newOwner = random.nextInt(numUsers) + 1;

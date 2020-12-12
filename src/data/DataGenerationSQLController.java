@@ -59,7 +59,6 @@ public class DataGenerationSQLController extends SQLController {
         performUpdate(query2);
     }
 
-    // TODO: this is same as the old sellTool in SQLController but with currentDate and price variable
     /**
      * Sell tool
      *
@@ -105,7 +104,6 @@ public class DataGenerationSQLController extends SQLController {
         performUpdate(query2);
     }
 
-    // TODO: Consider using performStoredFunc from updateTool
     /**
      * Update tool in tool and owns tables
      *
@@ -117,5 +115,4 @@ public class DataGenerationSQLController extends SQLController {
                 "date_sold IS NULL AND tid = " + tid;
         performUpdate(query);
     }
-
 }
