@@ -54,7 +54,8 @@ public class AddToolController extends ToolController {
             for (int i = 0; i < categories.size(); i++) {
                 query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
             }
-            SQLController.addTool(query);
+//            SQLController.addTool(query);
+            SQLController.performStoredFunc(query);
 
             setCategories(new ArrayList<>());
 

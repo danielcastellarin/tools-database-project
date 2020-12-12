@@ -88,7 +88,8 @@ public class ModifyToolController extends ToolController {
             for (int i = 0; i < categories.size(); i++) {
                 query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
             }
-            SQLController.updateToolFunc(query);
+//            SQLController.updateToolFunc(query);
+            SQLController.performStoredFunc(query);
             gotoViewTools(event);
             setCategories(new ArrayList<>());
         } else {

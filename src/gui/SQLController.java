@@ -265,6 +265,18 @@ public class SQLController {
         }
     }
 
+    // TODO: decide whether performQuery should be public, because this is pretty stupid
+
+    /**
+     * Used when adding or modifying tools by calling stored
+     * functions in the database.
+     *
+     * @param query The SQL query calling the stored function
+     */
+    public static void performStoredFunc(String query) {
+        performQuery(query);
+    }
+
     // TODO: delete this method once addNewCategory in ToolCategoriesController is removed
 
     /**
@@ -829,7 +841,6 @@ public class SQLController {
 //        insertNewHasRelations(tid, categories);
     }
 
-    // TODO: Merge with addfunction because it does the same thing.
     /**
      * Use a stored function to execute an (action) update on a tool in the database.
      *
@@ -855,7 +866,6 @@ public class SQLController {
         performUpdate(query2);
     }
 
-    // TODO: merge either with sellTool or something like getNextAvailableTID because it's the same Java but a different query
     /**
      * Gets sale price of tool from id
      *
