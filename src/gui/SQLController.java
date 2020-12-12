@@ -491,28 +491,24 @@ public class SQLController {
     }
 
     /**
-     * Gets sellable tool info
+     * Retrieves information necessary for selling a tool
      *
-     * @param uid        user id
-     * @param tids       list of tool ids
-     * @param toolNames  list of tool names
-     * @param toolPrices list of tool prices
+     * @param query      the SQL query for obtaining the data
+     * @param tids       a list to store tids of tools that can be sold
+     * @param toolNames  a list to store names of tools that can be sold
+     * @param toolPrices a list to store prices of tools that can be sold
      */
-    public static void getSellableToolInfo(int uid, List<Integer> tids,
+    public static void getSellableToolInfo(String query, List<Integer> tids,
                                            List<String> toolNames, List<Integer> toolPrices) {
-        String query = "SELECT t.tid, t.tool_name, o.sale_price FROM \"Owns\" o, \"Tool\" t WHERE " +
-                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = " +
-                "true AND date_sold IS NULL";
         performQuery(query);
-        while (true) {
-            try {
-                if (!resultSet.next()) break;
+        try {
+            while (resultSet.next()) {
                 tids.add(resultSet.getInt(1));
                 toolNames.add(resultSet.getString(2));
                 toolPrices.add(resultSet.getInt(3));
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
