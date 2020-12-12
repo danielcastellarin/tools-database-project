@@ -77,10 +77,9 @@ public class LendToolsController extends Controller {
         LocalDate dueDate = dueDateDatePicker.getValue();
         if (users.containsKey(username) && toolNames.contains(toolName) && dueDate != null) {
             statusText.setVisible(false);
-            String dateString = dueDate.toString();
             // tids & toolNames have equal indexes
             int tid = tids.get(toolNames.indexOf(toolName));
-            SQLController.lendTool(users.get(username), tid, dateString);
+            SQLController.lendTool(users.get(username), tid, dueDate, LocalDate.now());
             gotoHome(event);
         } else {
             statusText.setVisible(true);

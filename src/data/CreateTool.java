@@ -115,8 +115,9 @@ public class CreateTool {
                     System.out.println("Lend Date: " + currentDate);
                     System.out.println("Due Date: " + dueDate);
                     System.out.println("Return Date: Null");
-                    DataGenerationSQLController.insertNewBorrowRecord(currentBorrower,
-                            tid, dueDate.toString(), currentDate.toString());
+//                    DataGenerationSQLController.insertNewBorrowRecord(currentBorrower,
+//                            tid, dueDate.toString(), currentDate.toString());
+                    SQLController.lendTool(currentBorrower, tid, dueDate, currentDate);
                     isLent = true;
                 }
             }

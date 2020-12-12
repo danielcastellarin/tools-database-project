@@ -4,6 +4,7 @@ package gui;
  */
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 public class SQLController {
@@ -23,7 +24,7 @@ public class SQLController {
         try {
             connection = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to Database");
-
+            System.out.println(LocalDate.now());
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -946,9 +947,11 @@ public class SQLController {
      * @param tid      the borrowed tool's id
      * @param dueDate  the date tool should be returned to the owner
      */
-    public static void lendTool(int uid, int tid, String dueDate) {
+    public static void lendTool(int uid, int tid, LocalDate dueDate, LocalDate lendDate) {
+//        String query1 = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +
+//                "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', CURRENT_DATE)";
         String query1 = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +
-                "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', CURRENT_DATE)";
+                "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', '" + lendDate + "')";
         performUpdate(query1);
         String query2 = "UPDATE \"Tool\" SET lendable = false WHERE tid = " + tid;
         performUpdate(query2);

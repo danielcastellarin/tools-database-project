@@ -44,7 +44,6 @@ public class DataGenerationSQLController extends SQLController {
 //        insertNewHasRelations(tid, categories);
     }
 
-    // TODO: this is same as lendTool in SQLController but with currentDate variable
     /**
      * Insert new record into borrow table
      *
