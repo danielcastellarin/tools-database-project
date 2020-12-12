@@ -59,7 +59,7 @@ public class SellToolsController extends Controller {
             userComboBox.setDisable(false);
             String query = "SELECT username, uid FROM \"User\" WHERE " +
                     "uid != " + Main.getUID() + " AND balance > " + toolPrice;
-            SQLController.getUsersWithEnoughBank(query, users);
+            SQLController.getOtherUsers(query, users);
             userComboBox.getItems().addAll(users.keySet());
         }
     }

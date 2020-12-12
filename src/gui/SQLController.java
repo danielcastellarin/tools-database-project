@@ -715,6 +715,7 @@ public class SQLController {
 //        getAllOtherUsers(uid, uids, usernames);
     }
 
+    // TODO: try to generalize tool query so it can be used in the getSellableToolInfo
     /**
      * Retrieves information necessary for lending a tool
      *
@@ -741,14 +742,15 @@ public class SQLController {
 
         // Gather User (Borrower) information
         String borrowerQuery = "SELECT username, uid FROM \"User\" WHERE uid != " + uid;
-        performQuery(borrowerQuery);
-        try {
-            while (resultSet.next()) {
-                users.put(resultSet.getString(1), resultSet.getInt(2));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        getOtherUsers(borrowerQuery, users);
+//        performQuery(borrowerQuery);
+//        try {
+//            while (resultSet.next()) {
+//                users.put(resultSet.getString(1), resultSet.getInt(2));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -779,7 +781,7 @@ public class SQLController {
      * @param query     the SQL query for the database
      * @param users     a map to store user names and ids
      */
-    public static void getUsersWithEnoughBank(String query, Map<String, Integer> users) {
+    public static void getOtherUsers(String query, Map<String, Integer> users) {
         performQuery(query);
         try {
             while (resultSet.next()) {

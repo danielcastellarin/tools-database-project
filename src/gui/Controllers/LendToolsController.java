@@ -50,6 +50,7 @@ public class LendToolsController extends Controller {
         toolNames = new ArrayList<>();
         users = new HashMap<>();
 
+        // TODO: maybe separate this query into tool and user parts
         SQLController.getLendableUserTools(Main.getUID(), tids, toolNames, users);
         toolComboBox.getItems().addAll(toolNames);
         userComboBox.getItems().addAll(users.keySet());
