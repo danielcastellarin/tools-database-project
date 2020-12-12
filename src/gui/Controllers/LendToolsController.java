@@ -28,8 +28,7 @@ public class LendToolsController extends Controller {
 
     private List<Integer> tids;
     private List<String> toolNames;
-    private Set<String> usernames;
-    private Set<Integer> uids;
+    private Map<String, Integer> users;
 
     /**
      * Queries the database to get all available lendable tools and the
@@ -49,11 +48,11 @@ public class LendToolsController extends Controller {
 
         tids = new ArrayList<>();
         toolNames = new ArrayList<>();
-        usernames = new HashSet<>();
-        uids = new HashSet<>();
-        SQLController.getLendableUserTools(Main.getUID(), tids, toolNames, uids, usernames);
+        users = new HashMap<>();
+
+        SQLController.getLendableUserTools(Main.getUID(), tids, toolNames, users);
         toolComboBox.getItems().addAll(toolNames);
-        userComboBox.getItems().addAll(usernames);
+        userComboBox.getItems().addAll(users.keySet());
     }
 
     /**
@@ -67,12 +66,12 @@ public class LendToolsController extends Controller {
         String username = userComboBox.getSelectionModel().getSelectedItem();
         String toolName = toolComboBox.getSelectionModel().getSelectedItem();
         LocalDate dueDate = dueDateDatePicker.getValue();
-        if (usernames.contains(username) && toolNames.contains(toolName) && dueDate != null) {
+        if (users.containsKey(username) && toolNames.contains(toolName) && dueDate != null) {
             statusText.setVisible(false);
             String dateString = dueDate.toString();
             // tids & toolNames have equal indexes
             int tid = tids.get(toolNames.indexOf(toolName));
-            SQLController.insertNewBorrowRecord(username, tid, dateString);
+            SQLController.lendTool(users.get(username), tid, dateString);
             gotoHome(event);
         } else {
             statusText.setVisible(true);

@@ -667,18 +667,18 @@ public class SQLController {
      * @param toolNames a list to store the lendable tool names
      */
     private static void getLendableToolInfo(int uid, List<Integer> tids, List<String> toolNames) {
-        String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
-                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true " +
-                "AND date_sold IS NULL";
-        performQuery(query);
-        try {
-            while (resultSet.next()) {
-                tids.add(resultSet.getInt(1));
-                toolNames.add(resultSet.getString(2));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        String query = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
+//                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true " +
+//                "AND date_sold IS NULL";
+//        performQuery(query);
+//        try {
+//            while (resultSet.next()) {
+//                tids.add(resultSet.getInt(1));
+//                toolNames.add(resultSet.getString(2));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -703,18 +703,52 @@ public class SQLController {
     }
 
     /**
-     * Gets lendable user tools
+     * Retrieves information necessary for lending a tool
      *
-     * @param uid       user id
-     * @param tids      list of tool ids
-     * @param toolNames list of tool names
-     * @param uids      set of user ids
-     * @param usernames set of usernames
+     * @param uid       the lender's identification
+     * @param tids      a list to store the lendable tool tids
+     * @param toolNames a list to store the lendable tool names
+     * @param uids      a set to store user ids
+     * @param usernames a set to store usernames
      */
-    public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames, Set<Integer> uids,
-                                            Set<String> usernames) {
-        getLendableToolInfo(uid, tids, toolNames);
-        getAllOtherUsers(uid, uids, usernames);
+    public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames,
+                                            Set<Integer> uids, Set<String> usernames) {
+//        getLendableToolInfo(uid, tids, toolNames);
+//        getAllOtherUsers(uid, uids, usernames);
+    }
+
+    /**
+     * Retrieves information necessary for lending a tool
+     *
+     * @param uid       the lender's identification
+     * @param tids      a list to store the lendable tool tids
+     * @param toolNames a list to store the lendable tool names
+     * @param users     a map to store user names and ids
+     */
+    public static void getLendableUserTools(int uid, List<Integer> tids, List<String> toolNames,
+                         Map<String, Integer> users) {
+        String toolQuery = "SELECT t.tid, t.tool_name FROM \"Owns\" o, \"Tool\" t WHERE " +
+                "o.tid = t.tid AND o.uid = " + uid + " AND t.lendable = true " +
+                "AND date_sold IS NULL";
+        performQuery(toolQuery);
+        try {
+            while (resultSet.next()) {
+                tids.add(resultSet.getInt(1));
+                toolNames.add(resultSet.getString(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String userQuery = "SELECT username, uid FROM \"User\" WHERE uid != " + uid;
+        performQuery(userQuery);
+        try {
+            while (resultSet.next()) {
+                users.put(resultSet.getString(1), resultSet.getInt(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -780,14 +814,14 @@ public class SQLController {
     }
 
     /**
-     * Insert new record into borrow table
+     * This is called when a user lends a tool to someone else.
+     * It creates a new Borrow record and sets the tool to not lendable.
      *
-     * @param username username
-     * @param tid      tool id
-     * @param dueDate  date tool is due
+     * @param uid      the borrower's identification
+     * @param tid      the borrowed tool's id
+     * @param dueDate  the date tool should be returned to the owner
      */
-    public static void insertNewBorrowRecord(String username, int tid, String dueDate) {
-        int uid = getUIDFromUsername(username);
+    public static void lendTool(int uid, int tid, String dueDate) {
         String query1 = "INSERT INTO \"Borrows\" (uid, tid, due_date, lend_date) " +
                 "VALUES(" + uid + ", " + tid + ", '" + dueDate + "', CURRENT_DATE)";
         performUpdate(query1);
