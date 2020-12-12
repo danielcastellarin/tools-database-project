@@ -51,7 +51,8 @@ public class CreateTool {
     private void createDataForTool(int uid, int numUsers) {
         // TODO return tid from addTool stored func so that this method becomes obsolete
         String idQuery = "SELECT COALESCE(MAX(tid) + 1, 1) FROM \"Tool\"";
-        int tid = SQLController.getNextAvailableTID(idQuery);
+//        int tid = SQLController.getNextAvailableTID(idQuery);
+        int tid = SQLController.readInt(idQuery);
 
         LocalDate datePurchased = createDate(initialDay, finalDay);
         int salePrice = (random.nextInt(8) + 1) * 5;

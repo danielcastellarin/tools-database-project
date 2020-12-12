@@ -364,7 +364,7 @@ public class SQLController {
             queryCats += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'");
         }
         String q = "SELECT cid FROM \"Category\" WHERE tool_category IN (" + queryCats + ")";
-        SQLController.readCategoriesForCIDs(q, cids);
+//        SQLController.readCategoriesForCIDs(q, cids);
 //        List<Integer> cids = getCategoryIDs(categories);
 
         for (int cid : cids) {
