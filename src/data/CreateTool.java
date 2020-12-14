@@ -57,14 +57,10 @@ public class CreateTool {
         String toolName = pair.getKey();
         List<String> categories = pair.getValue();
 
-//        DataGenerationSQLController.addNewTool(uid, toolName,
-//                datePurchased.toString(), salePrice, categories);
-
         String query = "SELECT addTool(" + uid + ", '" + toolName + "', '" + datePurchased + "', " + salePrice + ", VARIADIC ARRAY[";
         for (int i = 0; i < categories.size(); i++) {
             query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
         }
-//        DataGenerationSQLController.addTool(query);
         int tid = SQLController.readInt(query);
         System.out.println("Owns(" + uid + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
 
@@ -86,7 +82,6 @@ public class CreateTool {
                     System.out.println( currentBorrower + " Return Tool to " + currentOwner);
                     currentBorrower = -1;
                     isLent = false;
-//                    DataGenerationSQLController.returnTool(tid, currentDate.toString());
                     SQLController.returnTool(tid, currentDate);
                 }
             } else {
@@ -95,14 +90,11 @@ public class CreateTool {
                     System.out.print("Change Price From " + salePrice + " ");
                     salePrice = (random.nextInt(8) + 1) * 5;
                     System.out.println("to " + salePrice);
-//                    DataGenerationSQLController.updatePrice(tid, salePrice);
                     SQLController.performUpdate("UPDATE \"Owns\" SET sale_price = " +
                             salePrice + " WHERE date_sold IS NULL AND tid = " + tid);
                 // Insert into Owns, Update Date_Sold
                 } else if (actionVar < 8) {
                     int newOwner = random.nextInt(numUsers) + 1;
-//                    DataGenerationSQLController.sellTool(newOwner,
-//                            currentOwner, tid, salePrice, currentDate.toString());
                     String sellQuery = "SELECT sellTool(" + tid + ", " +
                             newOwner + ", " + currentOwner + ", '" + currentDate + "')";
                     boolean success = SQLController.sellToolFunc(sellQuery);
@@ -121,8 +113,6 @@ public class CreateTool {
                     System.out.println("Lend Date: " + currentDate);
                     System.out.println("Due Date: " + dueDate);
                     System.out.println("Return Date: Null");
-//                    DataGenerationSQLController.insertNewBorrowRecord(currentBorrower,
-//                            tid, dueDate.toString(), currentDate.toString());
                     SQLController.lendTool(currentBorrower, tid, dueDate, currentDate);
                     isLent = true;
                 }
