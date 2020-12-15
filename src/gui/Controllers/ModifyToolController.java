@@ -1,6 +1,6 @@
 package gui.Controllers;
 
-import gui.data.OwnedTool;
+import gui.data.IndividualToolData;
 import gui.data.OwnedUserTools;
 import gui.SQLController;
 import javafx.event.ActionEvent;
@@ -30,7 +30,8 @@ public class ModifyToolController extends ToolController {
      * @param tid     The tool id of the tool
      */
     @FXML
-    public void initialize(OwnedTool theTool, OwnedUserTools tools, int index, int tid) {
+    public void initialize(IndividualToolData theTool, OwnedUserTools tools, int index,
+                           int tid) {
         this.tid = tid;
 
         toolNameTextField.setText(theTool.getName());

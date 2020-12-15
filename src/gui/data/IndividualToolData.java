@@ -16,15 +16,30 @@ public class IndividualToolData {
     private final SimpleIntegerProperty price;
     private final SimpleBooleanProperty isLendable;
 
-    public IndividualToolData(SimpleStringProperty name, SimpleStringProperty owner, SimpleStringProperty lendDate, SimpleStringProperty dueDate, SimpleStringProperty categories, SimpleIntegerProperty price, SimpleBooleanProperty isLendable) {
-        this.name = name;
-        this.owner = owner;
-        this.lendDate = lendDate;
-        this.dueDate = dueDate;
-        this.categories = categories;
-        this.price = price;
-        this.isLendable = isLendable;
+    //Borrows
+    public IndividualToolData(String name, String owner, String lendDate,
+                              String dueDate, String categories) {
+        this.name = new SimpleStringProperty(name);
+        this.owner = new SimpleStringProperty(owner);
+        this.lendDate = new SimpleStringProperty(lendDate);
+        this.dueDate = new SimpleStringProperty(dueDate);
+        this.categories = new SimpleStringProperty(categories);
+        this.price = null;
+        this.isLendable = null;
     }
+
+    //Owns
+    public IndividualToolData(String name, int sale_price, boolean lendable, String categories) {
+        this.name = new SimpleStringProperty(name);
+        this.price = new SimpleIntegerProperty(sale_price);
+        this.isLendable = new SimpleBooleanProperty(lendable);
+        this.categories = new SimpleStringProperty(categories);
+        this.owner = null;
+        this.lendDate = null;
+        this.dueDate = null;
+    }
+
+
 
 
     /**

@@ -1,10 +1,7 @@
 package gui.Controllers;
 
 import gui.*;
-import gui.data.BorrowedTool;
-import gui.data.BorrowedUserTools;
-import gui.data.OwnedTool;
-import gui.data.OwnedUserTools;
+import gui.data.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,8 +61,8 @@ public class ViewToolsController extends Controller {
 
     private BorrowedUserTools borrowedTools;
     private OwnedUserTools ownedTools;
-    private ArrayList<BorrowedTool> borrowedToolList;
-    private ArrayList<OwnedTool> ownedToolList;
+    private ArrayList<IndividualToolData> borrowedToolList;
+    private ArrayList<IndividualToolData> ownedToolList;
     private int selectedTid;
 
     /**
@@ -84,14 +81,14 @@ public class ViewToolsController extends Controller {
      * Updates the table of owned tools
      */
     private void updateOwnedTable() {
-        ownsNameColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Name"));
-        ownsPriceColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Integer>("Price"));
-        ownsLendableColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, Boolean>("Lendable"));
-        ownsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<OwnedTool, String>("Categories"));
+        ownsNameColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData, String>("Name"));
+        ownsPriceColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData, Integer>("Price"));
+        ownsLendableColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData, Boolean>("Lendable"));
+        ownsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData, String>("Categories"));
         ownedTools = new OwnedUserTools(Main.getUID());
         ownedToolList = new ArrayList<>(ownedTools.getTids().size());
         for (int i = 0; i < ownedTools.getTids().size(); i++) {
-            ownedToolList.add(new OwnedTool(ownedTools.getToolNames().get(i),
+            ownedToolList.add(new IndividualToolData(ownedTools.getToolNames().get(i),
                     ownedTools.getSalePrices().get(i), ownedTools.getLendable().get(i),
                     ownedTools.getCategories().get(i)));
         }
@@ -102,15 +99,19 @@ public class ViewToolsController extends Controller {
      * Updates the table of borrowed tools
      */
     private void updateBorrowedTable() {
-        borrowsNameColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Name"));
-        borrowsOwnerColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Owner"));
-        borrowsLendDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("LendDate"));
-        borrowsDueDateColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("DueDate"));
-        borrowsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<BorrowedTool, String>("Categories"));
+        borrowsNameColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData,
+                String>("Name"));
+        borrowsOwnerColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData,
+                String>("Owner"));
+        borrowsLendDateColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData,
+                String>("LendDate"));
+        borrowsDueDateColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData,
+                String>("DueDate"));
+        borrowsCategoriesColumn.setCellValueFactory(new PropertyValueFactory<IndividualToolData, String>("Categories"));
         borrowedTools = new BorrowedUserTools(Main.getUID());
         borrowedToolList = new ArrayList<>(borrowedTools.getTids().size());
         for (int i = 0; i < borrowedTools.getTids().size(); i++) {
-            borrowedToolList.add(new BorrowedTool(borrowedTools.getToolNames().get(i),
+            borrowedToolList.add(new IndividualToolData(borrowedTools.getToolNames().get(i),
                     borrowedTools.getOwnerNames().get(i), borrowedTools.getLendDates().get(i),
                     borrowedTools.getDueDates().get(i),
                     borrowedTools.getCategories().get(i)));
