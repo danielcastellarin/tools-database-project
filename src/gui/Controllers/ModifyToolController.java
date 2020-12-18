@@ -1,7 +1,7 @@
 package gui.Controllers;
 
+import gui.data.GroupToolData;
 import gui.data.IndividualToolData;
-import gui.data.OwnedUserTools;
 import gui.SQLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,13 +30,13 @@ public class ModifyToolController extends ToolController {
      * @param tid     The tool id of the tool
      */
     @FXML
-    public void initialize(IndividualToolData theTool, OwnedUserTools tools, int index,
+    public void initialize(IndividualToolData theTool, GroupToolData tools, int index,
                            int tid) {
         this.tid = tid;
 
         toolNameTextField.setText(theTool.getName());
         priceTextField.setText(String.valueOf(theTool.getPrice()));
-        setCategories(parseCategories(tools.getCategories().get(index)));
+        setCategories(parseCategories(tools.getOwnedCategories().get(index)));
     }
 
     /**

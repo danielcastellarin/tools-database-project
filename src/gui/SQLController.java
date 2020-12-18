@@ -145,11 +145,11 @@ public class SQLController {
      * @param lendable   a list to store whether tools are lendable
      * @param categories a list to store tool categories
      */
-    public static void getGoodUserTools(int uid, List<Integer> tids,
-                                        List<String> toolNames,
-                                        List<Integer> salePrices,
-                                        List<Boolean> lendable,
-                                        List<String> categories) {
+    public static void getOwnedTools(int uid, List<Integer> tids,
+                                     List<String> toolNames,
+                                     List<Integer> salePrices,
+                                     List<Boolean> lendable,
+                                     List<String> categories) {
         performQuery("SELECT * FROM getOwnedTools(" + uid + ")");
         try {
             while (resultSet.next()) {
