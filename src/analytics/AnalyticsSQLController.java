@@ -1,12 +1,8 @@
 package analytics;
 
-import analytics.AnalyticsCSVWriter;
 import gui.Main;
 import gui.SQLController;
-
-import java.io.File;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Ryan LaRue, rml5169@rit.edu

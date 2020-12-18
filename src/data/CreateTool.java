@@ -2,7 +2,6 @@ package data;
 
 import gui.SQLController;
 import javafx.util.Pair;
-
 import java.time.LocalDate;
 import java.util.*;
 

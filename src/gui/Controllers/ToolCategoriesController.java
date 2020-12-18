@@ -6,11 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +18,6 @@ public class ToolCategoriesController extends ToolController {
 
     @FXML
     private VBox categoryVBox;
-    @FXML
-    private TextField newCategoryTextField;
-    @FXML
-    private Text statusText;
 
     /**
      * Populates the scene with a list of categories from the database

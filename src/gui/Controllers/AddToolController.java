@@ -4,7 +4,6 @@ import gui.Main;
 import gui.SQLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
 import java.util.ArrayList;
 
 /**

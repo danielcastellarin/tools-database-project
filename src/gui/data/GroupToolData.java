@@ -2,7 +2,6 @@ package gui.data;
 
 import gui.Main;
 import gui.SQLController;
-
 import java.util.ArrayList;
 import java.util.List;
 
