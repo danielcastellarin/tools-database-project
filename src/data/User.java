@@ -60,4 +60,43 @@ public class User {
         return need;
     }
 
+
+    /*
+    min - the minimum skewed value possible
+    max - the maximum skewed value possible
+    skew - the degree to which the values cluster around the mode of the distribution; higher values mean tighter clustering
+    bias - the tendency of the mode to approach the min, max or midpoint value; positive values bias toward max, negative values toward min
+     */
+    static public double nextSkewedBoundedDouble(double min, double max, double skew, double bias) {
+        Random random = new Random();
+        double range = max - min;
+        double mid = min + range / 2.0;
+        double unitGaussian = random.nextGaussian();
+        double biasFactor = Math.exp(bias);
+        double retval = mid+(range*(biasFactor/(biasFactor+Math.exp(-unitGaussian/skew))-0.5));
+        return retval;
+    }
+
+    public static void main(String[] args) {
+
+//        HashMap<Integer, Integer> map = new HashMap<>();
+//        for (int i = 1; i < 55; i++) {
+//            map.put(i, 0);
+//        }
+//
+//        for (int i = 0; i < 1000; i++) {
+//            int val = (int)nextSkewedBoundedDouble(1, 55, 1, 3);
+//            map.put(val, map.get(val) + 1);
+//        }
+//
+//        for (Integer key : map.keySet()) {
+//            System.out.println(key + ": " + map.get(key));
+//        }
+
+        System.out.println((int)nextSkewedBoundedDouble(1, 55, 1, 3));
+    }
+
+
+
+
 }
