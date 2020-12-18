@@ -1,7 +1,6 @@
 package gui.Controllers;
 
-import analytics.AnalyticsCSVWriter;
-import analytics.AnalyticsSQLController;
+import gui.AnalyticsSQLController;
 import gui.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,7 +59,7 @@ public class AnalyticsMenuController extends Controller {
                 csvName = "Tally of Each Category You Have Owned.csv";
                 resultSet = AnalyticsSQLController.getTallyOfEachCategoryType();
         }
-        AnalyticsCSVWriter.write(file, resultSet, csvName);
+        AnalyticsSQLController.write(file, resultSet, csvName);
         statusText.setText("CSV written to: " + file + "\\" + csvName);
         statusText.setVisible(true);
     }

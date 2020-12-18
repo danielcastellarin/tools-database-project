@@ -1,13 +1,29 @@
-package analytics;
+package gui;
 
-import gui.Main;
-import gui.SQLController;
+import com.opencsv.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author Ryan LaRue, rml5169@rit.edu
  */
 public class AnalyticsSQLController extends SQLController {
+
+    public static void write(File filePath,
+                             ResultSet resultSet, String fileName) {
+        try {
+            FileWriter output = new FileWriter(filePath + "/" + fileName);
+            CSVWriter writer = new CSVWriter(output);
+            writer.writeAll(resultSet, true);
+            writer.close();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static ResultSet getResultSet(String query) {
         performQuery(query);
