@@ -55,7 +55,7 @@ public class User {
     public int determineToolNeed(String categories) {
         int need = 0;
         for (char c : categories.toCharArray()) {
-            need += (high.indexOf(c) >= 0 ? 5 : (med.indexOf(c) >= 0 ? 3 : 0));
+            need += (high.indexOf(c) >= 0 ? 5 : (med.indexOf(c) >= 0 ? 3 : (low.indexOf(c) >= 0 ? 1 : 0)));
         }
         return need;
     }
