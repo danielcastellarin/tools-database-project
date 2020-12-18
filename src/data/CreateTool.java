@@ -11,6 +11,8 @@ public class CreateTool {
     private int initialDay;
     private int finalDay;
 
+    // private HashMap(Int, User)
+
     public CreateTool() {
         this.random = new Random();
         this.initialDay = (int) LocalDate.of(2019, 11, 13).toEpochDay();
@@ -18,6 +20,7 @@ public class CreateTool {
         int numUsers = 53;
         int uid = random.nextInt(numUsers) + 1;
         createDataForTool(uid, numUsers);
+        // createDataForTool(User)
     }
 
     private double determineReturnProbability(double x) {
@@ -53,6 +56,7 @@ public class CreateTool {
         LocalDate dateSold = null;
 
         Pair<String, List<String>> pair = generateName();
+        // Pair<String, List<String>> pair = generateName(User); passed in thru createDataForTool
         String toolName = pair.getKey();
         List<String> categories = pair.getValue();
 

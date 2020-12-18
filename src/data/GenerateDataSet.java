@@ -3,11 +3,20 @@ package data;
 import gui.Credentials;
 import gui.SQLController;
 
+import java.util.HashMap;
+
 public class GenerateDataSet extends SQLController{
 
-    private static void generate() {
+    private static HashMap<Integer, User> users;
+
+    private static void generateTools() {
+        users = new HashMap<>();
+        for(int i = 1; i < 55; i++) {
+            users.put(i, new User(i));
+        }
         for (int i = 0; i < 150; i++) {
             new CreateTool();
+            // new CreateTool(users);
         }
     }
 
@@ -30,7 +39,7 @@ public class GenerateDataSet extends SQLController{
         if (isPurge) {
             the_purge();
         } else {
-            generate();
+            generateTools();
         }
 
         SQLController.closeConnection();
