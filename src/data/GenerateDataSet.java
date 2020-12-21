@@ -15,8 +15,8 @@ public class GenerateDataSet extends SQLController{
             users.put(i, new User(i));
         }
         for (int i = 0; i < 150; i++) {
-            new CreateTool();
-            // new CreateTool(users);
+//            new CreateTool();
+             new CreateTool(users);
         }
     }
 

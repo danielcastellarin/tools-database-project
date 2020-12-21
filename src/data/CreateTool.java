@@ -11,16 +11,61 @@ public class CreateTool {
     private int initialDay;
     private int finalDay;
 
-    // private HashMap(Int, User)
+    private ArrayList<Integer> userOrder;
 
-    public CreateTool() {
+    public CreateTool(HashMap<Integer, User> users) {
         this.random = new Random();
         this.initialDay = (int) LocalDate.of(2019, 11, 13).toEpochDay();
         this.finalDay = (int) LocalDate.of(2020, 11, 13).toEpochDay();
-        int numUsers = 53;
-        int uid = random.nextInt(numUsers) + 1;
-        createDataForTool(uid, numUsers);
-        // createDataForTool(User)
+        createDataForTool(users);
+    }
+
+    /*
+    min - the minimum skewed value possible
+    max - the maximum skewed value possible
+    skew - the degree to which the values cluster around the mode of the distribution; higher values mean tighter clustering
+    bias - the tendency of the mode to approach the min, max or midpoint value; positive values bias toward max, negative values toward min
+     */
+    public double nextSkewedBoundedDouble(double min, double max, double skew, double bias) {
+        Random random = new Random();
+        double range = max - min;
+        double mid = min + range / 2.0;
+        double unitGaussian = random.nextGaussian();
+        double biasFactor = Math.exp(bias);
+        double retval = mid+(range*(biasFactor/(biasFactor+Math.exp(-unitGaussian/skew))-0.5));
+        return retval;
+    }
+
+    private void getUserPreferenceOrder(List<String> categories, HashMap<Integer, User> users) {
+        userOrder = new ArrayList<>(users.size());
+        ArrayList<Integer> userPreferences = new ArrayList<>(users.size());
+        int uid, pos;
+        User u;
+
+        for (Map.Entry<Integer, User> entry : users.entrySet()) {
+            uid = entry.getKey();
+            u = entry.getValue();
+
+            pos = 0;
+            int need = u.determineToolNeed(categories);
+            for (; pos < userOrder.size(); pos++) {
+                if (need < userPreferences.get(pos)) {
+                    break;
+                }
+            }
+
+            userOrder.add(pos, uid);
+            userPreferences.add(pos, need);
+        }
+    }
+
+    private int findNewUser(int currentOwner) {
+        int orderID;
+        do {
+            orderID = (int) nextSkewedBoundedDouble(1, userOrder.size(), 1, 3);
+        } while (userOrder.get(orderID) == currentOwner);
+
+        return userOrder.get(orderID);
     }
 
     private double determineReturnProbability(double x) {
@@ -50,28 +95,30 @@ public class CreateTool {
         return LocalDate.ofEpochDay(randomDay);
     }
 
-    private void createDataForTool(int uid, int numUsers) {
+    private void createDataForTool(HashMap<Integer, User> users) {
         LocalDate datePurchased = createDate(initialDay, finalDay);
         int salePrice = (random.nextInt(8) + 1) * 5;
         LocalDate dateSold = null;
+        LocalDate dueDate = null;
 
         Pair<String, List<String>> pair = generateName();
-        // Pair<String, List<String>> pair = generateName(User); passed in thru createDataForTool
         String toolName = pair.getKey();
         List<String> categories = pair.getValue();
 
-        String query = "SELECT addTool(" + uid + ", '" + toolName + "', '" + datePurchased + "', " + salePrice + ", VARIADIC ARRAY[";
+        getUserPreferenceOrder(categories, users);
+        int currentOwner = findNewUser(-1);
+        int currentBorrower = -1;
+        boolean isLent = false;
+
+        // Run query to for database and retrieve its tid
+        String query = "SELECT addTool(" + currentOwner + ", '" + toolName + "', '" + datePurchased + "', " + salePrice + ", VARIADIC ARRAY[";
         for (int i = 0; i < categories.size(); i++) {
             query += "'" + categories.get(i) + (i + 1 < categories.size() ? "', " : "'])");
         }
         int tid = SQLController.readInt(query);
-        System.out.println("Owns(" + uid + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
 
-        LocalDate dueDate = null;
-        int currentOwner = uid;
-        int currentBorrower = -1;
-
-        boolean isLent = false;
+        System.out.println("Order for tid " + tid + ": " + userOrder.toString());
+        System.out.println("Owns(" + currentOwner + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
 
         for (LocalDate currentDate = datePurchased; currentDate.isBefore(LocalDate.ofEpochDay(finalDay)); currentDate =
                 currentDate.plusDays(1) ) {
@@ -79,8 +126,7 @@ public class CreateTool {
             System.out.println("Current Owner: " + currentOwner);
             System.out.println(currentDate);
             int actionVar = random.nextInt(101) + 1;
-            if (isLent) {
-                // Update Borrows Entry
+            if (isLent) {                       // Update Borrows Entry
                 if (actionVar < determineReturnProbability((int) (currentDate.toEpochDay() - dueDate.toEpochDay())) * 100) {
                     System.out.println( currentBorrower + " Return Tool to " + currentOwner);
                     currentBorrower = -1;
@@ -88,31 +134,27 @@ public class CreateTool {
                     SQLController.returnTool(tid, currentDate);
                 }
             } else {
-                // Update Owns
-                if(actionVar < 2) {
+                if(actionVar < 2) {             // Update Owns
                     System.out.print("Change Price From " + salePrice + " ");
                     salePrice = (random.nextInt(8) + 1) * 5;
                     System.out.println("to " + salePrice);
                     SQLController.performUpdate("UPDATE \"Owns\" SET sale_price = " +
                             salePrice + " WHERE date_sold IS NULL AND tid = " + tid);
-                // Insert into Owns, Update Date_Sold
-                } else if (actionVar < 8) {
-                    int newOwner = random.nextInt(numUsers) + 1;
+                } else if (actionVar < 8) {     // Insert into Owns, Update Date_Sold
+                    int newOwner = findNewUser(currentOwner);
                     String sellQuery = "SELECT sellTool(" + tid + ", " +
                             newOwner + ", " + currentOwner + ", '" + currentDate + "')";
-                    boolean success = SQLController.sellToolFunc(sellQuery);
-                    if (newOwner == currentOwner || !success) continue;
+                    if (!SQLController.sellToolFunc(sellQuery)) continue;
                     System.out.println(currentOwner + " Sell Tool To: " + newOwner);
                     System.out.println("Date Purchased: " + currentDate);
                     System.out.println("Date Sold: Null");
                     currentOwner = newOwner;
-                // Insert into Borrows
-                } else if (actionVar < 20) {
-                    currentBorrower = random.nextInt(numUsers) + 1;
-                    if (currentBorrower == currentOwner) continue;
-                    System.out.println(currentOwner + " Lend Tool To: " + currentBorrower);
+                } else if (actionVar < 20) {    // Insert into Borrows
+                    // TODO: Consider using a different skew for Borrows, slightly more normal
+                    currentBorrower = findNewUser(currentOwner);
                     dueDate = createDate((int)currentDate.toEpochDay() + 7,
                             (int)currentDate.toEpochDay() + 21);
+                    System.out.println(currentOwner + " Lend Tool To: " + currentBorrower);
                     System.out.println("Lend Date: " + currentDate);
                     System.out.println("Due Date: " + dueDate);
                     System.out.println("Return Date: Null");
