@@ -26,6 +26,7 @@
             <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Average Borrow Time (All Users)" textAlignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#downloadCSV" prefHeight="50.0" prefWidth="250.0" text="Tally of Each Category You Have Owned" textAlignment="CENTER" />
             <VBox spacing="5.0" />
+            <Button mnemonicParsing="false" onAction="#testing" text="Testing" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />

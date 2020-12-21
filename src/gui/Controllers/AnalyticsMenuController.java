@@ -64,6 +64,13 @@ public class AnalyticsMenuController extends Controller {
         statusText.setVisible(true);
     }
 
+    //TODO: Remove once finished
+    @FXML
+    public void testing(ActionEvent event) {
+        changeScene("FXML/analyticsGraphs.fxml", "Analytics");
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+    }
+
     @FXML
     public void gotoHome(ActionEvent event) {
         changeScene("FXML/home.fxml", "Home");
