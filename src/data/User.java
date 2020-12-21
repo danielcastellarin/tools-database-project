@@ -52,10 +52,18 @@ public class User {
         }
     }
 
-    public int determineToolNeed(String categories) {
+//    public int determineToolNeed(String categories) {
+//        int need = 0;
+//        for (char c : categories.toCharArray()) {
+//            need += (high.indexOf(c) >= 0 ? 5 : (med.indexOf(c) >= 0 ? 3 : (low.indexOf(c) >= 0 ? 1 : 0)));
+//        }
+//        return need;
+//    }
+    
+    public int determineToolNeed(List<String> categories) {
         int need = 0;
-        for (char c : categories.toCharArray()) {
-            need += (high.indexOf(c) >= 0 ? 5 : (med.indexOf(c) >= 0 ? 3 : (low.indexOf(c) >= 0 ? 1 : 0)));
+        for (String c : categories) {
+            need += (high.contains(c) ? 5 : (med.contains(c) ? 3 : (low.contains(c) ? 1 : 0)));
         }
         return need;
     }

@@ -11,16 +11,41 @@ public class CreateTool {
     private int initialDay;
     private int finalDay;
 
-    // private HashMap(Int, User)
+    private ArrayList<Integer> userOrder;
 
-    public CreateTool() {
+    public CreateTool() {       // TODO public CreateTool(HashMap<Integer, User> users) {
         this.random = new Random();
         this.initialDay = (int) LocalDate.of(2019, 11, 13).toEpochDay();
         this.finalDay = (int) LocalDate.of(2020, 11, 13).toEpochDay();
         int numUsers = 53;
         int uid = random.nextInt(numUsers) + 1;
         createDataForTool(uid, numUsers);
-        // createDataForTool(User)
+        // TODO
+        // createDataForTool(users)
+    }
+
+    private void getUserPreferenceOrder(List<String> categories, HashMap<Integer, User> users) {
+        userOrder = new ArrayList<>(users.size());
+        ArrayList<Integer> userPreferences = new ArrayList<>(users.size());
+        int uid;
+        User u;
+        int pos;
+
+        for (Map.Entry<Integer, User> entry : users.entrySet()) {
+            uid = entry.getKey();
+            u = entry.getValue();
+
+            pos = 0;
+            int need = u.determineToolNeed(categories);
+            for (; pos < userOrder.size(); pos++) {
+                if (need < userPreferences.get(pos)) {
+                    break;
+                }
+            }
+
+            userOrder.add(pos, uid);
+            userPreferences.add(pos, need);
+        }
     }
 
     private double determineReturnProbability(double x) {
@@ -59,6 +84,9 @@ public class CreateTool {
         // Pair<String, List<String>> pair = generateName(User); passed in thru createDataForTool
         String toolName = pair.getKey();
         List<String> categories = pair.getValue();
+
+        // TODO
+        // getUserPreferenceOrder(List<String> categories, HashMap<Integer, User> users)
 
         String query = "SELECT addTool(" + uid + ", '" + toolName + "', '" + datePurchased + "', " + salePrice + ", VARIADIC ARRAY[";
         for (int i = 0; i < categories.size(); i++) {
