@@ -29,12 +29,15 @@ public class User {
 
         high = ""; med = ""; low = "";
         determineCategoryPreference();
+        printCategoryPreference();
 
     }
 
     private void determineCategoryPreference() {
         String catChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Set<Integer> seen = new HashSet<Integer>();
+        // FIXME something is up with this loop, when debugging, it adds the character to a string one iteration after it should
+        //  still functional tho
         for (int i = 0; i < 11; i++) {
             int catIndex = random.nextInt(26);
             if (seen.contains(catIndex)) {
@@ -51,14 +54,6 @@ public class User {
             }
         }
     }
-
-//    public int determineToolNeed(String categories) {
-//        int need = 0;
-//        for (char c : categories.toCharArray()) {
-//            need += (high.indexOf(c) >= 0 ? 5 : (med.indexOf(c) >= 0 ? 3 : (low.indexOf(c) >= 0 ? 1 : 0)));
-//        }
-//        return need;
-//    }
     
     public int determineToolNeed(List<String> categories) {
         int need = 0;
@@ -68,43 +63,11 @@ public class User {
         return need;
     }
 
-
-    /*
-    min - the minimum skewed value possible
-    max - the maximum skewed value possible
-    skew - the degree to which the values cluster around the mode of the distribution; higher values mean tighter clustering
-    bias - the tendency of the mode to approach the min, max or midpoint value; positive values bias toward max, negative values toward min
-     */
-    static public double nextSkewedBoundedDouble(double min, double max, double skew, double bias) {
-        Random random = new Random();
-        double range = max - min;
-        double mid = min + range / 2.0;
-        double unitGaussian = random.nextGaussian();
-        double biasFactor = Math.exp(bias);
-        double retval = mid+(range*(biasFactor/(biasFactor+Math.exp(-unitGaussian/skew))-0.5));
-        return retval;
+    public void printCategoryPreference() {
+        System.out.println("UID: " + uid);
+        System.out.println("High pref: " + high);
+        System.out.println("Med pref: " + med);
+        System.out.println("Low pref: " + low);
+        System.out.println("############################");
     }
-
-    public static void main(String[] args) {
-
-//        HashMap<Integer, Integer> map = new HashMap<>();
-//        for (int i = 1; i < 55; i++) {
-//            map.put(i, 0);
-//        }
-//
-//        for (int i = 0; i < 1000; i++) {
-//            int val = (int)nextSkewedBoundedDouble(1, 55, 1, 3);
-//            map.put(val, map.get(val) + 1);
-//        }
-//
-//        for (Integer key : map.keySet()) {
-//            System.out.println(key + ": " + map.get(key));
-//        }
-
-        System.out.println((int)nextSkewedBoundedDouble(1, 55, 1, 3));
-    }
-
-
-
-
 }
