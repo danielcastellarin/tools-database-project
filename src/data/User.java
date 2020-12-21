@@ -4,20 +4,16 @@ import java.util.*;
 
 public class User {
 
-    // likelyhood to sell
-    // likelyhood to lend
-    // likelyhood to changeprice
-    // likelyhood to return tool
-    // category preference
-
     private Random random;
     private int uid;
+
     private int lendProb;
     private int sellProb;
     private int returnProb;
+    private int doNothingProb;
 
     private int priceProb;
-    private int incPriceChange;
+    private int priceMod;
 
     private String high;
     private String med;
@@ -26,6 +22,14 @@ public class User {
     public User(int id) {
         this.random = new Random();
         uid = id;
+
+        doNothingProb = random.nextInt(101) + 1;
+        lendProb = random.nextInt(101) + 1;
+        sellProb = random.nextInt(101) + 1;
+        returnProb = random.nextInt(101) + 1;
+        priceProb = random.nextInt(101) + 1;
+
+        priceMod = random.nextInt(11) - 5;
 
         high = ""; med = ""; low = "";
         determineCategoryPreference();
@@ -69,5 +73,9 @@ public class User {
         System.out.println("Med pref: " + med);
         System.out.println("Low pref: " + low);
         System.out.println("############################");
+    }
+
+    public int getPriceModifier() {
+        return priceMod;
     }
 }

@@ -5,7 +5,7 @@ import gui.SQLController;
 
 import java.util.HashMap;
 
-public class GenerateDataSet extends SQLController{
+public class GenerateDataSet extends SQLController {
 
     private static HashMap<Integer, User> users;
 

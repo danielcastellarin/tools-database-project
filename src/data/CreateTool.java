@@ -134,13 +134,19 @@ public class CreateTool {
                     SQLController.returnTool(tid, currentDate);
                 }
             } else {
-                if(actionVar < 2) {             // Update Owns
-                    System.out.print("Change Price From " + salePrice + " ");
-                    salePrice = (random.nextInt(8) + 1) * 5;
-                    System.out.println("to " + salePrice);
+                if(actionVar < 2) {             // Update Tool Price in Owns
+                    int userMod = users.get(currentOwner).getPriceModifier();
+                    int priceChange;
+                    do {
+                        int offset = random.nextInt(21) - 10;
+                        priceChange = (userMod + offset) * 5;
+                    } while (priceChange + salePrice <= 0);
+                    System.out.println("Change Price from " + salePrice + " to " + (salePrice + priceChange));
+                    salePrice += priceChange;
                     SQLController.performUpdate("UPDATE \"Owns\" SET sale_price = " +
                             salePrice + " WHERE date_sold IS NULL AND tid = " + tid);
                 } else if (actionVar < 8) {     // Insert into Owns, Update Date_Sold
+                    // TODO: Consider organizing ties by user's buyProb
                     int newOwner = findNewUser(currentOwner);
                     String sellQuery = "SELECT sellTool(" + tid + ", " +
                             newOwner + ", " + currentOwner + ", '" + currentDate + "')";
@@ -151,6 +157,7 @@ public class CreateTool {
                     currentOwner = newOwner;
                 } else if (actionVar < 20) {    // Insert into Borrows
                     // TODO: Consider using a different skew for Borrows, slightly more normal
+                    //      Also consider organizing ties by user's borrowProb
                     currentBorrower = findNewUser(currentOwner);
                     dueDate = createDate((int)currentDate.toEpochDay() + 7,
                             (int)currentDate.toEpochDay() + 21);
