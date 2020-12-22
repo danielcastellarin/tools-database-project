@@ -135,7 +135,7 @@ public class CreateTool {
             System.out.println("----------------------");
             System.out.println("Current Owner: " + currentOwner);
             System.out.println(currentDate);
-            int actionVar = random.nextInt(101) + 1;
+            int actionVar = random.nextInt(101);// + 1;
             if (isLent) {                       // Update Borrows Entry
                 borrowerReturnProb = users.get(currentBorrower).getReturnMod();
                 // TODO: Consider having second iteration per day that has difference of dates + .5
@@ -158,7 +158,7 @@ public class CreateTool {
                 ownerLendProb = users.get(currentOwner).getLendProb();
                 ownerSellProb = users.get(currentOwner).getSellProb();
                 ownerPriceProb = users.get(currentOwner).getPriceProb();
-                if (actionVar < 2) {             // Update Tool Price in Owns
+                if (actionVar < ownerPriceProb) {             // Update Tool Price in Owns                   OG 2
                     int userMod = users.get(currentOwner).getPriceModifier();
                     int priceChange;
                     do {
@@ -169,7 +169,7 @@ public class CreateTool {
                     salePrice += priceChange;
                     SQLController.performUpdate("UPDATE \"Owns\" SET sale_price = " +
                             salePrice + " WHERE date_sold IS NULL AND tid = " + tid);
-                } else if (actionVar < 8) {     // Insert into Owns, Update Date_Sold
+                } else if (actionVar < ownerSellProb) {     // Insert into Owns, Update Date_Sold           OG 8
                     // TODO: Consider organizing ties by user's buyProb
                     int newOwner = findNewUser(currentOwner);
                     String sellQuery = "SELECT sellTool(" + tid + ", " +
@@ -179,7 +179,7 @@ public class CreateTool {
                     System.out.println("Date Purchased: " + currentDate);
                     System.out.println("Date Sold: Null");
                     currentOwner = newOwner;
-                } else if (actionVar < 20) {    // Insert into Borrows
+                } else if (actionVar < ownerLendProb) {    // Insert into Borrows                          OG 20
                     // TODO: Consider using a different skew for Borrows, slightly more normal
                     //      Also consider organizing ties by user's borrowProb
                     currentBorrower = findNewUser(currentOwner);

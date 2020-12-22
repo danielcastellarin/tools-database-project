@@ -24,9 +24,10 @@ public class User {
         uid = id;
 
         doNothingProb = random.nextInt(101) + 1;
-        lendProb = random.nextInt(101) + 1;
-        sellProb = random.nextInt(101) + 1;
-        priceProb = random.nextInt(101) + 1;
+
+        priceProb = random.nextInt(5) + 1;
+        sellProb = random.nextInt(priceProb + 15) + priceProb;
+        lendProb = random.nextInt(sellProb + 25) + sellProb;
 
         priceMod = random.nextInt(11) - 5;
         returnMod = (random.nextInt(31) - 15) * .1;
