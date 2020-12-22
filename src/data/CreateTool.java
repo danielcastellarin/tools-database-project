@@ -68,8 +68,13 @@ public class CreateTool {
         return userOrder.get(orderID);
     }
 
-    private double determineReturnProbability(double x) {
+    private double determineReturnProbabilityOLD(double x) {
         return 1 / (1.1 + Math.exp(-((5 * x) / 6 + .8)));
+    }
+
+    // TODO check if work
+    public boolean determineReturnProbability(double x, double userMod, double actionVar) {
+        return actionVar < (1 / (1.2 + Math.exp(-.85 * x + .5 + userMod))) * 100;
     }
 
     public Pair<String, List<String>> generateName() {
@@ -120,6 +125,11 @@ public class CreateTool {
         System.out.println("Order for tid " + tid + ": " + userOrder.toString());
         System.out.println("Owns(" + currentOwner + ", " + tid + ", " + datePurchased + ", " + dateSold + ", " + salePrice + ")");
 
+        int ownerLendProb;
+        int ownerSellProb;
+        int ownerPriceProb;
+        double borrowerReturnProb;
+
         for (LocalDate currentDate = datePurchased; currentDate.isBefore(LocalDate.ofEpochDay(finalDay)); currentDate =
                 currentDate.plusDays(1) ) {
             System.out.println("----------------------");
@@ -127,14 +137,28 @@ public class CreateTool {
             System.out.println(currentDate);
             int actionVar = random.nextInt(101) + 1;
             if (isLent) {                       // Update Borrows Entry
-                if (actionVar < determineReturnProbability((int) (currentDate.toEpochDay() - dueDate.toEpochDay())) * 100) {
+                borrowerReturnProb = users.get(currentBorrower).getReturnMod();
+                // TODO: Consider having second iteration per day that has difference of dates + .5
+                //      or only one iteration that adds a random value to that difference b/w -.5 and .5
+                if (determineReturnProbability((double) (currentDate.toEpochDay() - dueDate.toEpochDay()), borrowerReturnProb, actionVar)) {
                     System.out.println( currentBorrower + " Return Tool to " + currentOwner);
                     currentBorrower = -1;
                     isLent = false;
                     SQLController.returnTool(tid, currentDate);
+                } else {
+                    System.out.println("Currently lent to " + currentBorrower);
                 }
+//                if (actionVar < determineReturnProbabilityOLD((int) (currentDate.toEpochDay() - dueDate.toEpochDay())) * 100) {
+//                    System.out.println( currentBorrower + " Return Tool to " + currentOwner);
+//                    currentBorrower = -1;
+//                    isLent = false;
+//                    SQLController.returnTool(tid, currentDate);
+//                }
             } else {
-                if(actionVar < 2) {             // Update Tool Price in Owns
+                ownerLendProb = users.get(currentOwner).getLendProb();
+                ownerSellProb = users.get(currentOwner).getSellProb();
+                ownerPriceProb = users.get(currentOwner).getPriceProb();
+                if (actionVar < 2) {             // Update Tool Price in Owns
                     int userMod = users.get(currentOwner).getPriceModifier();
                     int priceChange;
                     do {

@@ -9,10 +9,10 @@ public class User {
 
     private int lendProb;
     private int sellProb;
-    private int returnProb;
     private int doNothingProb;
-
     private int priceProb;
+
+    private double returnMod;
     private int priceMod;
 
     private String high;
@@ -26,10 +26,10 @@ public class User {
         doNothingProb = random.nextInt(101) + 1;
         lendProb = random.nextInt(101) + 1;
         sellProb = random.nextInt(101) + 1;
-        returnProb = random.nextInt(101) + 1;
         priceProb = random.nextInt(101) + 1;
 
         priceMod = random.nextInt(11) - 5;
+        returnMod = (random.nextInt(31) - 15) * .1;
 
         high = ""; med = ""; low = "";
         determineCategoryPreference();
@@ -77,5 +77,21 @@ public class User {
 
     public int getPriceModifier() {
         return priceMod;
+    }
+
+    public int getPriceProb() {
+        return priceProb;
+    }
+
+    public int getSellProb() {
+        return sellProb;
+    }
+
+    public int getLendProb() {
+        return lendProb;
+    }
+
+    public double getReturnMod() {
+        return returnMod;
     }
 }
