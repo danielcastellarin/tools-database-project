@@ -107,5 +107,18 @@ public class AnalyticsSQLController extends SQLController {
         return getResultSet(query);
     }
 
+    public static ResultSet getCategoryCount() {
+        String query = "SELECT C.tool_category, count(h.cid)" +
+                "FROM \"Has\" as H INNER JOIN \"Category\" C on C.cid = H" +
+                ".cid GROUP BY C.tool_category";
+        return getResultSet(query);
+    }
+
+    public static ResultSet getNumberOfBorrowedTools() {
+        String query =
+                "SELECT count(*) FROM \"Borrows\" as b WHERE b.uid = " + Main.getUID();
+        return getResultSet(query);
+    }
+
 
 }
